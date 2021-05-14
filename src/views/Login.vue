@@ -3,38 +3,51 @@
     <body>
       <div class="contenedor">
         <v-form class="form">
-          <v-text-field
-            label="Número de documento"
-            placeholder="Número de documento"
-            prepend-icon="mdi-account"
-            color=#FFFFFF
-            solo
-          ></v-text-field>
-          <v-text-field
-            solo
-            prepend-icon="mdi-account-key"
-            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required]"
-            :type="show1 ? 'text' : 'password'"
-            name="input-10-1"
-            label="Contraseña"
-            placeholder="Contraseña"
-            color=#FFFFFF
-            @click:append="show1 = !show1"
-          ></v-text-field>
-          <v-btn color="primary">Click me</v-btn>
+          <div align="center">
+            <v-img
+              src="~@/assets/img/logo_obj.png"
+              width="200px"
+            ></v-img>
+            <br>
+          </div>
+          <div align="center">
+            <v-text-field
+              label="Número de documento"
+              append-icon="mdi-account"
+              color=#FFFFFF
+            ></v-text-field>
+          </div>
+          <div align="center">
+            <v-text-field
+              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="[rules.required]"
+              :type="show1 ? 'text' : 'password'"
+              name="input-10-1"
+              label="Contraseña"
+              placeholder="Contraseña"
+              color=#FFFFFF
+              @click:append="show1 = !show1"
+            ></v-text-field>
+          </div>
+          <div align="center">
+            <v-btn color="#FFFFFF" outlined
+            >
+              Iniciar sesión
+            </v-btn>
+          </div>
         </v-form>
       </div>
     </body>
   </div>
 </template>
 <style>
+
 .form {
   /* background-color: white; */
   opacity: 1 !important;
-  width: 700px;
-  height: 500px;
-  padding: 48px;
+  width: 500px;
+  height: 400px;
+  padding: 30px;
 }
 
 .contenedor {
