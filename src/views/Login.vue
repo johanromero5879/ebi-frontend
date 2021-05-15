@@ -11,21 +11,21 @@
             <br>
           </div>
           <div align="center">
-            <v-text-field
+            <v-text-field dark
               label="Número de documento"
               append-icon="mdi-account"
-              color=#FFFFFF
+              color=#FFCC80
             ></v-text-field>
           </div>
           <div align="center">
-            <v-text-field
+            <v-text-field dark
               :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="[rules.required]"
               :type="show1 ? 'text' : 'password'"
               name="input-10-1"
               label="Contraseña"
               placeholder="Contraseña"
-              color=#FFFFFF
+              color=#FFCC80
               @click:append="show1 = !show1"
             ></v-text-field>
           </div>
