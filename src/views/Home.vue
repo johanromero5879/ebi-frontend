@@ -76,6 +76,7 @@
   box-sizing: border-box;
   background: url("~@/assets/img/loginbg.png");
   background-size: cover;
+  font-family: sans-serif;
 }
 
 @media screen and (max-width: 500px) {
