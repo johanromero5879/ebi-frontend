@@ -7,20 +7,22 @@
 
 <template>
   <div class="contenedorPanel">
-    <div class="formPanel">
+    <div class="formPanel" outlined>
      
-        <div align="center">
+        <div align="center" >
             <v-text-field
+            
             v-model="nombresyapellidos"
             :rules="Reglasnya"
             label="Nombres y Apellidos"
             required
-            color=#FFFFFF 
+            color="#302def" 
           ></v-text-field>
 
             <br>
           
             <v-text-field
+            color="#302def"
             v-model="cedula"
             :rules="Reglascc"
             label="Cedula"
@@ -31,6 +33,7 @@
           <br>
 
           <v-text-field
+          color="#302def"
             v-model="email"
             :rules="emailRules"
             label="E-mail"
@@ -40,6 +43,7 @@
           <br>
           
           <v-text-field
+          color="#302def"
             v-model="Nombreusuario"
             :rules="Reglasusuario"
             label="Nombre de usuario"
@@ -49,6 +53,7 @@
           <br>
 
         <v-select
+        color="#302def"
           :items="items"
           label="Tipo de usuario"
         ></v-select>
@@ -81,6 +86,7 @@
   width: 500px;
   height: 550px;
   padding: 30px;
+  
 }
 .contenedorPanel {
   min-height: 200vh; 
@@ -89,8 +95,8 @@
   background-size: cover;
   background-position: center;
   display: flex;
-  justify-content: top ;
-  align-items: top ;
+  justify-content: center ;
+  align-items: center ;
 }
 
 @media screen and (max-width: 500px) {

@@ -21,7 +21,7 @@
           ></v-img>
         </div>
         <v-spacer></v-spacer>
-        <v-btn outlined>
+        <v-btn outlined onclick="location.href='http://localhost:8080/ingresar'">
           <v-icon left>mdi-exit-to-app</v-icon>
           Cerrar sesión  
         </v-btn>
