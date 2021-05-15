@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Panel from '../views/Panel.vue'
 import Login from '../views/Login.vue'
+import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
@@ -17,6 +18,10 @@ const routes = [
   {
     path: '/panel',
     component: Panel
+  },
+  {
+    path: '/home',
+    component: Home
   }
 ]
 
