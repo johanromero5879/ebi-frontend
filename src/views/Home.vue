@@ -1,12 +1,11 @@
 <template>
   <div>
     <body>
-      <div>
-      <v-card class="mx-auto overflow-hidden"
-    height="800"
-    
-  >
-    <v-app-bar
+      <div class="contenedorHome">
+        <v-form class="formHome">
+          <div align="center">
+           <div>
+             <v-app-bar
       color=#f27459
       dark
     >
@@ -44,18 +43,42 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-      <div>
-    holis que pedal
-  </div>
-  </v-card>
-  </div>
 
-
+            </div> 
+            <br>
+          </div>
+          
+        </v-form>
+      </div>
     </body>
   </div>
 </template>
-
 <style>
+
+.formHome {
+  border: white; 
+  opacity: 1 !important;
+  width: 1500px;
+  height: 800px;
+  padding: 0px;
+}
+
+.contenedorHome {
+  min-height: 100vh; 
+  box-sizing: border-box;
+  background: url("~@/assets/img/loginbg.png");
+  background-size: cover;
+  background-position: top;
+  display: flex;
+  justify-content: top;
+  align-items: top;
+}
+
+@media screen and (max-width: 500px) {
+  .form{
+    padding: 16px;
+  }
+}
 
 </style>
 
