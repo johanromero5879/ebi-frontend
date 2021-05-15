@@ -1,11 +1,4 @@
 <template>
-  
-</template>
-
-
-
-
-<template>
   <div class="contenedorPanel">
     <div class="formPanel">
      
