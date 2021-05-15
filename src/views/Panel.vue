@@ -10,6 +10,8 @@
     
         <div align="center">
             <v-text-field
+            v-model="nombresyapellidos"
+            :rules="Reglasnya"
             label="Nombres y Apellidos"
             required
             color=#FFCC80
@@ -18,7 +20,10 @@
             <br>
           
             <v-text-field
+            v-model="cedula"
+            :rules="Reglascc"
             label="Cedula"
+            :counter="10"
             required
           ></v-text-field>
 
@@ -89,6 +94,22 @@
   export default {
     data: () => ({
       items: ['Administrador', 'Contador', 'Regular', 'Buzz'],
+       valid: false,
+      nombresyapellidos: '',
+      Reglasnya: [
+        v => !!v || 'Campo Obligatorio',
+      ],
+      cedula: '',
+      Reglascc: [
+        v => !!v || 'Campo Obligatorio',
+        v => v.length <= 10 || 'Cedula no valida',
+      ],
+      
+      email: '',
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid',
+      ],
     }),
   }
 </script>

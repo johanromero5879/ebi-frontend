@@ -70,6 +70,7 @@ export default {
   data: () => ({
     drawer: false,
     group: null,
+    
   }),
 };
 </script>
