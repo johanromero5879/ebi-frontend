@@ -56,30 +56,6 @@
 </template>
 
 <style>
-.form {
-  /* background-color: white; */
-  opacity: 1 !important;
-  width: 700px;
-  height: 500px;
-  padding: 48px;
-}
-
-.contenedor {
-  min-height: 100vh; 
-  box-sizing: border-box;
-  background: url("~@/assets/img/loginbg.png");
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@media screen and (max-width: 500px) {
-  .form{
-    padding: 16px;
-  }
-}
 
 </style>
 
