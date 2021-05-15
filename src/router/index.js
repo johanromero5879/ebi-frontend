@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Panel from '../views/Panel.vue'
 import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
+import Almacenes from '../views/Almacenes.vue'
 
 Vue.use(VueRouter)
 
@@ -26,6 +27,10 @@ const routes = [
       { 
         path: 'panel',
         component: Panel
+      },
+      {
+        path:'almacenes',
+        component: Almacenes
       }
     ]
   }
