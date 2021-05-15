@@ -21,7 +21,13 @@ const routes = [
   },
   {
     path: '/home',
-    component: Home
+    component: Home,
+    children: [
+      { 
+        path: 'panel',
+        component: Panel
+      }
+    ]
   }
 ]
 
