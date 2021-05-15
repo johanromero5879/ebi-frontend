@@ -1,10 +1,30 @@
 <template>
   <div class="contenedorHome">
-    <v-app-bar color="#f27459" dark>
-      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-
-      <v-toolbar-title>East Book Inventory</v-toolbar-title>
-      
+    <v-app-bar 
+      color="#f27459" dark
+      height="65px"
+      absolute
+      src="~@/assets/img/loginbg.png"
+      scroll-target="#scrolling-techniques-3"
+      >
+        <template v-slot:img="{ props }">
+          <v-img
+            v-bind="props"
+            gradient=" rgba(242,116,89,0.6), rgba(242,116,89,0.6)"
+          ></v-img>
+        </template>
+        <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+        <div>
+          <v-img
+            src="~@/assets/img/logo_obj.png"
+            width ="70px"
+          ></v-img>
+        </div>
+        <v-spacer></v-spacer>
+        <v-btn outlined>
+          <v-icon left>mdi-exit-to-app</v-icon>
+          Cerrar sesión  
+        </v-btn>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" absolute temporary>
