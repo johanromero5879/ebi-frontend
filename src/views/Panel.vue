@@ -1,13 +1,21 @@
 <template>
+  
+</template>
+
+
+
+
+<template>
   <div class="contenedorPanel">
-    
+    <div class="formPanel">
+     
         <div align="center">
             <v-text-field
             v-model="nombresyapellidos"
             :rules="Reglasnya"
             label="Nombres y Apellidos"
             required
-            color=#FFCC80
+            color=#FFFFFF 
           ></v-text-field>
 
             <br>
@@ -31,28 +39,37 @@
 
           <br>
           
+          <v-text-field
+            v-model="Nombreusuario"
+            :rules="Reglasusuario"
+            label="Nombre de usuario"
+            required
+          ></v-text-field>
+
+          <br>
+
         <v-select
           :items="items"
           label="Tipo de usuario"
         ></v-select>
         <br>
-        <v-btn color="#FFFFFF" outlined
+        <v-btn color="#302def" outlined
             >
               Guardar
             </v-btn>
 
-            <v-btn color="#FFFFFF" outlined
+            <v-btn color="#302def" outlined
             >
               Editar
             </v-btn>
 
-            <v-btn color="#FFFFFF" outlined
+            <v-btn color="#302def" outlined
             >
               Borrar
             </v-btn>
           </div>
           
-      
+      </div>
   </div>
 </template>
 
@@ -62,18 +79,18 @@
   background-color: white;
   opacity: 1 !important;
   width: 500px;
-  height: 400px;
+  height: 550px;
   padding: 30px;
 }
 .contenedorPanel {
-  min-height: 100vh; 
+  min-height: 200vh; 
   box-sizing: border-box;
   background: transparent;
   background-size: cover;
   background-position: center;
   display: flex;
-  justify-content: top;
-  align-items: top;
+  justify-content: top ;
+  align-items: top ;
 }
 
 @media screen and (max-width: 500px) {
@@ -97,7 +114,10 @@
         v => !!v || 'Campo Obligatorio',
         v => v.length <= 10 || 'Cedula no valida',
       ],
-      
+      Nombreusuario: '',
+      Reglasusuario: [
+        v => !!v || 'Campo Obligatorio',
+      ],
       email: '',
       emailRules: [
         v => !!v || 'E-mail is required',
