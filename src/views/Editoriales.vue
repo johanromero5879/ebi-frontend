@@ -1,11 +1,11 @@
 <template>
-    <div class="contAlmacenes">
-        <div class="titulo">
-          <v-icon dark left>mdi-bank</v-icon>
-          <h1>Registro de almacenes</h1>
+    <div class="contEditoriales">
+        <div class="tituloEd">
+          <v-icon dark left>mdi-library</v-icon>
+          <h1>Registro de editoriales</h1>
         </div>
-        <div class="objetos">
-            <div class="formular">
+        <div class="objetosEd">
+            <div class="formularEd">
                 <v-form
                     class="forma"
                     align="center"
@@ -14,38 +14,38 @@
                     lazy-validation
                 >
                     <v-text-field dark
-                    v-model="codigo"
+                    v-model="codigoEd"
                     :counter="10"
-                    :rules="codru"
+                    :rules="codruEd"
                     label="Código"
                     required
                     >
                     </v-text-field>
 
                     <v-text-field dark
-                    v-model="nombre"
-                    :rules="nomru"
+                    v-model="nombreEd"
+                    :rules="nomruEd"
                     label="Nombre"
                     required
                     ></v-text-field>
 
                     <v-text-field dark
-                    v-model="direccion"
-                    :rules="dirru"
+                    v-model="direccionEd"
+                    :rules="dirruEd"
                     label="Dirección"
                     required
                     ></v-text-field>
 
                     <v-text-field dark
-                    v-model="telefono"
-                    :rules="telru"
+                    v-model="telefonoEd"
+                    :rules="telruEd"
                     label="Teléfono"
                     required
                     ></v-text-field>
 
                     <v-text-field dark
-                    v-model="correo"
-                    :rules="corru"
+                    v-model="correoEd"
+                    :rules="corruEd"
                     label="Correo electrónico"
                     required
                     ></v-text-field>
@@ -85,10 +85,10 @@
                 </v-form>
             </div>
             <v-spacer></v-spacer>
-            <div class="tablamuestra">
+            <div class="tablamuestraEd">
                 <v-data-table
-                    :headers="titulosAl"
-                    :items="datosAl"
+                    :headers="titulosEd"
+                    :items="datosEd"
                     item-key="name"
                     class="elevation-1"
                     :search="search"
@@ -109,7 +109,7 @@
 
 <style>
 
-.contAlmacenes {
+.contEditoriales {
     /* background-color: white; */
     padding-top: 80px;
     padding-left: 40px;
@@ -121,7 +121,7 @@
     font-family: sans-serif;
 }
 
-.titulo
+.tituloEd
 {
     /* background-color: hotpink; */
     color: white;
@@ -129,7 +129,7 @@
     display: flex;
 }
 
-.objetos
+.objetosEd
 {
     /* background-color: indigo; */
     display: flex;
@@ -137,7 +137,7 @@
     align-items: top;
 }
 
-.formular
+.formularEd
 {
     background-color: rgba(0,0,0,.25);
     padding:20px;
@@ -147,7 +147,7 @@
     align-items: top;
 }
 
-.tablamuestra
+.tablamuestraEd
 {
     /* background-color: green; */
     padding-top: 0px;
@@ -167,62 +167,63 @@
             tipo: "xd"
         },
         valid: true,
-        codigo: '',
-        codru: [
+        codigoEd: '',
+        codruEd: [
         v => !!v || 'Este campo es obligatorio',
         v => (v && v.length <= 10) || 'El código no puede tener más de 10 caracteres',
         ],
 
         valid: true,
-        nombre: '',
-        nomru: [
+        nombreEd: '',
+        nomruEd: [
         v => !!v || 'Este campo es obligatorio',
         ],
 
         valid: true,
-        direccion: '',
-        dirru: [
+        direccionEd: '',
+        dirruEd: [
         v => !!v || 'Este campo es obligatorio',
         ],
 
         valid: true,
-        telefono: '',
-        telru: [
+        telefonoEd: '',
+        telruEd: [
         v => !!v || 'Este campo es obligatorio',
         ],
 
-        correol: '',
-        corru: [
+        correoEd: '',
+        corruEd: [
         v => !!v || 'Este campo es obligatorio',
         v => /.+@.+\..+/.test(v) || 'El correo debe tener un formato válido',
         ],
 
-        titulosAl: [
+        titulosEd: [
           {
             text: 'Código',
             align: 'start',
-            value: 'codigoAlm',
+            value: 'codigoEdi',
           },
-          { text: 'Nombre', value: 'nombreAlm' },
-          { text: 'Dirección', value: 'direccionAlm' },
-          { text: 'Teléfono', value: 'telefonoAlm' },
-          { text: 'Correo Electrónico', value: 'correoAlm' },
+          { text: 'Nombre', value: 'nombreEdi' },
+          { text: 'Dirección', value: 'direccionEdi' },
+          { text: 'Teléfono', value: 'telefonoEdi' },
+          { text: 'Correo Electrónico', value: 'correoEdi' },
         ],
-        datosAl: [
+        datosEd: [
           {
-            codigoAlm: 1234567890,
-            nombreAlm: 'Tres pelagatos sas',
-            direccionAlm: 'Calle 30B # 2-19',
-            telefonoAlm: 3048463944,
-            correoAlm: 'contacto@trespel.com',
+            codigoEdi: 1234567890,
+            nombreEdi: 'Santillana',
+            direccionEdi: 'Calle 50A # 6-19',
+            telefonoEdi: 3025846359,
+            correoEdi: 'contacto@satillana.com',
           },
           {
-            codigoAlm: 9987654321,
-            nombreAlm: 'El lector',
-            direccionAlm: 'Trasversal 5A # 2-14',
-            telefonoAlm: 3135994633,
-            correoAlm: 'contacto@ellector.com',
+            codigoEdi: 9987654321,
+            nombreEdi: 'Grupo planeta',
+            direccionEdi: 'Trasversar 16B # 3-18',
+            telefonoEdi: 3125946800,
+            correoEdi: 'contacto@grupoplaneta.com',
           },
+          
         ],
       }
     },

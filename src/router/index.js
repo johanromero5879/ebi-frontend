@@ -5,6 +5,7 @@ import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
 import Almacenes from '../views/Almacenes.vue'
 import addLibros from '../views/addLibros.vue'
+import editoriales from '../views/Editoriales.vue'
 
 Vue.use(VueRouter)
 
@@ -32,6 +33,10 @@ const routes = [
       {
         path:'crear_libro',
         component: addLibros
+      },
+      {
+        path: 'editoriales',
+        component: editoriales
       }
     ]
   }
