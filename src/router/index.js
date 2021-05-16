@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Panel from '../views/Panel.vue'
+import addUsuario from '../views/addUsuario.vue'
 import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
 import Almacenes from '../views/Almacenes.vue'
+import addLibros from '../views/addLibros.vue'
 
 Vue.use(VueRouter)
 
@@ -17,20 +18,28 @@ const routes = [
     component: Login
   },
   {
-    path: '/panel',
-    component: Panel
+    path: '/crear_usuario',
+    component: addUsuario
+  },
+  {
+    path: '/crear_libro',
+    component: addLibros
   },
   {
     path: '/home',
     component: Home,
     children: [
       { 
-        path: 'panel',
-        component: Panel
+        path: 'crear_usuario',
+        component: addUsuario
       },
       {
         path:'almacenes',
         component: Almacenes
+      },
+      {
+        path:'crear_libro',
+        component: addLibros
       }
     ]
   }
