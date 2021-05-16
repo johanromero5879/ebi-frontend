@@ -14,7 +14,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/ingresar' 
+    redirect: '/ingresar'
   },
   {
     path: '/ingresar',
@@ -24,16 +24,16 @@ const routes = [
     path: '/home',
     component: Home,
     children: [
-      { 
+      {
         path: 'crear_usuario',
         component: addUsuario
       },
       {
-        path:'almacenes',
+        path: 'almacenes',
         component: Almacenes
       },
       {
-        path:'crear_libro',
+        path: 'crear_libro',
         component: addLibros
       },
       {

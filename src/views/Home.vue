@@ -1,30 +1,28 @@
 <template>
   <div class="contenedorHome">
-    <v-app-bar 
-      color="#f27459" dark
+    <v-app-bar
+      color="#f27459"
+      dark
       height="65px"
       absolute
       src="~@/assets/img/loginbg.png"
       scroll-target="#scrolling-techniques-3"
-      >
-        <template v-slot:img="{ props }">
-          <v-img
-            v-bind="props"
-            gradient=" rgba(242,116,89,0.6), rgba(242,116,89,0.6)"
-          ></v-img>
-        </template>
-        <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-        <div>
-          <v-img
-            src="~@/assets/img/logo_obj.png"
-            width ="70px"
-          ></v-img>
-        </div>
-        <v-spacer></v-spacer>
-        <v-btn outlined onclick="location.href='http://localhost:8080/ingresar'">
-          <v-icon left>mdi-exit-to-app</v-icon>
-          Cerrar sesión  
-        </v-btn>
+    >
+      <template v-slot:img="{ props }">
+        <v-img
+          v-bind="props"
+          gradient=" rgba(242,116,89,0.6), rgba(242,116,89,0.6)"
+        ></v-img>
+      </template>
+      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+      <div>
+        <v-img src="~@/assets/img/logo_obj.png" width="70px"></v-img>
+      </div>
+      <v-spacer></v-spacer>
+      <v-btn outlined onclick="location.href='http://localhost:8080/ingresar'">
+        <v-icon left>mdi-exit-to-app</v-icon>
+        Cerrar sesión
+      </v-btn>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" absolute temporary>
@@ -40,48 +38,59 @@
             <v-list-item-title>Inicio</v-list-item-title>
           </v-list-item>
 
-          <v-list-item onclick="location.href='http://localhost:8080/home/crear_usuario'">
+          <v-list-item
+            onclick="location.href='http://localhost:8080/home/crear_usuario'"
+          >
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Usuarios</v-list-item-title>
           </v-list-item>
 
-          <v-list-item onclick="location.href='http://localhost:8080/home/crear_libro'">
+          <v-list-item
+            onclick="location.href='http://localhost:8080/home/crear_libro'"
+          >
             <v-list-item-icon>
               <v-icon> mdi-book-open</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Libros</v-list-item-title>
           </v-list-item>
 
-          <v-list-item onclick="location.href='http://localhost:8080/home/almacenes'">
+          <v-list-item
+            onclick="location.href='http://localhost:8080/home/almacenes'"
+          >
             <v-list-item-icon>
               <v-icon> mdi-bank</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Almacenes</v-list-item-title>
           </v-list-item>
 
-          <v-list-item onclick="location.href='http://localhost:8080/home/editoriales'">
+          <v-list-item
+            onclick="location.href='http://localhost:8080/home/editoriales'"
+          >
             <v-list-item-icon>
               <v-icon> mdi-library</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Editoriales</v-list-item-title>
           </v-list-item>
 
-          <v-list-item onclick="location.href='http://localhost:8080/home/movimientos'">
+          <v-list-item
+            onclick="location.href='http://localhost:8080/home/movimientos'"
+          >
             <v-list-item-icon>
               <v-icon>mdi-note-text</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Movimientos</v-list-item-title>
           </v-list-item>
 
-          <v-list-item onclick="location.href='http://localhost:8080/home/kardex'">
+          <v-list-item
+            onclick="location.href='http://localhost:8080/home/kardex'"
+          >
             <v-list-item-icon>
               <v-icon>mdi-dropbox</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Kardex</v-list-item-title>
           </v-list-item>
-
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -94,7 +103,6 @@
         <router-view></router-view>
       </v-container>
     </v-main>
-    
   </div>
 </template>
 <style>
@@ -126,7 +134,6 @@ export default {
   data: () => ({
     drawer: false,
     group: null,
-    
   }),
 };
 </script>

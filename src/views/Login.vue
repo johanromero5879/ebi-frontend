@@ -4,36 +4,32 @@
       <div class="contenedor">
         <v-form class="form">
           <div align="center">
-            <v-img
-              src="~@/assets/img/logo_obj.png"
-              width="200px"
-            ></v-img>
-            <br>
+            <v-img src="~@/assets/img/logo_obj.png" width="200px"></v-img>
+            <br />
           </div>
           <div align="center">
-            <v-text-field dark
+            <v-text-field
+              dark
               label="Número de documento"
               append-icon="mdi-account"
-              color=#FFCC80
+              color="#FFCC80"
             ></v-text-field>
           </div>
           <div align="center">
-            <v-text-field dark
+            <v-text-field
+              dark
               :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
               :rules="[rules.required]"
               :type="show1 ? 'text' : 'password'"
               name="input-10-1"
               label="Contraseña"
               placeholder="Contraseña"
-              color=#FFCC80
+              color="#FFCC80"
               @click:append="show1 = !show1"
             ></v-text-field>
           </div>
           <div align="center">
-            <v-btn color="#FFFFFF" outlined
-            >
-              Iniciar sesión
-            </v-btn>
+            <v-btn color="#FFFFFF" outlined> Iniciar sesión </v-btn>
           </div>
         </v-form>
       </div>
@@ -41,7 +37,6 @@
   </div>
 </template>
 <style>
-
 .form {
   /* background-color: white; */
   opacity: 1 !important;
@@ -51,7 +46,7 @@
 }
 
 .contenedor {
-  min-height: 100vh; 
+  min-height: 100vh;
   box-sizing: border-box;
   background: url("~@/assets/img/loginbg.png");
   background-size: cover;
@@ -62,11 +57,10 @@
 }
 
 @media screen and (max-width: 500px) {
-  .form{
+  .form {
     padding: 16px;
   }
 }
-
 </style>
 
 <script>
@@ -80,6 +74,6 @@ export default {
         emailMatch: () => `El usuario o la contraeña son incorrectos`,
       },
     };
-  }
+  },
 };
 </script>

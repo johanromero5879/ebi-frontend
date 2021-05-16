@@ -1,241 +1,226 @@
 <template>
-    <div class="contAlmacenes">
-        <div class="titulo">
-          <v-icon dark left>mdi-bank</v-icon>
-          <h1>Registro de almacenes</h1>
-        </div>
-        <div class="objetos">
-            <div class="formular">
-                <v-form
-                    class="forma"
-                    align="center"
-                    ref="form"
-                    v-model="valid"
-                    lazy-validation
-                >
-                    <v-text-field dark
-                    v-model="codigo"
-                    :counter="10"
-                    :rules="codru"
-                    label="Código"
-                    required
-                    >
-                    </v-text-field>
-
-                    <v-text-field dark
-                    v-model="nombre"
-                    :rules="nomru"
-                    label="Nombre"
-                    required
-                    ></v-text-field>
-
-                    <v-text-field dark
-                    v-model="direccion"
-                    :rules="dirru"
-                    label="Dirección"
-                    required
-                    ></v-text-field>
-
-                    <v-text-field dark
-                    v-model="telefono"
-                    :rules="telru"
-                    label="Teléfono"
-                    required
-                    ></v-text-field>
-
-                    <v-text-field dark
-                    v-model="correo"
-                    :rules="corru"
-                    label="Correo electrónico"
-                    required
-                    ></v-text-field>
-
-                    <br>
-                    <br>
-
-                    <v-btn
-                    color="white"
-                    class="mr-4"
-                    outlined
-                    @click="validate"
-                    >
-                    <v-icon left>mdi-content-save</v-icon>
-                    Guardar
-                    </v-btn>
-
-                    <v-btn
-                    color="white"
-                    class="mr-4"
-                    outlined
-                    @click="reset"
-                    >
-                    <v-icon left>mdi-pencil</v-icon>
-                    Editar
-                    </v-btn>
-
-                    <v-btn
-                    v-if="usuario.tipo == 'admin'"
-                    color="white"
-                    outlined
-                    @click="resetValidation"
-                    >
-                    <v-icon left>mdi-delete</v-icon>
-                    Eliminar
-                    </v-btn>
-                </v-form>
-            </div>
-            <v-spacer></v-spacer>
-            <div class="tablamuestra">
-                <v-data-table
-                    :headers="titulosAl"
-                    :items="datosAl"
-                    item-key="name"
-                    class="elevation-1"
-                    :search="search"
-                >
-                    <template v-slot:top>
-                    <v-text-field
-                        v-model="search"
-                        label="Buscar almacenes"
-                        class="mx-4"
-                    ></v-text-field>
-                    </template>
-                </v-data-table>
-            </div>
-        </div>
+  <div class="contAlmacenes">
+    <div class="titulo">
+      <v-icon dark left>mdi-bank</v-icon>
+      <h1>Registro de almacenes</h1>
     </div>
+    <div class="objetos">
+      <div class="formular">
+        <v-form
+          class="forma"
+          align="center"
+          ref="form"
+          v-model="valid"
+          lazy-validation
+        >
+          <v-text-field
+            dark
+            v-model="codigo"
+            :counter="10"
+            :rules="codru"
+            label="Código"
+            required
+          >
+          </v-text-field>
+
+          <v-text-field
+            dark
+            v-model="nombre"
+            :rules="nomru"
+            label="Nombre"
+            required
+          ></v-text-field>
+
+          <v-text-field
+            dark
+            v-model="direccion"
+            :rules="dirru"
+            label="Dirección"
+            required
+          ></v-text-field>
+
+          <v-text-field
+            dark
+            v-model="telefono"
+            :rules="telru"
+            label="Teléfono"
+            required
+          ></v-text-field>
+
+          <v-text-field
+            dark
+            v-model="correo"
+            :rules="corru"
+            label="Correo electrónico"
+            required
+          ></v-text-field>
+
+          <br />
+          <br />
+
+          <v-btn color="white" class="mr-4" outlined @click="validate">
+            <v-icon left>mdi-content-save</v-icon>
+            Guardar
+          </v-btn>
+
+          <v-btn color="white" class="mr-4" outlined @click="reset">
+            <v-icon left>mdi-pencil</v-icon>
+            Editar
+          </v-btn>
+
+          <v-btn
+            v-if="usuario.tipo == 'admin'"
+            color="white"
+            outlined
+            @click="resetValidation"
+          >
+            <v-icon left>mdi-delete</v-icon>
+            Eliminar
+          </v-btn>
+        </v-form>
+      </div>
+      <v-spacer></v-spacer>
+      <div class="tablamuestra">
+        <v-data-table
+          :headers="titulosAl"
+          :items="datosAl"
+          item-key="name"
+          class="elevation-1"
+          :search="search"
+        >
+          <template v-slot:top>
+            <v-text-field
+              v-model="search"
+              label="Buscar almacenes"
+              class="mx-4"
+            ></v-text-field>
+          </template>
+        </v-data-table>
+      </div>
+    </div>
+  </div>
 </template>
 
 
 <style>
-
 .contAlmacenes {
-    /* background-color: white; */
-    padding-top: 80px;
-    padding-left: 40px;
-    padding-right: 40px;
-    box-sizing: border-box;
-    display: block;
-    justify-content: top;
-    align-items: top;
-    font-family: sans-serif;
+  /* background-color: white; */
+  padding-top: 80px;
+  padding-left: 40px;
+  padding-right: 40px;
+  box-sizing: border-box;
+  display: block;
+  justify-content: top;
+  align-items: top;
+  font-family: sans-serif;
 }
 
-.titulo
-{
-    /* background-color: hotpink; */
-    color: white;
-    padding: 10px;
-    display: flex;
+.titulo {
+  /* background-color: hotpink; */
+  color: white;
+  padding: 10px;
+  display: flex;
 }
 
-.objetos
-{
-    /* background-color: indigo; */
-    display: flex;
-    justify-content: top;
-    align-items: top;
+.objetos {
+  /* background-color: indigo; */
+  display: flex;
+  justify-content: top;
+  align-items: top;
 }
 
-.formular
-{
-    background-color: rgba(0,0,0,.25);
-    padding:20px;
-    border-radius: 5px;
-    width: 30%;
-    display: block;
-    align-items: top;
+.formular {
+  background-color: rgba(0, 0, 0, 0.25);
+  padding: 20px;
+  border-radius: 5px;
+  width: 30%;
+  display: block;
+  align-items: top;
 }
 
-.tablamuestra
-{
-    /* background-color: green; */
-    padding-top: 0px;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-    width: 70%;
+.tablamuestra {
+  /* background-color: green; */
+  padding-top: 0px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 70%;
 }
 </style>
 
 <script>
-  export default {
-    data () {
-      return {
+export default {
+  data() {
+    return {
+      usuario: {
+        tipo: "xd",
+      },
+      valid: true,
+      codigo: "",
+      codru: [
+        (v) => !!v || "Este campo es obligatorio",
+        (v) =>
+          (v && v.length <= 10) ||
+          "El código no puede tener más de 10 caracteres",
+      ],
 
-        usuario: {
-            tipo: "xd"
+      valid: true,
+      nombre: "",
+      nomru: [(v) => !!v || "Este campo es obligatorio"],
+
+      valid: true,
+      direccion: "",
+      dirru: [(v) => !!v || "Este campo es obligatorio"],
+
+      valid: true,
+      telefono: "",
+      telru: [(v) => !!v || "Este campo es obligatorio"],
+
+      correol: "",
+      corru: [
+        (v) => !!v || "Este campo es obligatorio",
+        (v) => /.+@.+\..+/.test(v) || "El correo debe tener un formato válido",
+      ],
+
+      titulosAl: [
+        {
+          text: "Código",
+          align: "start",
+          value: "codigoAlm",
         },
-        valid: true,
-        codigo: '',
-        codru: [
-        v => !!v || 'Este campo es obligatorio',
-        v => (v && v.length <= 10) || 'El código no puede tener más de 10 caracteres',
-        ],
-
-        valid: true,
-        nombre: '',
-        nomru: [
-        v => !!v || 'Este campo es obligatorio',
-        ],
-
-        valid: true,
-        direccion: '',
-        dirru: [
-        v => !!v || 'Este campo es obligatorio',
-        ],
-
-        valid: true,
-        telefono: '',
-        telru: [
-        v => !!v || 'Este campo es obligatorio',
-        ],
-
-        correol: '',
-        corru: [
-        v => !!v || 'Este campo es obligatorio',
-        v => /.+@.+\..+/.test(v) || 'El correo debe tener un formato válido',
-        ],
-
-        titulosAl: [
-          {
-            text: 'Código',
-            align: 'start',
-            value: 'codigoAlm',
-          },
-          { text: 'Nombre', value: 'nombreAlm' },
-          { text: 'Dirección', value: 'direccionAlm' },
-          { text: 'Teléfono', value: 'telefonoAlm' },
-          { text: 'Correo Electrónico', value: 'correoAlm' },
-        ],
-        datosAl: [
-          {
-            codigoAlm: 1234567890,
-            nombreAlm: 'Tres pelagatos sas',
-            direccionAlm: 'Calle 30B # 2-19',
-            telefonoAlm: 3048463944,
-            correoAlm: 'contacto@trespel.com',
-          },
-          {
-            codigoAlm: 9987654321,
-            nombreAlm: 'El lector',
-            direccionAlm: 'Trasversal 5A # 2-14',
-            telefonoAlm: 3135994633,
-            correoAlm: 'contacto@ellector.com',
-          },
-        ],
-      }
+        { text: "Nombre", value: "nombreAlm" },
+        { text: "Dirección", value: "direccionAlm" },
+        { text: "Teléfono", value: "telefonoAlm" },
+        { text: "Correo Electrónico", value: "correoAlm" },
+      ],
+      datosAl: [
+        {
+          codigoAlm: 1234567890,
+          nombreAlm: "Tres pelagatos sas",
+          direccionAlm: "Calle 30B # 2-19",
+          telefonoAlm: 3048463944,
+          correoAlm: "contacto@trespel.com",
+        },
+        {
+          codigoAlm: 9987654321,
+          nombreAlm: "El lector",
+          direccionAlm: "Trasversal 5A # 2-14",
+          telefonoAlm: 3135994633,
+          correoAlm: "contacto@ellector.com",
+        },
+      ],
+    };
+  },
+  methods: {
+    validate() {
+      this.$refs.form.validate();
     },
-    methods: {
-      validate () {
-        this.$refs.form.validate()
-      },
-      reset () {
-        this.$refs.form.reset()
-      },
-      resetValidation () {
-        this.$refs.form.resetValidation()
-      },
+    reset() {
+      this.$refs.form.reset();
     },
-  }
+    resetValidation() {
+      this.$refs.form.resetValidation();
+    },
+  },
+};
 </script>
