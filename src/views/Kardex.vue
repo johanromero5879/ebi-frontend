@@ -7,8 +7,10 @@
     <div class="objetosKa">
       <div class="formularKa">
         <v-form align="center" ref="form" v-model="valid" lazy-validation>
-          <h1 class="selectexto">Seleccione un almacén para visualizar sus registros de Kardex:</h1>
-          <br>
+          <h1 class="selectexto">
+            Seleccione un almacén para visualizar sus registros de Kardex:
+          </h1>
+          <br />
           <v-select
             class="seleccionarc"
             dark
@@ -23,11 +25,10 @@
             <v-icon left>mdi-format-list-bulleted</v-icon>
             Listar
           </v-btn>
-
         </v-form>
       </div>
       <v-spacer></v-spacer>
-      <div class="tablamuestraKa">
+      <div class="tablamuestraKa" align="center">
         <v-data-table
           :headers="titulosMo"
           :items="datosMo"
@@ -43,6 +44,31 @@
             ></v-text-field>
           </template>
         </v-data-table>
+
+        <br />
+
+        <v-col cols="auto">
+          <v-dialog transition="dialog-bottom-transition" max-width="600">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn outlined color="white" v-bind="attrs" v-on="on"
+                >From the bottom
+              </v-btn>
+            </template>
+            <template v-slot:default="dialog">
+              <v-card>
+                <v-toolbar color="primary" dark
+                  >Opening from the bottom</v-toolbar
+                >
+                <v-card-text>
+                  <div class="text-h2 pa-12">Hello world!</div>
+                </v-card-text>
+                <v-card-actions class="justify-end">
+                  <v-btn text @click="dialog.value = false">Close</v-btn>
+                </v-card-actions>
+              </v-card>
+            </template>
+          </v-dialog>
+        </v-col>
       </div>
     </div>
   </div>
@@ -102,6 +128,7 @@
   padding-left: 20px;
   padding-right: 20px;
   width: 70%;
+  display: block;
 }
 </style>
 
@@ -118,10 +145,7 @@ export default {
       detruMo: [(v) => !!v || "Este campo es obligatorio"],
 
       almKa: null,
-      itemsKa: [
-        "Tres pelagatos sas",
-        "El lector",
-      ],
+      itemsKa: ["Tres pelagatos sas", "El lector"],
 
       refliMo: null,
       irefliMo: ["La tortuguita pescuezona - YTXX74YA3M"],
