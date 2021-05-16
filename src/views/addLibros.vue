@@ -14,16 +14,16 @@
                 >
                     <v-text-field dark
                     v-model="codigoisbn"
-                    :counter="10"
+                    :counter="13"
                     :rules="codisbnru"
                     label="Código ISBN"
                     required
                     ></v-text-field>
 
                     <v-text-field dark
-                    v-model="nombre"
-                    :rules="nomru"
-                    label="Nombre"
+                    v-model="titulo"
+                    :rules="tituloru"
+                    label="Titulo del Libro"
                     required
                     ></v-text-field>
 
@@ -82,7 +82,23 @@
                 </v-form>
             </div>
             <v-spacer></v-spacer>
-            
+            <div class="tablamuestralib">
+                <v-data-table
+                    :headers="headers"
+                    :items="desserts"
+                    item-key="name"
+                    class="elevation-1"
+                    :search="search"
+                >
+                    <template v-slot:top>
+                    <v-text-field
+                        v-model="search"
+                        label="Buscar almacenes"
+                        class="mx-4"
+                    ></v-text-field>
+                    </template>
+                </v-data-table>
+            </div>
         </div>
     </div>
 </template>
@@ -128,6 +144,16 @@
     font-family: sans-serif;
 }
 
+.tablamuestralib
+{
+    /* background-color: green; */
+    padding-top: 0px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 70%;
+    font-family: sans-serif;
+}
 
 </style>
 
@@ -146,8 +172,8 @@
         v => (v && v.length <= 10) || 'El código no puede tener más de 10 caracteres',
         ],
         valid: true,
-        nombre: '',
-        nomru: [
+        titulo: '',
+        tituloru: [
         v => !!v || 'Este campo es obligatorio',
         ],
 
