@@ -18,14 +18,6 @@ const routes = [
     component: Login
   },
   {
-    path: '/crear_usuario',
-    component: addUsuario
-  },
-  {
-    path: '/crear_libro',
-    component: addLibros
-  },
-  {
     path: '/home',
     component: Home,
     children: [
