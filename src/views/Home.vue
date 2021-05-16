@@ -44,14 +44,14 @@
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Crear Usuario</v-list-item-title>
+            <v-list-item-title>Usuarios</v-list-item-title>
           </v-list-item>
 
           <v-list-item onclick="location.href='http://localhost:8080/home/crear_libro'">
             <v-list-item-icon>
               <v-icon> mdi-book-open</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Crear Libro</v-list-item-title>
+            <v-list-item-title>Libros</v-list-item-title>
           </v-list-item>
 
           <v-list-item onclick="location.href='http://localhost:8080/home/almacenes'">

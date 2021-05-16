@@ -1,7 +1,8 @@
 <template>
     <div class="contLibros">
         <div class="titulolib">
-            <h1>Crear Nuevo Libro</h1>
+          <v-icon dark left> mdi-book-open </v-icon>
+            <h1>Registro de Libros</h1>
         </div>
         <div class="objetoslib">
             <div class="formulariolib">
@@ -12,10 +13,11 @@
                     v-model="valid"
                     lazy-validation
                 >
+
                     <v-text-field dark
                     v-model="codigoisbn"
                     :counter="13"
-                    :rules="codisbnru"
+                    :rules="codisbru"
                     label="Código ISBN"
                     required
                     ></v-text-field>
@@ -28,23 +30,30 @@
                     ></v-text-field>
 
                     <v-text-field dark
-                    v-model="direccion"
-                    :rules="dirru"
-                    label="Dirección"
+                    v-model="autor"
+                    :rules="autoru"
+                    label="Autor"
                     required
                     ></v-text-field>
 
                     <v-text-field dark
-                    v-model="telefono"
-                    :rules="telru"
-                    label="Teléfono"
+                    v-model="categoria"
+                    :rules="cateru"
+                    label="Categoria"
                     required
                     ></v-text-field>
 
                     <v-text-field dark
-                    v-model="correo"
-                    :rules="corru"
-                    label="Correo electrónico"
+                    v-model="tema"
+                    :rules="temru"
+                    label="Tema"
+                    required
+                    ></v-text-field>
+
+                    <v-text-field dark
+                    v-model="anu"
+                    :rules="anuru"
+                    label="Año"
                     required
                     ></v-text-field>
 
@@ -84,8 +93,8 @@
             <v-spacer></v-spacer>
             <div class="tablamuestralib">
                 <v-data-table
-                    :headers="headers"
-                    :items="desserts"
+                    :headers="tituloslib"
+                    :items="datoslib"
                     item-key="name"
                     class="elevation-1"
                     :search="search"
@@ -93,7 +102,7 @@
                     <template v-slot:top>
                     <v-text-field
                         v-model="search"
-                        label="Buscar almacenes"
+                        label="Buscar libros"
                         class="mx-4"
                     ></v-text-field>
                     </template>
@@ -108,7 +117,9 @@
 
 .contLibros {
     /* background-color: white; */
-    padding-top: 57px;
+    padding-top: 80px;
+    padding-left: 40px;
+    padding-right: 40px;
     box-sizing: border-box;
     display: block;
     justify-content: top;
@@ -119,7 +130,7 @@
 .titulolib
 {
     /* background-color: hotpink; */
-    font-family: sans-serif;
+    display: flex;
     color: white;
     padding: 10px;
 }
@@ -130,7 +141,6 @@
     display: flex;
     justify-content: top;
     align-items: top;
-    font-family: sans-serif;
 }
 
 .formulariolib
@@ -141,7 +151,6 @@
     width: 30%;
     display:block;
     align-items: center;
-    font-family: sans-serif;
 }
 
 .tablamuestralib
@@ -152,7 +161,6 @@
     padding-left: 20px;
     padding-right: 20px;
     width: 70%;
-    font-family: sans-serif;
 }
 
 </style>
@@ -161,15 +169,11 @@
   export default {
     data: () => ({
         valid: true,
-        codigo: '',
-        codru: [
-        v => !!v || 'Este campo es obligatorio',
-        v => (v && v.length <= 13) || 'El código ISBN no puede tener más de 13 caracteres',
-        ],
         codigoisbn: '',
         codisbru: [
         v => !!v || 'Este campo es obligatorio',
-        v => (v && v.length <= 10) || 'El código no puede tener más de 10 caracteres',
+        v => (v && v.length > 9) || 'ISBN no puede tener menos de 10 digitos',
+        v => (v && v.length < 14) || 'ISBN no puede tener mas de 13 digitos',
         ],
         valid: true,
         titulo: '',
@@ -178,22 +182,64 @@
         ],
 
         valid: true,
-        direccion: '',
-        dirru: [
+        autor: '',
+        autoru: [
         v => !!v || 'Este campo es obligatorio',
         ],
 
         valid: true,
-        telefono: '',
-        telru: [
+        categoria: '',
+        cateru: [
         v => !!v || 'Este campo es obligatorio',
         ],
 
-        correol: '',
-        corru: [
+       tema: '',
+        temru: [
         v => !!v || 'Este campo es obligatorio',
-        v => /.+@.+\..+/.test(v) || 'El correo debe tener un formato válido',
-        ]
+        ],
+
+        anu: '',
+        anuru: [
+        v => !!v || 'Este campo es obligatorio',
+        v => (v && v.length <= 4) || 'El dato del año no es valido',
+        ],
+
+          tituloslib: [
+          {
+            text: 'Código',
+            align: 'start',
+            value: 'CodigoLib',
+          },
+          { text: 'ISBN', value: 'CodIsbn' },
+          { text: 'Titulo', value: 'TituloLib' },
+          { text: 'Autor', value: 'AutorLib' },
+          { text: 'Categoria', value: 'CategoriaLib' },
+          { text: 'Tema', value: 'TemaLib' },
+          { text: 'Año', value: 'AnuLib' },
+        ],
+        datoslib: [
+          {
+            CodigoLib: 1234567890,
+            CodIsbn: 1234567895 ,
+            TituloLib: 'El resplandor',
+            AutorLib: 'Stephen King',
+            CategoriaLib: 'Terror',
+            TemaLib: 'Adultos',
+            AnuLib: 1977,
+          },
+          {
+            CodigoLib: 5695426546,
+            CodIsbn: 9781234567897 ,
+            TituloLib: 'Luna de Plutón',
+            AutorLib: 'Dross Rotzank',
+            CategoriaLib: 'Entretenimiento',
+            TemaLib: 'Infantil',
+            AnuLib: 1977,
+          },
+          
+        ],
+
+        
     }),
 
     methods: {
