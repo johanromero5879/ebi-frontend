@@ -1,7 +1,8 @@
 <template>
     <div class="contEditoriales">
         <div class="tituloEd">
-            <h1>Información de las editoriales</h1>
+          <v-icon dark left>mdi-library</v-icon>
+          <h1>Registro de editoriales</h1>
         </div>
         <div class="objetosEd">
             <div class="formularEd">
@@ -125,6 +126,7 @@
     /* background-color: hotpink; */
     color: white;
     padding: 10px;
+    display: flex;
 }
 
 .objetosEd

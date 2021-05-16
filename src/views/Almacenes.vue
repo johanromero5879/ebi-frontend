@@ -1,7 +1,8 @@
 <template>
     <div class="contAlmacenes">
         <div class="titulo">
-            <h1>Información de los almacenes</h1>
+          <v-icon dark left>mdi-bank</v-icon>
+          <h1>Registro de almacenes</h1>
         </div>
         <div class="objetos">
             <div class="formular">
@@ -125,6 +126,7 @@
     /* background-color: hotpink; */
     color: white;
     padding: 10px;
+    display: flex;
 }
 
 .objetos
