@@ -87,7 +87,7 @@
             onclick="location.href='http://localhost:8080/home/kardex'"
           >
             <v-list-item-icon>
-              <v-icon>mdi-dropbox</v-icon>
+              <v-icon>mdi-book-multiple</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Kardex</v-list-item-title>
           </v-list-item>

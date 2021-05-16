@@ -1,14 +1,36 @@
 <template>
   <div class="contKardex">
-    <div class="tituloKardex">
-      <v-icon dark left> mdi-book-open </v-icon>
-      <h1>Bienvenido al Kardex</h1>
+    <div class="tituloKa">
+      <v-icon dark left>mdi-book-multiple</v-icon>
+      <h1>Registro de Kardex</h1>
     </div>
-    <div class="objetosKardex">
-      <div class="tablaKardex">
+    <div class="objetosKa">
+      <div class="formularKa">
+        <v-form align="center" ref="form" v-model="valid" lazy-validation>
+          <h1 class="selectexto">Seleccione un almacén para visualizar sus registros de Kardex:</h1>
+          <br>
+          <v-select
+            class="seleccionarc"
+            dark
+            v-model="almKa"
+            :items="itemsKa"
+            :rules="[(v) => !!v || 'Esta selección es obligatoria']"
+            label="Seleccione..."
+            required
+          ></v-select>
+
+          <v-btn color="white" class="mr-4" outlined @click="validate">
+            <v-icon left>mdi-format-list-bulleted</v-icon>
+            Listar
+          </v-btn>
+
+        </v-form>
+      </div>
+      <v-spacer></v-spacer>
+      <div class="tablamuestraKa">
         <v-data-table
-          :headers="titulosKardex"
-          :items="datosKardex"
+          :headers="titulosMo"
+          :items="datosMo"
           item-key="name"
           class="elevation-1"
           :search="search"
@@ -16,7 +38,7 @@
           <template v-slot:top>
             <v-text-field
               v-model="search"
-              label="Buscar libros"
+              label="Buscar movimientos   "
               class="mx-4"
             ></v-text-field>
           </template>
@@ -40,30 +62,40 @@
   font-family: sans-serif;
 }
 
-.tituloKardex {
+.tituloKa {
   /* background-color: hotpink; */
-  display: flex;
   color: white;
   padding: 10px;
+  display: flex;
 }
 
-.objetosKardex {
+.objetosKa {
   /* background-color: indigo; */
   display: flex;
   justify-content: top;
   align-items: top;
 }
 
-.formularioKardex {
+.formularKa {
   background-color: rgba(0, 0, 0, 0.25);
   padding: 20px;
   border-radius: 5px;
   width: 30%;
   display: block;
-  align-items: center;
+  align-items: top;
 }
 
-.tablaKardex {
+.selectexto {
+  color: white;
+  font-size: 16.5px;
+  display: flex;
+}
+
+.seleccionarc {
+  padding-bottom: 10px;
+}
+
+.tablamuestraKa {
   /* background-color: green; */
   padding-top: 0px;
   padding-bottom: 20px;
@@ -75,35 +107,64 @@
 
 <script>
 export default {
-  data: () => ({
-    titulosKardex: [
-      {
-        text: "Codigo Almacen",
-        align: "start",
-        value: "CodigoAlm",
-      },
-      { text: "", value: "Cod" },
-    ],
-    datosKardex: [
-      {
-        CodigoAlm: 1234567890,
-        Cod: 1234567895,
-      },
-      {
-        CodigoAlm: 5695426546,
-        Cod: 9781234567897,
-      },
-    ],
-  }),
+  data() {
+    return {
+      valid: true,
+      cantidadMo: "",
+      canruMo: [(v) => !!v || "Este campo es obligatorio"],
 
+      valid: true,
+      detalleMo: "",
+      detruMo: [(v) => !!v || "Este campo es obligatorio"],
+
+      almKa: null,
+      itemsKa: [
+        "Tres pelagatos sas",
+        "El lector",
+      ],
+
+      refliMo: null,
+      irefliMo: ["La tortuguita pescuezona - YTXX74YA3M"],
+
+      almorMo: null,
+      ialmorMo: ["Bodega", "Tres pelagatos sas", "El lector"],
+
+      almdeMo: null,
+      ialmdeMo: ["Bodega", "Tres pelagatos sas", "El lector"],
+
+      titulosMo: [
+        { text: "Fecha", align: "start", value: "fechaMov" },
+        { text: "Detalle", value: "detalleMov" },
+        { text: "Cantidad", value: "cantidadMov" },
+        { text: "Tipo", value: "tipoMov" },
+        { text: "Referencia", value: "referenciaMov" },
+        { text: "Almacen de origen", value: "almorigenMov" },
+        { text: "Almacen de destino", value: "almdestinoMov" },
+      ],
+      datosMo: [
+        {
+          fechaMov: "15-03-2021, 8:55 a.m.",
+          detalleMov: "Adquisición de libros",
+          cantidadMov: 10,
+          tipoMov: "Adquisición (+)",
+          referenciaMov: "MD74M83YR4",
+          almorigenMov: "Tres pelagatos sas",
+          almdestinoMov: "Bodega",
+        },
+        {
+          fechaMov: "10-04-2021, 11:43 a.m.",
+          detalleMov: "devolución de libros",
+          cantidadMov: 2,
+          tipoMov: "Devolución de adquisición (-)",
+          referenciaMov: "MD74M83YR4",
+          almorigenMov: "Bodega",
+          almdestinoMov: "Tres pelagatos sas",
+        },
+      ],
+    };
+  },
   methods: {
     validate() {
-      this.$refs.form.validate();
-    },
-    reset() {
-      this.$refs.form.reset();
-    },
-    resetValidation() {
       this.$refs.form.resetValidation();
     },
   },
