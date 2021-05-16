@@ -68,6 +68,15 @@
             <v-list-item-title>Editoriales</v-list-item-title>
           </v-list-item>
 
+
+
+          <v-list-item onclick="location.href='http://localhost:8080/home/kardex'">
+            <v-list-item-icon>
+              <v-icon> mdi-dropbox</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Kardex</v-list-item-title>
+          </v-list-item>
+
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>

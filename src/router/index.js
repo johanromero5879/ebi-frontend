@@ -6,6 +6,7 @@ import Home from '../views/Home.vue'
 import Almacenes from '../views/Almacenes.vue'
 import addLibros from '../views/addLibros.vue'
 import editoriales from '../views/Editoriales.vue'
+import kardex from '../views/Kardex.vue'
 
 Vue.use(VueRouter)
 
@@ -37,6 +38,10 @@ const routes = [
       {
         path: 'editoriales',
         component: editoriales
+      },
+      {
+        path: 'kardex',
+        component: kardex
       }
     ]
   }
