@@ -86,8 +86,8 @@
             <v-spacer></v-spacer>
             <div class="tablamuestraEd">
                 <v-data-table
-                    :headers="headers"
-                    :items="desserts"
+                    :headers="titulosEd"
+                    :items="datosEd"
                     item-key="name"
                     class="elevation-1"
                     :search="search"
@@ -123,7 +123,6 @@
 .tituloEd
 {
     /* background-color: hotpink; */
-    font-family: sans-serif;
     color: white;
     padding: 10px;
 }
@@ -134,7 +133,6 @@
     display: flex;
     justify-content: top;
     align-items: top;
-    font-family: sans-serif;
 }
 
 .formularEd
@@ -145,7 +143,6 @@
     width: 30%;
     display: block;
     align-items: top;
-    font-family: sans-serif;
 }
 
 .tablamuestraEd
@@ -156,7 +153,6 @@
     padding-left: 20px;
     padding-right: 20px;
     width: 70%;
-    font-family: sans-serif;
 }
 </style>
 
@@ -199,7 +195,7 @@
         v => /.+@.+\..+/.test(v) || 'El correo debe tener un formato válido',
         ],
 
-        headers: [
+        titulosEd: [
           {
             text: 'Código',
             align: 'start',
@@ -210,7 +206,7 @@
           { text: 'Teléfono', value: 'telefonoEdi' },
           { text: 'Correo Electrónico', value: 'correoEdi' },
         ],
-        desserts: [
+        datosEd: [
           {
             codigoEdi: 1234567890,
             nombreEdi: 'Santillana',

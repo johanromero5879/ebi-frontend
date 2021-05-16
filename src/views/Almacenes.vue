@@ -86,8 +86,8 @@
             <v-spacer></v-spacer>
             <div class="tablamuestra">
                 <v-data-table
-                    :headers="headers"
-                    :items="desserts"
+                    :headers="titulosAl"
+                    :items="datosAl"
                     item-key="name"
                     class="elevation-1"
                     :search="search"
@@ -123,7 +123,6 @@
 .titulo
 {
     /* background-color: hotpink; */
-    font-family: sans-serif;
     color: white;
     padding: 10px;
 }
@@ -134,7 +133,6 @@
     display: flex;
     justify-content: top;
     align-items: top;
-    font-family: sans-serif;
 }
 
 .formular
@@ -145,7 +143,6 @@
     width: 30%;
     display: block;
     align-items: top;
-    font-family: sans-serif;
 }
 
 .tablamuestra
@@ -156,7 +153,6 @@
     padding-left: 20px;
     padding-right: 20px;
     width: 70%;
-    font-family: sans-serif;
 }
 </style>
 
@@ -199,99 +195,31 @@
         v => /.+@.+\..+/.test(v) || 'El correo debe tener un formato válido',
         ],
 
-        headers: [
+        titulosAl: [
           {
-            text: 'Dessert (100g serving)',
+            text: 'Código',
             align: 'start',
-            sortable: false,
-            value: 'name',
+            value: 'codigoAlm',
           },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' },
+          { text: 'Nombre', value: 'nombreAlm' },
+          { text: 'Dirección', value: 'direccionAlm' },
+          { text: 'Teléfono', value: 'telefonoAlm' },
+          { text: 'Correo Electrónico', value: 'correoAlm' },
         ],
-        desserts: [
+        datosAl: [
           {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: '1%',
+            codigoAlm: 1234567890,
+            nombreAlm: 'Tres pelagatos sas',
+            direccionAlm: 'Calle 30B # 2-19',
+            telefonoAlm: 3048463944,
+            correoAlm: 'contacto@trespel.com',
           },
           {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%',
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: '7%',
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            iron: '8%',
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            iron: '16%',
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            iron: '0%',
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            iron: '2%',
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            iron: '45%',
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%',
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%',
+            codigoAlm: 9987654321,
+            nombreAlm: 'El lector',
+            direccionAlm: 'Trasversal 5A # 2-14',
+            telefonoAlm: 3135994633,
+            correoAlm: 'contacto@ellector.com',
           },
         ],
       }
