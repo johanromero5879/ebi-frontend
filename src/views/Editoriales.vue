@@ -1,10 +1,10 @@
 <template>
-    <div class="contAlmacenes">
-        <div class="titulo">
-            <h1>Información de los almacenes</h1>
+    <div class="contEditoriales">
+        <div class="tituloEd">
+            <h1>Información de las editoriales</h1>
         </div>
-        <div class="objetos">
-            <div class="formular">
+        <div class="objetosEd">
+            <div class="formularEd">
                 <v-form
                     class="forma"
                     align="center"
@@ -13,38 +13,38 @@
                     lazy-validation
                 >
                     <v-text-field dark
-                    v-model="codigo"
+                    v-model="codigoEd"
                     :counter="10"
-                    :rules="codru"
+                    :rules="codruEd"
                     label="Código"
                     required
                     >
                     </v-text-field>
 
                     <v-text-field dark
-                    v-model="nombre"
-                    :rules="nomru"
+                    v-model="nombreEd"
+                    :rules="nomruEd"
                     label="Nombre"
                     required
                     ></v-text-field>
 
                     <v-text-field dark
-                    v-model="direccion"
-                    :rules="dirru"
+                    v-model="direccionEd"
+                    :rules="dirruEd"
                     label="Dirección"
                     required
                     ></v-text-field>
 
                     <v-text-field dark
-                    v-model="telefono"
-                    :rules="telru"
+                    v-model="telefonoEd"
+                    :rules="telruEd"
                     label="Teléfono"
                     required
                     ></v-text-field>
 
                     <v-text-field dark
-                    v-model="correo"
-                    :rules="corru"
+                    v-model="correoEd"
+                    :rules="corruEd"
                     label="Correo electrónico"
                     required
                     ></v-text-field>
@@ -84,7 +84,7 @@
                 </v-form>
             </div>
             <v-spacer></v-spacer>
-            <div class="tablamuestra">
+            <div class="tablamuestraEd">
                 <v-data-table
                     :headers="headers"
                     :items="desserts"
@@ -108,7 +108,7 @@
 
 <style>
 
-.contAlmacenes {
+.contEditoriales {
     /* background-color: white; */
     padding-top: 80px;
     padding-left: 40px;
@@ -120,7 +120,7 @@
     font-family: sans-serif;
 }
 
-.titulo
+.tituloEd
 {
     /* background-color: hotpink; */
     font-family: sans-serif;
@@ -128,7 +128,7 @@
     padding: 10px;
 }
 
-.objetos
+.objetosEd
 {
     /* background-color: indigo; */
     display: flex;
@@ -137,7 +137,7 @@
     font-family: sans-serif;
 }
 
-.formular
+.formularEd
 {
     background-color: rgba(0,0,0,.25);
     padding:20px;
@@ -148,7 +148,7 @@
     font-family: sans-serif;
 }
 
-.tablamuestra
+.tablamuestraEd
 {
     /* background-color: green; */
     padding-top: 0px;
@@ -169,130 +169,63 @@
             tipo: "xd"
         },
         valid: true,
-        codigo: '',
-        codru: [
+        codigoEd: '',
+        codruEd: [
         v => !!v || 'Este campo es obligatorio',
         v => (v && v.length <= 10) || 'El código no puede tener más de 10 caracteres',
         ],
 
         valid: true,
-        nombre: '',
-        nomru: [
+        nombreEd: '',
+        nomruEd: [
         v => !!v || 'Este campo es obligatorio',
         ],
 
         valid: true,
-        direccion: '',
-        dirru: [
+        direccionEd: '',
+        dirruEd: [
         v => !!v || 'Este campo es obligatorio',
         ],
 
         valid: true,
-        telefono: '',
-        telru: [
+        telefonoEd: '',
+        telruEd: [
         v => !!v || 'Este campo es obligatorio',
         ],
 
-        correol: '',
-        corru: [
+        correoEd: '',
+        corruEd: [
         v => !!v || 'Este campo es obligatorio',
         v => /.+@.+\..+/.test(v) || 'El correo debe tener un formato válido',
         ],
 
         headers: [
           {
-            text: 'Dessert (100g serving)',
+            text: 'Código',
             align: 'start',
-            sortable: false,
-            value: 'name',
+            value: 'codigoEdi',
           },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' },
+          { text: 'Nombre', value: 'nombreEdi' },
+          { text: 'Dirección', value: 'direccionEdi' },
+          { text: 'Teléfono', value: 'telefonoEdi' },
+          { text: 'Correo Electrónico', value: 'correoEdi' },
         ],
         desserts: [
           {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: '1%',
+            codigoEdi: 1234567890,
+            nombreEdi: 'Santillana',
+            direccionEdi: 'Calle 50A # 6-19',
+            telefonoEdi: 3025846359,
+            correoEdi: 'contacto@satillana.com',
           },
           {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%',
+            codigoEdi: 9987654321,
+            nombreEdi: 'Grupo planeta',
+            direccionEdi: 'Trasversar 16B # 3-18',
+            telefonoEdi: 3125946800,
+            correoEdi: 'contacto@grupoplaneta.com',
           },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: '7%',
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            iron: '8%',
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            iron: '16%',
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            iron: '0%',
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            iron: '2%',
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            iron: '45%',
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%',
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%',
-          },
+          
         ],
       }
     },
