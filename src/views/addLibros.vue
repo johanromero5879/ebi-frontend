@@ -68,6 +68,15 @@
             required
           ></v-text-field>
           
+          <v-text-field
+            dark
+            v-model="costo"
+            :rules="costoru"
+            label="Costo del Libro"
+            outlined
+            required
+          ></v-text-field>
+
           <br />
 
           <v-btn color="white" class="mr-4" outlined @click="validate">
@@ -93,13 +102,35 @@
           :items="datoslib"
           item-key="name"
           class="elevation-1"
+          @click:row="handleClickLib"
           :search="search"
+          v-model="selectedLib"
         >
+
+            <template slot="items" slot-scope="props">
+          <tr @click="showAlert(props.item)">
+          <td>{{ props.item.CodigoLib }}</td>
+          <td class="text-xs-right">{{ props.item.CodIsbn }}</td>
+          <td class="text-xs-right">{{ props.item.TituloLib }}</td>
+          <td class="text-xs-right">{{ props.item.AutorLib }}</td>
+          <td class="text-xs-right">{{ props.item.CategoriaLib }}</td>
+          <td class="text-xs-right">{{ props.item.TemaLib }}</td>
+          <td class="text-xs-right">{{ props.item.AnuLib }}</td>
+          <td class="text-xs-right">{{ props.item.CostoLib }}</td>
+            </tr>
+        </template>
+        <v-alert slot="no-results" :value="true" color="error" icon="warning">
+          Your search for "{{ search }}" found no results.
+        </v-alert>
+
           <template v-slot:top>
             <v-text-field
               v-model="search"
               label="Buscar libros"
               class="mx-4"
+              append-icon="search"
+              single-line
+              hide-details
             ></v-text-field>
           </template>
         </v-data-table>
@@ -157,6 +188,7 @@
 
 <script>
 export default {
+  
   data: () => ({
     valid: true,
     codigoisbn: "",
@@ -185,8 +217,14 @@ export default {
       (v) => !!v || "Este campo es obligatorio",
       (v) => (v && v.length <= 4) || "El dato del año no es valido",
     ],
-
-    tituloslib: [
+    costo: "",
+    costoru: [
+      (v) => !!v || "Este campo es obligatorio",
+      (v) => (v && v.length <= 4) || "El dato del año no es valido",
+    ],
+selected:[],
+      search: '',
+  tituloslib: [
       {
         text: "Código",
         align: "start",
@@ -198,6 +236,7 @@ export default {
       { text: "Categoria", value: "CategoriaLib" },
       { text: "Tema", value: "TemaLib" },
       { text: "Año", value: "AnuLib" },
+      { text: "Costo", value: "CostoLib" },
     ],
     datoslib: [
       {
@@ -208,6 +247,7 @@ export default {
         CategoriaLib: "Terror",
         TemaLib: "Adultos",
         AnuLib: 1977,
+        CostoLib: 65000,
       },
       {
         CodigoLib: 5695426546,
@@ -216,12 +256,19 @@ export default {
         AutorLib: "Dross Rotzank",
         CategoriaLib: "Entretenimiento",
         TemaLib: "Infantil",
-        AnuLib: 1977,
+        AnuLib: 2015,
+        CostoLib: 58000,
       },
-    ],
+    ]
+  
+    
   }),
 
   methods: {
+    handleClickLib(item) {
+      alert('Codigo ' + item.CodigoLib +' ISBN: '+ item.CodIsbn+' Titulo: '+ item.TituloLib+' Autor: '+ item.AutorLib+
+      ' Categoria: '+ item.CategoriaLib+' Tema: '+ item.TemaLib+' Año: '+ item.AnuLib+' Costo: '+ item.CostoLib+' ');
+    },
     validate() {
       this.$refs.form.validate();
     },
