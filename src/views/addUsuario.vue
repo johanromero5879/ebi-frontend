@@ -80,6 +80,7 @@
           <v-select
             dark
             :items="items"
+            :rules="[(v) => !!v || 'Esta selección es obligatoria']"
             label="Tipo de usuario"
             outlined
             aria-required=""
