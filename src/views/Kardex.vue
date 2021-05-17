@@ -18,6 +18,7 @@
             :items="itemsKa"
             :rules="[(v) => !!v || 'Esta selección es obligatoria']"
             label="Seleccione..."
+            outlined
             required
           ></v-select>
 

@@ -2,10 +2,11 @@
   <div>
     <body>
       <div class="contenedor">
-        <v-form class="form">
+        <v-form class="form"  align="center">
           <div align="center">
             <v-img src="~@/assets/img/logo_obj.png" width="200px"></v-img>
-            <br />
+            <br>
+            <br>
           </div>
           <div align="center">
             <v-text-field
@@ -13,6 +14,7 @@
               label="Número de documento"
               append-icon="mdi-account"
               color="#FFCC80"
+              outlined
             ></v-text-field>
           </div>
           <div align="center">
@@ -25,12 +27,16 @@
               label="Contraseña"
               placeholder="Contraseña"
               color="#FFCC80"
+              outlined
               @click:append="show1 = !show1"
             ></v-text-field>
           </div>
-          <div align="center">
-            <v-btn color="#FFFFFF" outlined> Iniciar sesión </v-btn>
-          </div>
+          <v-btn
+            color="#FFFFFF"
+            outlined
+          >
+            Iniciar sesión
+          </v-btn>
         </v-form>
       </div>
     </body>
@@ -41,7 +47,7 @@
   /* background-color: white; */
   opacity: 1 !important;
   width: 500px;
-  height: 400px;
+  height: 463px;
   padding: 30px;
 }
 

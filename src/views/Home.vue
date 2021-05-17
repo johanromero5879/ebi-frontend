@@ -11,7 +11,7 @@
       <template v-slot:img="{ props }">
         <v-img
           v-bind="props"
-          gradient=" rgba(242,116,89,0.6), rgba(242,116,89,0.6)"
+          gradient=" rgba(242,116,89,0.6), rgba(242,116,89,0.2)"
         ></v-img>
       </template>
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>

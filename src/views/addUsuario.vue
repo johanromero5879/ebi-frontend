@@ -18,6 +18,7 @@
             v-model="nombreap"
             :rules="nomapru"
             label="Nombres y Apellidos"
+            outlined
             required
           ></v-text-field>
 
@@ -27,6 +28,7 @@
             :counter="10"
             :rules="ccru"
             label="Cedula"
+            outlined
             required
           ></v-text-field>
 
@@ -35,6 +37,7 @@
             v-model="direccion"
             :rules="dirru"
             label="Dirección"
+            outlined
             required
           ></v-text-field>
 
@@ -43,6 +46,7 @@
             v-model="telefono"
             :rules="telru"
             label="Teléfono"
+            outlined
             required
           ></v-text-field>
 
@@ -51,6 +55,7 @@
             v-model="correo"
             :rules="corru"
             label="Correo electrónico"
+            outlined
             required
           ></v-text-field>
 
@@ -59,6 +64,7 @@
             v-model="nombreusu"
             :rules="nomusuru"
             label="Nombre de usuario"
+            outlined
             required
           ></v-text-field>
 
@@ -67,6 +73,7 @@
             v-model="contras"
             :rules="contrasru"
             label="Cree una contraseña"
+            outlined
             required
           ></v-text-field>
 
@@ -74,11 +81,9 @@
             dark
             :items="items"
             label="Tipo de usuario"
+            outlined
             aria-required=""
           ></v-select>
-
-          <br />
-          <br />
 
           <v-btn color="white" class="mr-4" outlined @click="validate">
             <v-icon left>mdi-content-save</v-icon>

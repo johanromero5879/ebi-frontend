@@ -12,6 +12,7 @@
             v-model="cantidadMo"
             :rules="canruMo"
             label="Cantidad"
+            outlined
             required
           >
           </v-text-field>
@@ -21,6 +22,7 @@
             v-model="detalleMo"
             :rules="detruMo"
             label="Detalles"
+            outlined
             required
           ></v-text-field>
 
@@ -30,6 +32,7 @@
             :items="itemsMo"
             :rules="[(v) => !!v || 'Ésta selección es obligatoria']"
             label="Tipo"
+            outlined
             required
           ></v-select>
 
@@ -39,6 +42,7 @@
             :items="irefliMo"
             :rules="[(v) => !!v || 'Ésta selección es obligatoria']"
             label="Referencia del libro"
+            outlined
             required
           ></v-select>
 
@@ -48,6 +52,7 @@
             :items="ialmorMo"
             :rules="[(v) => !!v || 'Ésta selección es obligatoria']"
             label="Almacén de origen"
+            outlined
             required
           ></v-select>
 
@@ -57,10 +62,10 @@
             :items="ialmdeMo"
             :rules="[(v) => !!v || 'Ésta selección es obligatoria']"
             label="Almacén de destino"
+            outlined
             required
           ></v-select>
 
-          <br />
           <br />
 
           <v-btn color="white" class="mr-4" outlined @click="validate">
@@ -187,7 +192,8 @@ export default {
       ialmdeMo: ["Bodega", "Tres pelagatos sas", "El lector"],
 
       titulosMo: [
-        { text: "Fecha", align: "start", value: "fechaMov" },
+        { text: "ID", align: "start", value: "idMov" },
+        { text: "Fecha", value: "fechaMov" },
         { text: "Detalle", value: "detalleMov" },
         { text: "Cantidad", value: "cantidadMov" },
         { text: "Tipo", value: "tipoMov" },
@@ -197,8 +203,9 @@ export default {
       ],
       datosMo: [
         {
+          idMov: 123456789,
           fechaMov: "15-03-2021, 8:55 a.m.",
-          detalleMov: "Adquisición de libros",
+          detalleMov: "Adquisición de nuevas existencias de la tortuguita pescuezona.",
           cantidadMov: 10,
           tipoMov: "Adquisición (+)",
           referenciaMov: "MD74M83YR4",
@@ -206,8 +213,9 @@ export default {
           almdestinoMov: "Bodega",
         },
         {
+          idMov: 987654321,
           fechaMov: "10-04-2021, 11:43 a.m.",
-          detalleMov: "devolución de libros",
+          detalleMov: "Devolución de existencias sobrantes de la tortuguita pescuezona.",
           cantidadMov: 2,
           tipoMov: "Devolución de adquisición (-)",
           referenciaMov: "MD74M83YR4",

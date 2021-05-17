@@ -19,6 +19,7 @@
             :counter="13"
             :rules="codisbru"
             label="Código ISBN"
+            outlined
             required
           ></v-text-field>
 
@@ -27,6 +28,7 @@
             v-model="titulo"
             :rules="tituloru"
             label="Titulo del Libro"
+            outlined
             required
           ></v-text-field>
 
@@ -35,6 +37,7 @@
             v-model="autor"
             :rules="autoru"
             label="Autor"
+            outlined
             required
           ></v-text-field>
 
@@ -43,6 +46,7 @@
             v-model="categoria"
             :rules="cateru"
             label="Categoria"
+            outlined
             required
           ></v-text-field>
 
@@ -51,6 +55,7 @@
             v-model="tema"
             :rules="temru"
             label="Tema"
+            outlined
             required
           ></v-text-field>
 
@@ -59,10 +64,10 @@
             v-model="anu"
             :rules="anuru"
             label="Año"
+            outlined
             required
           ></v-text-field>
-
-          <br />
+          
           <br />
 
           <v-btn color="white" class="mr-4" outlined @click="validate">

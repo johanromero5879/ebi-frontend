@@ -19,6 +19,7 @@
             :counter="10"
             :rules="codruEd"
             label="Código"
+            outlined
             required
           >
           </v-text-field>
@@ -28,6 +29,7 @@
             v-model="nombreEd"
             :rules="nomruEd"
             label="Nombre"
+            outlined
             required
           ></v-text-field>
 
@@ -36,6 +38,7 @@
             v-model="direccionEd"
             :rules="dirruEd"
             label="Dirección"
+            outlined
             required
           ></v-text-field>
 
@@ -44,6 +47,7 @@
             v-model="telefonoEd"
             :rules="telruEd"
             label="Teléfono"
+            outlined
             required
           ></v-text-field>
 
@@ -52,10 +56,10 @@
             v-model="correoEd"
             :rules="corruEd"
             label="Correo electrónico"
+            outlined
             required
           ></v-text-field>
 
-          <br />
           <br />
 
           <v-btn color="white" class="mr-4" outlined @click="validate">

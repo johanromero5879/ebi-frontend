@@ -19,6 +19,7 @@
             :counter="10"
             :rules="codru"
             label="Código"
+            outlined
             required
           >
           </v-text-field>
@@ -28,6 +29,7 @@
             v-model="nombre"
             :rules="nomru"
             label="Nombre"
+            outlined
             required
           ></v-text-field>
 
@@ -36,6 +38,7 @@
             v-model="direccion"
             :rules="dirru"
             label="Dirección"
+            outlined
             required
           ></v-text-field>
 
@@ -44,6 +47,7 @@
             v-model="telefono"
             :rules="telru"
             label="Teléfono"
+            outlined
             required
           ></v-text-field>
 
@@ -52,10 +56,10 @@
             v-model="correo"
             :rules="corru"
             label="Correo electrónico"
+            outlined
             required
           ></v-text-field>
 
-          <br />
           <br />
 
           <v-btn color="white" class="mr-4" outlined @click="validate">
