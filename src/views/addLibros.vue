@@ -107,20 +107,20 @@
           v-model="selectedLib"
         >
 
-            <template slot="items" slot-scope="props">
+        <template slot="items" slot-scope="props">
           <tr @click="showAlert(props.item)">
-          <td>{{ props.item.CodigoLib }}</td>
-          <td class="text-xs-right">{{ props.item.CodIsbn }}</td>
-          <td class="text-xs-right">{{ props.item.TituloLib }}</td>
-          <td class="text-xs-right">{{ props.item.AutorLib }}</td>
-          <td class="text-xs-right">{{ props.item.CategoriaLib }}</td>
-          <td class="text-xs-right">{{ props.item.TemaLib }}</td>
-          <td class="text-xs-right">{{ props.item.AnuLib }}</td>
-          <td class="text-xs-right">{{ props.item.CostoLib }}</td>
-            </tr>
+            <td>{{ props.item.CodigoLib }}</td>
+            <td class="text-xs-right">{{ props.item.CodIsbn }}</td>
+            <td class="text-xs-right">{{ props.item.TituloLib }}</td>
+            <td class="text-xs-right">{{ props.item.AutorLib }}</td>
+            <td class="text-xs-right">{{ props.item.CategoriaLib }}</td>
+            <td class="text-xs-right">{{ props.item.TemaLib }}</td>
+            <td class="text-xs-right">{{ props.item.AnuLib }}</td>
+            <td class="text-xs-right">{{ props.item.CostoLib }}</td>
+          </tr>
         </template>
-        <v-alert slot="no-results" :value="true" color="error" icon="warning">
-          Your search for "{{ search }}" found no results.
+        <v-alert slot="no-results" :value="true" color="error" icon="mdi-alert">
+          No se encontraron resultados para "{{ search }}".
         </v-alert>
 
           <template v-slot:top>
@@ -128,8 +128,9 @@
               v-model="search"
               label="Buscar libros"
               class="mx-4"
-              append-icon="search"
+              append-icon="mdi-magnify"
               single-line
+              color="orange"
               hide-details
             ></v-text-field>
           </template>
