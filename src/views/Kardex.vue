@@ -35,6 +35,7 @@
           :items="datosMo"
           item-key="name"
           class="elevation-1"
+          @click:row="handleClickKA"
           :search="search"
         >
           <template v-slot:top>
@@ -56,6 +57,7 @@
                 Ver registro
               </v-btn>
             </template>
+            
             <template v-slot:default="dialog">
               <v-card>
                 <v-toolbar color="primary" dark>
@@ -179,7 +181,7 @@ export default {
         },
         {
           fechaMov: "10-04-2021, 11:43 a.m.",
-          detalleMov: "devolución de libros",
+          detalleMov: "Devolución de libros",
           cantidadMov: 2,
           tipoMov: "Devolución de adquisición (-)",
           referenciaMov: "MD74M83YR4",
@@ -190,6 +192,9 @@ export default {
     };
   },
   methods: {
+    handleClickKA(item) {
+      alert('You clicked ' + item.detalleMov);
+    },
     validate() {
       this.$refs.form.resetValidation();
     },
