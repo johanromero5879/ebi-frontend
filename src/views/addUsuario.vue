@@ -120,8 +120,8 @@
           <td class="text-xs-right">{{ props.item.TipUsu }}</td>
             </tr>
         </template>
-        <v-alert slot="no-results" :value="true" color="error" icon="warning">
-          su busqueda de "{{ buscarUsu }}" no se encuentran resultados.
+        <v-alert slot="no-results" :value="true" color="error" icon="mdi-alert">
+          No se encontraron resultados para "{{ buscarUsu }}".
         </v-alert>
 
           <template v-slot:top>
@@ -129,7 +129,7 @@
               v-model="buscarUsu"
               label="Buscar usuarios"
               class="mx-4"
-              append-icon="search"
+              append-icon="mdi-magnify"
               single-line
               hide-details
             ></v-text-field>

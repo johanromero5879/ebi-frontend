@@ -70,8 +70,8 @@
           <td class="text-xs-right">{{ props.item.fechaKA }}</td>
             </tr>
         </template>
-        <v-alert slot="no-results" :value="true" color="error" icon="warning">
-          su busqueda de "{{ buscarKa }}" no se encuentran resultados.
+        <v-alert slot="no-results" :value="true" color="error" icon="mdi-alert">
+          No se encontraron resultados para "{{ buscarKa }}".
         </v-alert>
 
           <template v-slot:top>
@@ -79,7 +79,7 @@
               v-model="buscarKa"
               label="Buscar registro"
               class="mx-4"
-              append-icon="search"
+              append-icon="mdi-magnify"
               single-line
               hide-details
               

@@ -95,8 +95,8 @@
           <td class="text-xs-right">{{ props.item.correoEdi }}</td>
             </tr>
         </template>
-        <v-alert slot="no-results" :value="true" color="error" icon="warning">
-          su busqueda de "{{ buscarEd }}" no se encuentran resultados.
+        <v-alert slot="no-results" :value="true" color="error" icon="mdi-alert">
+          No se encontraron resultados para "{{ buscarEd }}".
         </v-alert>
 
           <template v-slot:top>
@@ -104,7 +104,7 @@
               v-model="buscarEd"
               label="Buscar editoriales"
               class="mx-4"
-              append-icon="search"
+              append-icon="mdi-magnify"
               single-line
               hide-details
             ></v-text-field>
