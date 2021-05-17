@@ -1,7 +1,6 @@
 <template>
   <div class="contenedorHome">
     <v-app-bar
-      color="#f27459"
       dark
       height="65px"
       absolute
@@ -31,56 +30,56 @@
           v-model="group"
           active-class="deep-purple--text text--accent-4"
         >
-          <v-list-item onclick="location.href='http://localhost:8080/home'">
+          <v-list-item onclick="location.href='http://localhost:8080/home'" color="orange" >
             <v-list-item-icon>
             <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Inicio</v-list-item-title>
           </v-list-item>
 
-          <v-list-item onclick="location.href='http://localhost:8080/home/crear_usuario'">
+          <v-list-item onclick="location.href='http://localhost:8080/home/crear_usuario'" color="orange" >
             <v-list-item-icon>
             <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Usuarios</v-list-item-title>
           </v-list-item>
 
-          <v-list-item onclick="location.href='http://localhost:8080/home/crear_libro'" >
+          <v-list-item onclick="location.href='http://localhost:8080/home/crear_libro'" color="orange" >
             <v-list-item-icon>
             <v-icon> mdi-book-open-blank-variant </v-icon>
             </v-list-item-icon>
             <v-list-item-title>Libros</v-list-item-title>
           </v-list-item>
 
-          <v-list-item onclick="location.href='http://localhost:8080/home/almacenes'" >
+          <v-list-item onclick="location.href='http://localhost:8080/home/almacenes'" color="orange" >
             <v-list-item-icon>
             <v-icon> mdi-store</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Almacenes</v-list-item-title>
           </v-list-item>
 
-          <v-list-item onclick="location.href='http://localhost:8080/home/editoriales'" >
+          <v-list-item onclick="location.href='http://localhost:8080/home/editoriales'" color="orange" >
             <v-list-item-icon>
             <v-icon> mdi-library</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Editoriales</v-list-item-title>
           </v-list-item>
 
-          <v-list-item onclick="location.href='http://localhost:8080/home/consultar-existencias'" >
+          <v-list-item onclick="location.href='http://localhost:8080/home/consultar-existencias'" color="orange" >
             <v-list-item-icon>
             <v-icon>mdi-book-information-variant</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Existencias de libros</v-list-item-title>
           </v-list-item>
 
-          <v-list-item onclick="location.href='http://localhost:8080/home/movimientos'" >
+          <v-list-item onclick="location.href='http://localhost:8080/home/movimientos'" color="orange" >
             <v-list-item-icon>
             <v-icon>mdi-text-box-search</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Movimientos</v-list-item-title>
           </v-list-item>
 
-          <v-list-item onclick="location.href='http://localhost:8080/home/kardex'" >
+          <v-list-item onclick="location.href='http://localhost:8080/home/kardex'" color="orange" >
             <v-list-item-icon>
             <v-icon>mdi-currency-usd</v-icon>
             </v-list-item-icon>
