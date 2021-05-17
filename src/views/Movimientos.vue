@@ -1,7 +1,7 @@
 <template>
   <div class="contMovimientos">
     <div class="tituloMo">
-      <v-icon dark left>mdi-note-text</v-icon>
+      <v-icon dark left> mdi-text-box-search </v-icon>
       <h1>Registro de movimientos</h1>
     </div>
     <div class="objetosMo">
@@ -30,7 +30,7 @@
             dark
             v-model="tipoMo"
             :items="itemsMo"
-            :rules="[(v) => !!v || 'Ésta selección es obligatoria']"
+            :rules="[(v) => !!v || 'Esta selección es obligatoria']"
             label="Tipo"
             outlined
             required
@@ -40,7 +40,7 @@
             dark
             v-model="refliMo"
             :items="irefliMo"
-            :rules="[(v) => !!v || 'Ésta selección es obligatoria']"
+            :rules="[(v) => !!v || 'Esta selección es obligatoria']"
             label="Referencia del libro"
             outlined
             required
@@ -50,7 +50,7 @@
             dark
             v-model="almorMo"
             :items="ialmorMo"
-            :rules="[(v) => !!v || 'Ésta selección es obligatoria']"
+            :rules="[(v) => !!v || 'Esta selección es obligatoria']"
             label="Almacén de origen"
             outlined
             required
@@ -60,7 +60,7 @@
             dark
             v-model="almdeMo"
             :items="ialmdeMo"
-            :rules="[(v) => !!v || 'Ésta selección es obligatoria']"
+            :rules="[(v) => !!v || 'Esta selección es obligatoria']"
             label="Almacén de destino"
             outlined
             required

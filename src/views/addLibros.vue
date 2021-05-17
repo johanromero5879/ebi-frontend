@@ -1,8 +1,8 @@
 <template>
   <div class="contLibros">
     <div class="titulolib">
-      <v-icon dark left> mdi-book-open </v-icon>
-      <h1>Registro de Libros</h1>
+      <v-icon dark left> mdi-book-open-blank-variant </v-icon>
+      <h1>Registro de libros</h1>
     </div>
     <div class="objetoslib">
       <div class="formulariolib">

@@ -1,7 +1,7 @@
 <template>
   <div class="contKardex">
     <div class="tituloKa">
-      <v-icon dark left>mdi-book-multiple</v-icon>
+      <v-icon dark left> mdi-currency-usd </v-icon>
       <h1>Registro de Kardex</h1>
     </div>
     <div class="objetosKa">
@@ -52,6 +52,7 @@
           <v-dialog transition="dialog-bottom-transition" max-width="600">
             <template v-slot:activator="{ on, attrs }">
               <v-btn outlined color="white" v-bind="attrs" v-on="on">
+                <v-icon left>mdi-alert-circle-outline</v-icon>
                 Ver registro
               </v-btn>
             </template>

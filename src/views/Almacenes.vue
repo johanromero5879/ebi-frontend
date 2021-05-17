@@ -1,7 +1,7 @@
 <template>
   <div class="contAlmacenes">
     <div class="titulo">
-      <v-icon dark left>mdi-bank</v-icon>
+      <v-icon dark left>mdi-store</v-icon>
       <h1>Registro de almacenes</h1>
     </div>
     <div class="objetos">

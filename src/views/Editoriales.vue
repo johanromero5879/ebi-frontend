@@ -95,7 +95,7 @@
           <template v-slot:top>
             <v-text-field
               v-model="search"
-              label="Buscar almacenes"
+              label="Buscar editoriales"
               class="mx-4"
             ></v-text-field>
           </template>

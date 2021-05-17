@@ -8,6 +8,7 @@ import addLibros from '../views/addLibros.vue'
 import editoriales from '../views/Editoriales.vue'
 import movimientos from '../views/Movimientos.vue'
 import kardex from '../views/Kardex.vue'
+import consultexis from '../views/consultarExistencias.vue'
 
 Vue.use(VueRouter)
 
@@ -47,6 +48,10 @@ const routes = [
       {
         path: 'movimientos',
         component: movimientos
+      },
+      {
+        path: 'consultar-existencias',
+        component: consultexis
       }
     ]
   }

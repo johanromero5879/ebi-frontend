@@ -27,7 +27,7 @@
             v-model="cedula"
             :counter="10"
             :rules="ccru"
-            label="Cedula"
+            label="Cédula"
             outlined
             required
           ></v-text-field>
@@ -107,7 +107,7 @@
           <template v-slot:top>
             <v-text-field
               v-model="buscar"
-              label="Buscar Usuarios"
+              label="Buscar usuarios"
               class="mx-4"
             ></v-text-field>
           </template>
