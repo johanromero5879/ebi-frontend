@@ -140,53 +140,25 @@
 export default {
   data() {
     return {
-      valid: true,
-      cantidadMo: "",
-      canruMo: [(v) => !!v || "Este campo es obligatorio"],
-
-      valid: true,
-      detalleMo: "",
-      detruMo: [(v) => !!v || "Este campo es obligatorio"],
+      muestraitem: {
+        va: "no",
+      },
 
       almKa: null,
       itemsKa: ["Tres pelagatos sas", "El lector"],
 
-      refliMo: null,
-      irefliMo: ["La tortuguita pescuezona - YTXX74YA3M"],
-
-      almorMo: null,
-      ialmorMo: ["Bodega", "Tres pelagatos sas", "El lector"],
-
-      almdeMo: null,
-      ialmdeMo: ["Bodega", "Tres pelagatos sas", "El lector"],
-
       titulosMo: [
-        { text: "Fecha", align: "start", value: "fechaMov" },
-        { text: "Detalle", value: "detalleMov" },
-        { text: "Cantidad", value: "cantidadMov" },
-        { text: "Tipo", value: "tipoMov" },
-        { text: "Referencia", value: "referenciaMov" },
-        { text: "Almacen de origen", value: "almorigenMov" },
-        { text: "Almacen de destino", value: "almdestinoMov" },
+        { text: "ID", align: "start", value: "idKA" },
+        { text: "Fecha", value: "fechaKA" },
       ],
       datosMo: [
         {
-          fechaMov: "15-03-2021, 8:55 a.m.",
-          detalleMov: "Adquisición de libros",
-          cantidadMov: 10,
-          tipoMov: "Adquisición (+)",
-          referenciaMov: "MD74M83YR4",
-          almorigenMov: "Tres pelagatos sas",
-          almdestinoMov: "Bodega",
+          idKA: "192837465",
+          fechaKA: "02-03-2021",
         },
         {
-          fechaMov: "10-04-2021, 11:43 a.m.",
-          detalleMov: "Devolución de libros",
-          cantidadMov: 2,
-          tipoMov: "Devolución de adquisición (-)",
-          referenciaMov: "MD74M83YR4",
-          almorigenMov: "Bodega",
-          almdestinoMov: "Tres pelagatos sas",
+          idKA: "546372819",
+          fechaKA: "12-01-2020",
         },
       ],
     };

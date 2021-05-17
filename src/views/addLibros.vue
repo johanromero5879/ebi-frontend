@@ -120,7 +120,7 @@
             </tr>
         </template>
         <v-alert slot="no-results" :value="true" color="error" icon="warning">
-          Your search for "{{ search }}" found no results.
+          su busqueda de "{{ search }}" no se encuentran resultados.
         </v-alert>
 
           <template v-slot:top>
@@ -222,7 +222,7 @@ export default {
       (v) => !!v || "Este campo es obligatorio",
       (v) => (v && v.length <= 4) || "El dato del año no es valido",
     ],
-selected:[],
+      selected:[],
       search: '',
   tituloslib: [
       {

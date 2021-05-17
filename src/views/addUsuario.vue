@@ -102,13 +102,35 @@
           :items="datosUsuarios"
           item-key="name"
           class="elevation-1"
-          :search="buscar"
+          :search="buscarUsu"
+          v-model="selectedUsu"
+          @click:row="handleClickUsu"
         >
+
+           <template slot="items" slot-scope="props">
+          <tr @click="showAlert(props.item)">
+          <td>{{ props.item.CodigoUsuario }}</td>
+          <td class="text-xs-right">{{ props.item.NomApeUsu }}</td>
+          <td class="text-xs-right">{{ props.item.ccUsu }}</td>
+          <td class="text-xs-right">{{ props.item.DirecUsu }}</td>
+          <td class="text-xs-right">{{ props.item.TelUsu }}</td>
+          <td class="text-xs-right">{{ props.item.EmailUsu }}</td>
+          <td class="text-xs-right">{{ props.item.NomUsu }}</td>
+          <td class="text-xs-right">{{ props.item.TipUsu }}</td>
+            </tr>
+        </template>
+        <v-alert slot="no-results" :value="true" color="error" icon="warning">
+          su busqueda de "{{ buscarUsu }}" no se encuentran resultados.
+        </v-alert>
+
           <template v-slot:top>
             <v-text-field
-              v-model="buscar"
+              v-model="buscarUsu"
               label="Buscar usuarios"
               class="mx-4"
+              append-icon="search"
+              single-line
+              hide-details
             ></v-text-field>
           </template>
         </v-data-table>
@@ -191,6 +213,9 @@ export default {
       (v) => /.+@.+\..+/.test(v) || "El correo debe tener un formato válido",
     ],
 
+    selectedUsu:[],
+    buscarUsu: '',
+
     titulosUsuarios: [
       {
         text: "Código",
@@ -230,6 +255,12 @@ export default {
   }),
 
   methods: {
+
+      handleClickUsu(item) {
+      alert('Codigo ' + item.CodigoUsuario +' Nombre completo: '+ item.NomApeUsu+' Cedula: '+ item.ccUsu+' Direccion: '+ item.DirecUsu+
+      ' Telefono: '+ item.TelUsu+' E-mail: '+ item.EmailUsu+' Nombre de usuario: '+ item.NomUsu+' Tipo de usuario: '+ item.TipUsu+' ');
+      },
+
     validate() {
       this.$refs.form.validate();
     },
