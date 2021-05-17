@@ -40,7 +40,7 @@
           <template v-slot:top>
             <v-text-field
               v-model="search"
-              label="Buscar movimientos"
+              label="Buscar registro"
               class="mx-4"
             ></v-text-field>
           </template>
