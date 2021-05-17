@@ -107,20 +107,25 @@
           v-model="selectedLib"
         >
 
-            <template slot="items" slot-scope="props">
+        <template slot="items" slot-scope="props">
           <tr @click="showAlert(props.item)">
-          <td>{{ props.item.CodigoLib }}</td>
-          <td class="text-xs-right">{{ props.item.CodIsbn }}</td>
-          <td class="text-xs-right">{{ props.item.TituloLib }}</td>
-          <td class="text-xs-right">{{ props.item.AutorLib }}</td>
-          <td class="text-xs-right">{{ props.item.CategoriaLib }}</td>
-          <td class="text-xs-right">{{ props.item.TemaLib }}</td>
-          <td class="text-xs-right">{{ props.item.AnuLib }}</td>
-          <td class="text-xs-right">{{ props.item.CostoLib }}</td>
-            </tr>
+            <td>{{ props.item.CodigoLib }}</td>
+            <td class="text-xs-right">{{ props.item.CodIsbn }}</td>
+            <td class="text-xs-right">{{ props.item.TituloLib }}</td>
+            <td class="text-xs-right">{{ props.item.AutorLib }}</td>
+            <td class="text-xs-right">{{ props.item.CategoriaLib }}</td>
+            <td class="text-xs-right">{{ props.item.TemaLib }}</td>
+            <td class="text-xs-right">{{ props.item.AnuLib }}</td>
+            <td class="text-xs-right">{{ props.item.CostoLib }}</td>
+          </tr>
         </template>
+<<<<<<< HEAD
         <v-alert slot="no-results" :value="true" color="error" icon="warning">
           su busqueda de "{{ search }}" no se encuentran resultados.
+=======
+        <v-alert slot="no-results" :value="true" color="error" icon="mdi-alert">
+          No se encontraron resultados para "{{ search }}".
+>>>>>>> 4a9b8ab0b7d5377b258ec3c888ba4f5a420664bc
         </v-alert>
 
           <template v-slot:top>
@@ -128,8 +133,9 @@
               v-model="search"
               label="Buscar libros"
               class="mx-4"
-              append-icon="search"
+              append-icon="mdi-magnify"
               single-line
+              color="orange"
               hide-details
             ></v-text-field>
           </template>

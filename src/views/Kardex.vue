@@ -10,7 +10,7 @@
           <h1 class="selectexto">
             Seleccione un almacén para visualizar sus registros de Kardex:
           </h1>
-          <br />
+          <br>
           <v-select
             class="seleccionarc"
             dark
@@ -30,12 +30,35 @@
       </div>
       <v-spacer></v-spacer>
       <div class="tablamuestraKa" align="center">
+
+        <v-alert
+          class="almuesKardex"
+          v-if="muestraitem.va == 'si'"
+          v-model="alert"
+          close-text="Close Alert"
+          color="black"
+          text
+        >
+          <v-data-table
+            item-key="name"
+            class="elevation-1"
+          >
+          </v-data-table>
+
+          <br>
+
+          <v-btn color="white" class="mr-4" @click="cerrarKardex">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+
+        </v-alert>
+
         <v-data-table
           :headers="titulosMo"
           :items="datosMo"
           item-key="name"
           class="elevation-1"
-          @click:row="handleClickKA"
+          @click:row="listarKA"
           :search="search"
         >
           <template v-slot:top>
@@ -47,32 +70,6 @@
           </template>
         </v-data-table>
 
-        <br />
-
-        <v-col cols="auto">
-          <v-dialog transition="dialog-bottom-transition" max-width="600">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn outlined color="white" v-bind="attrs" v-on="on">
-                <v-icon left>mdi-alert-circle-outline</v-icon>
-                Ver registro
-              </v-btn>
-            </template>
-            
-            <template v-slot:default="dialog">
-              <v-card>
-                <v-toolbar color="primary" dark>
-                  Kardex
-                </v-toolbar>
-                <v-card-text>
-                  <div class="text-h2 pa-12">Aquí se debería mostrar la tabla con el registro</div>
-                </v-card-text>
-                <v-card-actions class="justify-end">
-                  <v-btn text @click="dialog.value = false">Cerrar</v-btn>
-                </v-card-actions>
-              </v-card>
-            </template>
-          </v-dialog>
-        </v-col>
       </div>
     </div>
   </div>
@@ -102,8 +99,6 @@
 .objetosKa {
   /* background-color: indigo; */
   display: flex;
-  justify-content: top;
-  align-items: top;
 }
 
 .formularKa {
@@ -113,6 +108,7 @@
   width: 30%;
   display: block;
   align-items: top;
+  /* height: 220px; */
 }
 
 .selectexto {
@@ -123,6 +119,12 @@
 
 .seleccionarc {
   padding-bottom: 10px;
+}
+
+.almuesKardex {
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .tablamuestraKa {
@@ -143,7 +145,6 @@ export default {
       muestraitem: {
         va: "no",
       },
-
       almKa: null,
       itemsKa: ["Tres pelagatos sas", "El lector"],
 
@@ -164,11 +165,15 @@ export default {
     };
   },
   methods: {
-    handleClickKA(item) {
-      alert('You clicked ' + item.detalleMov);
+    listarKA(item) {
+      // alert('Diste clic a ' + item.detalleMov);
+      this.muestraitem.va = 'si'
     },
     validate() {
       this.$refs.form.resetValidation();
+    },
+    cerrarKardex() {
+      this.muestraitem.va = 'no'
     },
   },
 };
