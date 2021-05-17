@@ -90,13 +90,32 @@
           :items="datosAl"
           item-key="name"
           class="elevation-1"
-          :search="search"
+          :search="buscarAlm"
+          v-model="selectedAlm"
+          @click:row="handleClickAlm"
         >
+
+          <template slot="items" slot-scope="props">
+          <tr @click="showAlert(props.item)">
+          <td>{{ props.item.codigoAlm }}</td>
+          <td class="text-xs-right">{{ props.item.nombreAlm }}</td>
+          <td class="text-xs-right">{{ props.item.direccionAlm }}</td>
+          <td class="text-xs-right">{{ props.item.telefonoAlm }}</td>
+          <td class="text-xs-right">{{ props.item.correoAlm }}</td>
+            </tr>
+        </template>
+        <v-alert slot="no-results" :value="true" color="error" icon="warning">
+          su busqueda de "{{ buscarAlm }}" no se encuentran resultados.
+        </v-alert>
+
           <template v-slot:top>
             <v-text-field
-              v-model="search"
+              v-model="buscarAlm"
               label="Buscar almacenes"
               class="mx-4"
+              append-icon="search"
+              single-line
+              hide-details
             ></v-text-field>
           </template>
         </v-data-table>
@@ -186,6 +205,9 @@ export default {
         (v) => /.+@.+\..+/.test(v) || "El correo debe tener un formato válido",
       ],
 
+    selectedAlm:[],
+    buscarAlm: '',
+
       titulosAl: [
         {
           text: "Código",
@@ -216,6 +238,12 @@ export default {
     };
   },
   methods: {
+
+    handleClickAlm(item) {
+      alert('Codigo ' + item.codigoAlm +' Nombre almacen: '+ item.nombreAlm+' Direccion: '+ item.direccionAlm+' Telefono: '+ item.telefonoAlm+
+      ' E-mail: '+ item.correoAlm);
+      },
+
     validate() {
       this.$refs.form.validate();
     },

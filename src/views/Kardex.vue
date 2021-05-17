@@ -59,13 +59,30 @@
           item-key="name"
           class="elevation-1"
           @click:row="listarKA"
-          :search="search"
+          :search="buscarKa"
+          v-model="selectedKa"
         >
+
+          <template slot="items" slot-scope="props">
+          <tr @click="showAlert(props.item)">
+          <td>{{ props.item.idMov }}</td>
+          <td class="text-xs-right">{{ props.item.idKa }}</td>
+          <td class="text-xs-right">{{ props.item.fechaKA }}</td>
+            </tr>
+        </template>
+        <v-alert slot="no-results" :value="true" color="error" icon="warning">
+          su busqueda de "{{ buscarKa }}" no se encuentran resultados.
+        </v-alert>
+
           <template v-slot:top>
             <v-text-field
-              v-model="search"
+              v-model="buscarKa"
               label="Buscar registro"
               class="mx-4"
+              append-icon="search"
+              single-line
+              hide-details
+              
             ></v-text-field>
           </template>
         </v-data-table>
@@ -152,6 +169,10 @@ export default {
         { text: "ID", align: "start", value: "idKA" },
         { text: "Fecha", value: "fechaKA" },
       ],
+
+      selectedKa:[],
+      buscarKa: '',
+
       datosMo: [
         {
           idKA: "192837465",
@@ -166,8 +187,7 @@ export default {
   },
   methods: {
     listarKA(item) {
-      // alert('Diste clic a ' + item.detalleMov);
-      this.muestraitem.va = 'si'
+        alert('Id: ' + item.idKA +' Fecha : '+ item.fechaKA );
     },
     validate() {
       this.$refs.form.resetValidation();

@@ -119,13 +119,8 @@
             <td class="text-xs-right">{{ props.item.CostoLib }}</td>
           </tr>
         </template>
-<<<<<<< HEAD
         <v-alert slot="no-results" :value="true" color="error" icon="warning">
           su busqueda de "{{ search }}" no se encuentran resultados.
-=======
-        <v-alert slot="no-results" :value="true" color="error" icon="mdi-alert">
-          No se encontraron resultados para "{{ search }}".
->>>>>>> 4a9b8ab0b7d5377b258ec3c888ba4f5a420664bc
         </v-alert>
 
           <template v-slot:top>

@@ -13,16 +13,7 @@
           v-model="valid"
           lazy-validation
         >
-          <v-text-field
-            dark
-            v-model="codigoEd"
-            :counter="10"
-            :rules="codruEd"
-            label="Código"
-            outlined
-            required
-          >
-          </v-text-field>
+
 
           <v-text-field
             dark
@@ -90,13 +81,32 @@
           :items="datosEd"
           item-key="name"
           class="elevation-1"
-          :search="search"
+          :search="buscarEd"
+          v-model="selectedEd"
+          @click:row="handleClickEd"
         >
+
+          <template slot="items" slot-scope="props">
+          <tr @click="showAlert(props.item)">
+          <td>{{ props.item.codigoAlm }}</td>
+          <td class="text-xs-right">{{ props.item.nombreEdi }}</td>
+          <td class="text-xs-right">{{ props.item.direccionEdi }}</td>
+          <td class="text-xs-right">{{ props.item.telefonoEdi }}</td>
+          <td class="text-xs-right">{{ props.item.correoEdi }}</td>
+            </tr>
+        </template>
+        <v-alert slot="no-results" :value="true" color="error" icon="warning">
+          su busqueda de "{{ buscarEd }}" no se encuentran resultados.
+        </v-alert>
+
           <template v-slot:top>
             <v-text-field
-              v-model="search"
+              v-model="buscarEd"
               label="Buscar editoriales"
               class="mx-4"
+              append-icon="search"
+              single-line
+              hide-details
             ></v-text-field>
           </template>
         </v-data-table>
@@ -159,14 +169,6 @@ export default {
       usuario: {
         tipo: "xd",
       },
-      valid: true,
-      codigoEd: "",
-      codruEd: [
-        (v) => !!v || "Este campo es obligatorio",
-        (v) =>
-          (v && v.length <= 10) ||
-          "El código no puede tener más de 10 caracteres",
-      ],
 
       valid: true,
       nombreEd: "",
@@ -185,7 +187,8 @@ export default {
         (v) => !!v || "Este campo es obligatorio",
         (v) => /.+@.+\..+/.test(v) || "El correo debe tener un formato válido",
       ],
-
+    selectedEd:[],
+    buscarEd: '',
       titulosEd: [
         {
           text: "Código",
@@ -216,6 +219,12 @@ export default {
     };
   },
   methods: {
+
+      handleClickEd(item) {
+      alert('Codigo ' + item.codigoEdi +' Nombre Editorial: '+ item.nombreEdi+' Direccion: '+ item.direccionEdi+' Telefono: '+ item.telefonoEdi+
+      ' E-mail: '+ item.correoEdi);
+      },
+
     validate() {
       this.$refs.form.validate();
     },

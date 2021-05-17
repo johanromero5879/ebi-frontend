@@ -96,13 +96,35 @@
           :items="datosMo"
           item-key="name"
           class="elevation-1"
-          :search="search"
+          :search="buscarMov"
+          v-model="selectedMov"
+          @click:row="handleClickMov"
         >
+
+          <template slot="items" slot-scope="props">
+          <tr @click="showAlert(props.item)">
+          <td>{{ props.item.idMov }}</td>
+          <td class="text-xs-right">{{ props.item.fechaMov }}</td>
+          <td class="text-xs-right">{{ props.item.detalleMov }}</td>
+          <td class="text-xs-right">{{ props.item.cantidadMov }}</td>
+          <td class="text-xs-right">{{ props.item.tipoMov }}</td>
+          <td class="text-xs-right">{{ props.item.referenciaMov }}</td>
+          <td class="text-xs-right">{{ props.item.almorigenMov }}</td>
+          <td class="text-xs-right">{{ props.item.almdestinoMov }}</td>
+            </tr>
+        </template>
+        <v-alert slot="no-results" :value="true" color="error" icon="warning">
+          su busqueda de "{{ buscarMov }}" no se encuentran resultados.
+        </v-alert>
+
           <template v-slot:top>
             <v-text-field
-              v-model="search"
+              v-model="buscarMov"
               label="Buscar movimientos   "
               class="mx-4"
+              append-icon="search"
+              single-line
+              hide-details
             ></v-text-field>
           </template>
         </v-data-table>
@@ -191,6 +213,9 @@ export default {
       almdeMo: null,
       ialmdeMo: ["Bodega", "Tres pelagatos sas", "El lector"],
 
+      selectedMov:[],
+      buscarMov: '',
+
       titulosMo: [
         { text: "ID", align: "start", value: "idMov" },
         { text: "Fecha", value: "fechaMov" },
@@ -226,6 +251,12 @@ export default {
     };
   },
   methods: {
+
+    handleClickMov(item) {
+      alert('Id Movimiento: ' + item.idMov +' Fecha Movimiento: '+ item.fechaMov+' Detalles: '+ item.detalleMov+' Cantidad de movimientos: '+ item.cantidadMov+
+      ' Tipo de movimiento: '+ item.tipoMov +' Referencia: '+ item.referenciaMov +' Origen: '+ item.almorigenMov + ' Destino: '+ item.almdestinoMov );
+      },
+
     validate() {
       this.$refs.form.validate();
     },
