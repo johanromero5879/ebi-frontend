@@ -26,36 +26,19 @@
             <v-icon left>mdi-format-list-bulleted</v-icon>
             Listar
           </v-btn>
+
+          <v-btn color="white" class="mr-4" outlined @click="validate">
+            <v-icon left>mdi-file-chart</v-icon>
+            Generar Kardex
+          </v-btn>
         </v-form>
       </div>
       <v-spacer></v-spacer>
       <div class="tablamuestraKa" align="center">
 
-        <v-alert
-          class="almuesKardex"
-          v-if="muestraitem.va == 'si'"
-          v-model="alert"
-          close-text="Close Alert"
-          color="black"
-          text
-        >
-          <v-data-table
-            item-key="name"
-            class="elevation-1"
-          >
-          </v-data-table>
-
-          <br>
-
-          <v-btn color="white" class="mr-4" @click="cerrarKardex">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-
-        </v-alert>
-
         <v-data-table
-          :headers="titulosMo"
-          :items="datosMo"
+          :headers="titulosKa"
+          :items="datosKa"
           item-key="name"
           class="elevation-1"
           @click:row="listarKA"
@@ -86,9 +69,35 @@
             ></v-text-field>
           </template>
         </v-data-table>
-
       </div>
     </div>
+  <v-overlay align="center" :value="overlka" opacity="0.7">
+    <v-data-table
+      :hide-default-footer="true"
+      disable-pagination
+      height="300px"
+      light
+      :headers="titulosKardex"
+      :items="datosKardex"
+      item-key="name"
+      class="tablaKardexm"
+    >
+    </v-data-table>
+
+    <h1 class="espacio"> ■ </h1>
+
+    <div class="totalKardex">
+      <v-icon left> mdi-currency-usd </v-icon>
+      <v-spacer></v-spacer>
+      <h1>Total : {{ overlka }}</h1>
+    </div>
+
+    <br>
+
+    <v-btn color="white" light class="mr-4" @click="cerrarKardex">
+      <v-icon>mdi-close</v-icon>
+    </v-btn>
+  </v-overlay>
   </div>
 </template>
 
@@ -111,6 +120,20 @@
   color: white;
   padding: 10px;
   display: flex;
+}
+
+.espacio {
+  font-size: 4px;
+}
+
+.totalKardex {
+  background-color: white;
+  border-radius: 5px;
+  color: rgb(114, 114, 114);
+  padding-right: 18px;
+  height: 30px;
+  display: flex;
+  font-size: 10px;
 }
 
 .objetosKa {
@@ -153,47 +176,105 @@
   width: 70%;
   display: block;
 }
+
+.tablaKardexm {
+  width: 180vh;
+}
+
 </style>
 
 <script>
 export default {
   data() {
+
     return {
-      muestraitem: {
-        va: "no",
-      },
+      overlka: false,
+
       almKa: null,
       itemsKa: ["Tres pelagatos sas", "El lector"],
 
-      titulosMo: [
+      titulosKa: [
         { text: "ID", align: "start", value: "idKA" },
         { text: "Fecha", value: "fechaKA" },
+        { text: "Cantidad final", value: "cfKA" },
+        { text: "Valor final", value: "vfKA" },
       ],
 
       selectedKa:[],
       buscarKa: '',
 
-      datosMo: [
+      datosKa: [
         {
           idKA: "192837465",
           fechaKA: "02-03-2021",
+          cfKA: 0,
+          vfKA: 0,
         },
         {
-          idKA: "546372819",
-          fechaKA: "12-01-2020",
+          idKA: "192837465",
+          fechaKA: "02-03-2021",
+          cfKA: 0,
+          vfKA: 0,
+        },
+      ],
+
+      titulosKardex: [
+        { text: "Fecha", align: "start", value: "fechaKardex" , sortable: false},
+        { text: "Detalle", value: "detalleKardex" , sortable: false, width: "25%"},
+
+        { text: "E - Cantidad", value: "EcantidadKardex" , sortable: false},
+        { text: "E - Val. unitario", value: "EvunitKardex" , sortable: false},
+        { text: "E - Val. total", value: "EvtotKardex" , sortable: false},
+
+        { text: "S - Cantidad", value: "ScantidadKardex" , sortable: false},
+        { text: "S - Val. unitario", value: "SvunitKardex" , sortable: false},
+        { text: "S - Val. total", value: "SvtotKardex" , sortable: false},
+
+        { text: "Ex - Cantidad", value: "ExcantidadKardex" , sortable: false},
+        { text: "Ex - Val. unitario", value: "ExvunitKardex" , sortable: false},
+        { text: "Ex - Val. total", value: "ExvtotKardex" , sortable: false},
+      ],
+
+      datosKardex: [
+        {
+          fechaKardex: '12-05-2021',
+          detalleKardex: 'Compra de mercancía',
+          EcantidadKardex: 0,
+          EvunitKardex: 0,
+          EvtotKardex: 0,
+          ScantidadKardex: 0,
+          SvunitKardex: 0,
+          SvtotKardex: 0,
+          ExcantidadKardex: 0,
+          ExvunitKardex: 0,
+          ExvtotKardex: 0,
+        },
+        {
+          fechaKardex: '13-05-2021',
+          detalleKardex: 'Compra de mercancíaCompra de mercancía',
+          EcantidadKardex: '0',
+          EvunitKardex: '0',
+          EvtotKardex: '0',
+          ScantidadKardex: '0',
+          SvunitKardex: '0',
+          SvtotKardex: '0',
+          ExcantidadKardex: '0',
+          ExvunitKardex: '0',
+          ExvtotKardex: '0',
         },
       ],
     };
   },
   methods: {
     listarKA(item) {
-        alert('Id: ' + item.idKA +' Fecha : '+ item.fechaKA );
+        // alert('Id: ' + item.idKA +' Fecha : '+ item.fechaKA );
+        this.overlka = true;
     },
     validate() {
       this.$refs.form.resetValidation();
     },
     cerrarKardex() {
-      this.muestraitem.va = 'no'
+      this.overlka = false
     },
   },
 };

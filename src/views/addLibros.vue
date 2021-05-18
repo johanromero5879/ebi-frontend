@@ -137,6 +137,54 @@
         </v-data-table>
       </div>
     </div>
+    <v-overlay align="center" :value="true" opacity="0.7">
+
+      <div class="formulariorefer">
+        <v-form
+          class="forma"
+          align="center"
+          ref="form"
+          v-model="valid"
+          lazy-validation
+        >
+          <v-text-field
+            dark
+            v-model="codigoisbn"
+            :rules="codisbru"
+            label="Código ISBN"
+            outlined
+            required
+          ></v-text-field>
+
+          <v-text-field
+            dark
+            v-model="titulo"
+            :rules="tituloru"
+            label="Titulo del Libro"
+            outlined
+            required
+          ></v-text-field>
+
+          <br />
+
+          <v-btn color="white" class="mr-4" outlined @click="validate">
+            <v-icon left>mdi-content-save</v-icon>
+            Guardar
+          </v-btn>
+
+          <v-btn color="white" class="mr-4" outlined @click="reset">
+            <v-icon left>mdi-pencil</v-icon>
+            Editar
+          </v-btn>
+
+          <v-btn color="white" outlined @click="resetValidation">
+            <v-icon left>mdi-delete</v-icon>
+            Eliminar
+          </v-btn>
+        </v-form>
+      </div>
+
+    </v-overlay>
   </div>
 </template>
 
@@ -173,6 +221,15 @@
   padding: 20px;
   border-radius: 5px;
   width: 30%;
+  display: block;
+  align-items: center;
+}
+
+.formulariorefer {
+  background-color: rgba(0, 0, 0, 0.25);
+  padding: 20px;
+  border-radius: 5px;
+  width: 100%;
   display: block;
   align-items: center;
 }
@@ -237,7 +294,7 @@ export default {
       { text: "Categoria", value: "CategoriaLib" },
       { text: "Tema", value: "TemaLib" },
       { text: "Año", value: "AnuLib" },
-      { text: "Costo", value: "CostoLib" },
+      { text: "Editorial", value: "editLib" },
     ],
     datoslib: [
       {
@@ -248,7 +305,7 @@ export default {
         CategoriaLib: "Terror",
         TemaLib: "Adultos",
         AnuLib: 1977,
-        CostoLib: 65000,
+        editLib: "Debolsillo",
       },
       {
         CodigoLib: 5695426546,
@@ -258,7 +315,7 @@ export default {
         CategoriaLib: "Entretenimiento",
         TemaLib: "Infantil",
         AnuLib: 2015,
-        CostoLib: 58000,
+        editLib: "Grupo planeta",
       },
     ]
   
