@@ -18,7 +18,7 @@
         <v-img src="~@/assets/img/logo_obj.png" width="70px"></v-img>
       </div>
       <v-spacer></v-spacer>
-      <v-btn outlined onclick="location.href='http://localhost:8080/ingresar'">
+      <v-btn outlined @click="logout">
         <v-icon left>mdi-exit-to-app</v-icon>
         Cerrar sesión
       </v-btn>
@@ -125,10 +125,18 @@
 </style>
 
 <script>
+
+import { cerrarSesion } from '../utils'
+
 export default {
   data: () => ({
     drawer: false,
     group: null,
   }),
+  methods: {
+    logout(){
+      cerrarSesion(this.$router)
+    }
+  }
 };
 </script>
