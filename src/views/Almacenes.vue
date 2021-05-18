@@ -1,42 +1,48 @@
 <template>
   <div class="contAlmacenes">
+
+ 
+
     <div class="titulo">
       <v-icon dark left>mdi-store</v-icon>
       <h1>Registro de almacenes</h1>
     </div>
+    <v-snackbar
+      v-model="snackbar"
+      absolute
+      botton
+      right
+      color="success"
+    >
+      <span>Se ha registrado correctamente!</span>
+      <v-icon dark>
+        mdi-checkbox-marked-circle
+      </v-icon>
+    </v-snackbar>
     <div class="objetos">
       <div class="formular">
         <v-form
           class="forma"
           align="center"
-          ref="form"
-          v-model="valid"
-          lazy-validation
+          ref="formAlm"
+          @submit.prevent="submitAlm"
         >
-          <v-text-field
-            dark
-            v-model="codigo"
-            :counter="10"
-            :rules="codru"
-            label="Código"
-            outlined
-            required
-          >
-          </v-text-field>
+         
 
           <v-text-field
             dark
-            v-model="nombre"
-            :rules="nomru"
+            v-model="almacen.nombre"
+            :rules="rules.nomru"
             label="Nombre"
+            
             outlined
             required
           ></v-text-field>
 
           <v-text-field
             dark
-            v-model="direccion"
-            :rules="dirru"
+            v-model="almacen.direccion"
+            :rules="rules.dirru"
             label="Dirección"
             outlined
             required
@@ -44,8 +50,8 @@
 
           <v-text-field
             dark
-            v-model="telefono"
-            :rules="telru"
+            v-model="almacen.telefono"
+            :rules="rules.telru"
             label="Teléfono"
             outlined
             required
@@ -53,8 +59,8 @@
 
           <v-text-field
             dark
-            v-model="correo"
-            :rules="corru"
+            v-model="almacen.correo"
+            :rules="rules.corru"
             label="Correo electrónico"
             outlined
             required
@@ -62,12 +68,28 @@
 
           <br />
 
-          <v-btn color="white" class="mr-4" outlined @click="validate">
+          <v-btn 
+          color="white"
+          class="mr-4"
+          outlined
+          :disabled="!formIsValid"
+          type="submitAlm"
+          >
             <v-icon left>mdi-content-save</v-icon>
             Guardar
           </v-btn>
 
-          <v-btn color="white" class="mr-4" outlined @click="reset">
+          <v-btn 
+          color="white"
+          class="mr-4"
+          outlined
+          @click="resetFormAlm"
+          >
+            <v-icon left>mdi-window-close</v-icon>
+            Cancelar
+          </v-btn>
+
+          <v-btn color="white" class="mr-4" outlined @click="resetFormAlm">
             <v-icon left>mdi-pencil</v-icon>
             Editar
           </v-btn>
@@ -76,7 +98,7 @@
             v-if="usuario.tipo == 'admin'"
             color="white"
             outlined
-            @click="resetValidation"
+            @click="resetFormAlm"
           >
             <v-icon left>mdi-delete</v-icon>
             Eliminar
@@ -92,7 +114,7 @@
           class="elevation-1"
           :search="buscarAlm"
           v-model="selectedAlm"
-          @click:row="handleClickAlm"
+          @click:row="ClickAlm"
         >
 
           <template slot="items" slot-scope="props">
@@ -174,37 +196,42 @@
 <script>
 export default {
   data() {
+
+    const defaultFormAlm = Object.freeze({
+        nombre: '',
+        direccion: '',
+        telefono: '',
+        correo: '',
+      })
+      
+
     return {
+      formAlm: Object.assign({}, defaultFormAlm),
+        rules: {
+          nomru: [(v) => !!v || "Este campo es obligatorio"],
+          dirru: [(v) => !!v || "Este campo es obligatorio"],
+          telru: [(v) => !!v || "Este campo es obligatorio"],
+          corru: [
+        (v) => !!v || "Este campo es obligatorio",
+        (v) => /.+@.+\..+/.test(v) || "El correo debe tener un formato válido"
+      ],
+
+        },
+
+      almacen: {
+        _id: '',
+        nombre: '',
+        direccion: '',
+        telefono: '',
+        correo: '',
+
+      },
+
+      snackbar: false,
+      defaultFormAlm,
       usuario: {
         tipo: "xd",
       },
-      valid: true,
-      codigo: "",
-      codru: [
-        (v) => !!v || "Este campo es obligatorio",
-        (v) =>
-          (v && v.length <= 10) ||
-          "El código no puede tener más de 10 caracteres",
-      ],
-
-      valid: true,
-      nombre: "",
-      nomru: [(v) => !!v || "Este campo es obligatorio"],
-
-      valid: true,
-      direccion: "",
-      dirru: [(v) => !!v || "Este campo es obligatorio"],
-
-      valid: true,
-      telefono: "",
-      telru: [(v) => !!v || "Este campo es obligatorio"],
-
-      correol: "",
-      corru: [
-        (v) => !!v || "Este campo es obligatorio",
-        (v) => /.+@.+\..+/.test(v) || "El correo debe tener un formato válido",
-      ],
-
     selectedAlm:[],
     buscarAlm: '',
 
@@ -237,22 +264,35 @@ export default {
       ],
     };
   },
+
+   computed: {
+      formIsValid () {
+        return (
+          this.almacen.nombre &&
+          this.almacen.direccion &&
+          this.almacen.telefono &&
+          this.almacen.correo
+        )
+      },
+    },
+
   methods: {
 
-    handleClickAlm(item) {
-      alert('Codigo ' + item.codigoAlm +' Nombre almacen: '+ item.nombreAlm+' Direccion: '+ item.direccionAlm+' Telefono: '+ item.telefonoAlm+
-      ' E-mail: '+ item.correoAlm);
+    ClickAlm(item) {
+    this.almacen.nombre=item.nombreAlm;
+    this.almacen.direccion=item.direccionAlm;
+    this.almacen.telefono=item.telefonoAlm;
+    this.almacen.correo=item.correoAlm;
       },
 
-    validate() {
-      this.$refs.form.validate();
-    },
-    reset() {
-      this.$refs.form.reset();
-    },
-    resetValidation() {
-      this.$refs.form.resetValidation();
-    },
+      resetFormAlm () {
+        this.formAlm = Object.assign({}, this.defaultForm)
+        this.$refs.formAlm.reset()
+      },
+      submitAlm () {
+        this.snackbar = true
+        this.resetFormAlm()
+      },
   },
 };
 </script>
