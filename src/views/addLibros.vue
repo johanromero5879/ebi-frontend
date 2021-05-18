@@ -326,6 +326,7 @@ export default {
     handleClickLib(item) {
       alert('Codigo ' + item.CodigoLib +' ISBN: '+ item.CodIsbn+' Titulo: '+ item.TituloLib+' Autor: '+ item.AutorLib+
       ' Categoria: '+ item.CategoriaLib+' Tema: '+ item.TemaLib+' Año: '+ item.AnuLib+' Costo: '+ item.CostoLib+' ');
+      
     },
     validate() {
       this.$refs.form.validate();

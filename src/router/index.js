@@ -10,6 +10,7 @@ import movimientos from '../views/Movimientos.vue'
 import kardex from '../views/Kardex.vue'
 import consultexis from '../views/consultarExistencias.vue'
 
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -21,6 +22,7 @@ const routes = [
     path: '/ingresar',
     component: Login
   },
+
   {
     path: '/home',
     component: Home,

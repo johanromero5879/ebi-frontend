@@ -1,22 +1,39 @@
 <template>
   <div class="contuser">
+
+<v-snackbar
+      v-model="snackbar"
+      absolute
+      botton
+      right
+      color="success"
+    >
+      <span>Se ha registrado correctamente!</span>
+      <v-icon dark>
+        mdi-checkbox-marked-circle
+      </v-icon>
+    </v-snackbar>
+
     <div class="titulouser">
       <v-icon dark left> mdi-account </v-icon>
       <h1>Registro de usuarios</h1>
     </div>
+
+    
+
     <div class="objetosuser">
       <div class="formulariouser">
         <v-form
           class="forma"
           align="center"
           ref="form"
-          v-model="valid"
-          lazy-validation
+          @submit.prevent="submitUser"
+          
         >
           <v-text-field
             dark
-            v-model="nombreap"
-            :rules="nomapru"
+            v-model="usurio.nombreap"
+            :rules="rules.nomapru"
             label="Nombres y Apellidos"
             outlined
             required
@@ -24,9 +41,9 @@
 
           <v-text-field
             dark
-            v-model="cedula"
+            v-model="usurio.cedula"
             :counter="10"
-            :rules="ccru"
+            :rules="rules.ccru"
             label="Cédula"
             outlined
             required
@@ -34,8 +51,8 @@
 
           <v-text-field
             dark
-            v-model="direccion"
-            :rules="dirru"
+            v-model="usurio.direccion"
+            :rules="rules.dirru"
             label="Dirección"
             outlined
             required
@@ -43,8 +60,8 @@
 
           <v-text-field
             dark
-            v-model="telefono"
-            :rules="telru"
+            v-model="usurio.telefono"
+            :rules="rules.telru"
             label="Teléfono"
             outlined
             required
@@ -52,8 +69,8 @@
 
           <v-text-field
             dark
-            v-model="correo"
-            :rules="corru"
+            v-model="usurio.correo"
+            :rules="rules.corru"
             label="Correo electrónico"
             outlined
             required
@@ -61,8 +78,8 @@
 
           <v-text-field
             dark
-            v-model="nombreusu"
-            :rules="nomusuru"
+            v-model="usurio.nombreusu"
+            :rules="rules.nomusuru"
             label="Nombre de usuario"
             outlined
             required
@@ -70,8 +87,8 @@
 
           <v-text-field
             dark
-            v-model="contras"
-            :rules="contrasru"
+            v-model="usurio.contras"
+            :rules="rules.contrasru"
             label="Cree una contraseña"
             outlined
             required
@@ -79,19 +96,44 @@
 
           <v-select
             dark
+            v-model="usurio.tipo"
             :items="items"
-            :rules="[(v) => !!v || 'Esta selección es obligatoria']"
+            :rules="rules.tiporu"
             label="Tipo de usuario"
             outlined
             aria-required=""
           ></v-select>
 
-          <v-btn color="white" class="mr-4" outlined @click="validate">
+          <v-btn color="white"
+          class="mr-4"
+          outlined
+          
+          :disabled="!formIsValid"
+          type="submitUser"
+          >
             <v-icon left>mdi-content-save</v-icon>
+            
             Guardar
           </v-btn>
 
-          <v-btn color="white" outlined @click="resetValidation">
+          <v-btn 
+          color="white"
+          class="mr-4"
+          outlined
+          @click="resetFormUser"
+          >
+            <v-icon left>mdi-window-close</v-icon>
+            Cancelar
+          </v-btn>
+
+<vr></vr>
+
+          <v-btn color="white" class="mr-4" outlined @click="resetFormUser">
+            <v-icon left>mdi-pencil</v-icon>
+            Editar
+          </v-btn>
+
+          <v-btn color="white" outlined @click="resetFormUser">
             <v-icon left>mdi-delete</v-icon>
             Eliminar
           </v-btn>
@@ -105,7 +147,7 @@
           class="elevation-1"
           :search="buscarUsu"
           v-model="selectedUsu"
-          @click:row="handleClickUsu"
+          @click:row="ClickUsu"
         >
 
            <template slot="items" slot-scope="props">
@@ -153,21 +195,18 @@
   align-items: top;
   font-family: sans-serif;
 }
-
 .titulouser {
   /* background-color: hotpink; */
   display: flex;
   color: white;
   padding: 10px;
 }
-
 .objetosuser {
   /* background-color: indigo; */
   display: flex;
   justify-content: top;
   align-items: top;
 }
-
 .formulariouser {
   background-color: rgba(0, 0, 0, 0.25);
   padding: 20px;
@@ -180,44 +219,61 @@
 
 <script>
 export default {
-  data: () => ({
-    items: ["Administrador", "Contador", "Operador", "Bodeguero"],
-    valid: true,
-    cedula: "",
-    ccru: [
-      (v) => !!v || "Este campo es obligatorio",
-      (v) =>
-        (v && v.length <= 10) ||
-        "El código no puede tener más de 10 caracteres",
-    ],
-    contras: "",
-    contrasru: [
-      (v) => !!v || "Este campo es obligatorio",
-      (v) => (v && v.length < 8) || "La contraseña es debil",
-    ],
-    valid: true,
-    nombreap: "",
-    nomapru: [(v) => !!v || "Este campo es obligatorio"],
-    nombreusu: "",
-    nomusuru: [(v) => !!v || "Este campo es obligatorio"],
-    valid: true,
-    direccion: "",
-    dirru: [(v) => !!v || "Este campo es obligatorio"],
+  
+  data(){
+const defaultFormUser = Object.freeze({
+        nombreap: '',
+        cedula: '',
+        direccion: '',
+        telefono: '',
+        correo: '',
+        nombreusu: '', 
+        tipo: '',
+        contras: ''
+      })
 
-    valid: true,
-    telefono: "",
-    telru: [(v) => !!v || "Este campo es obligatorio"],
+return{
+form: Object.assign({}, defaultFormUser),
+  rules:{
+  nomapru: [(v) => !!v || "Este campo es obligatorio"],
+  ccru: [
+          (v) => !!v || "Este campo es obligatorio",
+          (v) =>(v && v.length <= 10) ||
+          "El código no puede tener más de 10 caracteres",
+          (v) =>(v && v.length >= 6) ||
+          "El código no puede tener menos de 6 caracteres"],
+  dirru: [(v) => !!v || "Este campo es obligatorio"],
+  telru: [(v) => !!v || "Este campo es obligatorio"],
+  corru: [
+        (v) => !!v || "Este campo es obligatorio",
+        (v) => /.+@.+\..+/.test(v) || "El correo debe tener un formato válido"],
+  nomusuru: [(v) => !!v || "Este campo es obligatorio"],
+  contrasru: [
+        (v) => !!v || "Este campo es obligatorio",
+        (v) => (v && v.length < 8) || "La contraseña es debil",],
+  tiporu:[(v) => !!v || 'Esta selección es obligatoria']
+  },
 
-    correol: "",
-    corru: [
-      (v) => !!v || "Este campo es obligatorio",
-      (v) => /.+@.+\..+/.test(v) || "El correo debe tener un formato válido",
-    ],
+  usurio:{
+        _id: '',
+        nombreap: '',
+        cedula: '',
+        direccion: '',
+        telefono: '',
+        correo: '',
+        nombreusu: '', 
+        contras: '',
+        tipo: ''
+        
 
-    selectedUsu:[],
-    buscarUsu: '',
+        },
 
-    titulosUsuarios: [
+        snackbar:false,
+        defaultFormUser,
+        items: ["Administrador", "Contador", "Operador", "Bodeguero"],
+        selectedUsu:[],
+        buscarUsu: '',
+        titulosUsuarios: [
       {
         text: "Código",
         align: "start",
@@ -230,8 +286,8 @@ export default {
       { text: "Correo", value: "EmailUsu" },
       { text: "Nombre de usuario", value: "NomUsu" },
       { text: "Tipo de usuario", value: "TipUsu" },
-    ],
-    datosUsuarios: [
+        ],
+      datosUsuarios: [
       {
         CodigoUsuario: 1234567890,
         NomApeUsu: "Juan Sebastian Vicaña Barrios",
@@ -252,25 +308,48 @@ export default {
         NomUsu: "SebPac",
         TipUsu: "Administrador",
       },
-    ],
-  }),
+    ]
+}
 
+  },
+  
+
+  
+  computed: {
+      formIsValid () {
+        return (
+      this.usurio.nombreap &&
+      this.usurio.cedula &&
+      this.usurio.direccion &&
+      this.usurio.telefono &&
+      this.usurio.correo &&
+      this.usurio.nombreusu &&
+      this.usurio.tipo
+        )
+      },
+    },
   methods: {
 
-      handleClickUsu(item) {
-      alert('Codigo ' + item.CodigoUsuario +' Nombre completo: '+ item.NomApeUsu+' Cedula: '+ item.ccUsu+' Direccion: '+ item.DirecUsu+
-      ' Telefono: '+ item.TelUsu+' E-mail: '+ item.EmailUsu+' Nombre de usuario: '+ item.NomUsu+' Tipo de usuario: '+ item.TipUsu+' ');
+      ClickUsu(item) {
+      this.usurio.nombreap=item.NomApeUsu;
+      this.usurio.cedula=item.ccUsu;
+      this.usurio.direccion=item.DirecUsu;
+      this.usurio.telefono=item.TelUsu;
+      this.usurio.correo=item.EmailUsu;
+      this.usurio.nombreusu=item.NomUsu;
+      this.usurio.tipo=item.TipUsu;
+      
       },
 
-    validate() {
-      this.$refs.form.validate();
-    },
-    reset() {
-      this.$refs.form.reset();
-    },
-    resetValidation() {
-      this.$refs.form.resetValidation();
-    },
+      resetFormUser () {
+        this.form = Object.assign({}, this.defaultForm)
+        this.$refs.form.reset()
+      },
+      submitUser () {
+        this.snackbar = true
+        this.resetFormUser()
+      },
+
   },
 };
 </script>
