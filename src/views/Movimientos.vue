@@ -4,13 +4,31 @@
       <v-icon dark left> mdi-text-box-search </v-icon>
       <h1>Registro de movimientos</h1>
     </div>
+
+    <v-snackbar
+      v-model="emergenteMov"
+      absolute
+      botton
+      right
+      color="success"
+    >
+      <span>Se ha registrado correctamente!</span>
+      <v-icon dark>
+        mdi-checkbox-marked-circle
+      </v-icon>
+    </v-snackbar>
+
     <div class="objetosMo">
       <div class="formularMo">
-        <v-form align="center" ref="form" v-model="valid" lazy-validation>
+        <v-form
+        align="center"
+        ref="formMov"
+        @submit.prevent="submitMov"
+        >
           <v-text-field
             dark
-            v-model="cantidadMo"
-            :rules="canruMo"
+            v-model="movimiento.cantidadMo"
+            :rules="rules.canruMo"
             label="Cantidad"
             outlined
             required
@@ -19,8 +37,8 @@
 
           <v-text-field
             dark
-            v-model="detalleMo"
-            :rules="detruMo"
+            v-model="movimiento.detalleMo"
+            :rules="rules.detruMo"
             label="Detalles"
             outlined
             required
@@ -28,9 +46,9 @@
 
           <v-select
             dark
-            v-model="tipoMo"
+            v-model="movimiento.tipoMo"
             :items="itemsMo"
-            :rules="[(v) => !!v || 'Esta selección es obligatoria']"
+            :rules="rules.tipoMoru"
             label="Tipo"
             outlined
             required
@@ -38,9 +56,9 @@
 
           <v-select
             dark
-            v-model="refliMo"
+            v-model="movimiento.refliMo"
             :items="irefliMo"
-            :rules="[(v) => !!v || 'Esta selección es obligatoria']"
+            :rules="rules.refliMoru"
             label="Referencia del libro"
             outlined
             required
@@ -48,9 +66,9 @@
 
           <v-select
             dark
-            v-model="almorMo"
+            v-model="movimiento.almorMo"
             :items="ialmorMo"
-            :rules="[(v) => !!v || 'Esta selección es obligatoria']"
+            :rules="rules.almorMoru"
             label="Almacén de origen"
             outlined
             required
@@ -58,9 +76,9 @@
 
           <v-select
             dark
-            v-model="almdeMo"
+            v-model="movimiento.almdeMo"
             :items="ialmdeMo"
-            :rules="[(v) => !!v || 'Esta selección es obligatoria']"
+            :rules="rules.almdeMoru"
             label="Almacén de destino"
             outlined
             required
@@ -68,21 +86,37 @@
 
           <br />
 
-          <v-btn color="white" class="mr-4" outlined @click="validate">
+          <v-btn 
+          color="white"
+          class="mr-4"
+          outlined 
+          :disabled="!formIsValid"
+          type="submitMov"
+          >
             <v-icon left>mdi-content-save</v-icon>
             Guardar
           </v-btn>
 
-          <v-btn color="white" class="mr-4" outlined @click="reset">
+          <v-btn color="white" class="mr-4" outlined @click="resetFormMov">
             <v-icon left>mdi-pencil</v-icon>
             Editar
+          </v-btn>
+
+          <v-btn 
+          color="white"
+          class="mr-4"
+          outlined
+          @click="resetFormMov"
+          >
+            <v-icon left>mdi-window-close</v-icon>
+            Cancelar
           </v-btn>
 
           <v-btn
             v-if="usuario.tipo == 'admin'"
             color="white"
             outlined
-            @click="resetValidation"
+            @click="resetFormMov"
           >
             <v-icon left>mdi-delete</v-icon>
             Eliminar
@@ -183,35 +217,48 @@
 <script>
 export default {
   data() {
+    
+    const defaultFormMov = Object.freeze({
+        cantidadMo: '',
+        detalleMo: '',
+        tipoMo: '',
+        refliMo: '',
+        almorMo: '',
+        almdeMo: '',
+      })
+
     return {
       usuario: {
         tipo: "xd",
       },
-
-      valid: true,
-      cantidadMo: "",
+      formMov:Object.assign({}, defaultFormMov),
+      rules: {
       canruMo: [(v) => !!v || "Este campo es obligatorio"],
-
-      valid: true,
-      detalleMo: "",
       detruMo: [(v) => !!v || "Este campo es obligatorio"],
-
-      tipoMo: null,
+      tipoMoru: [(v) => !!v || 'Esta selección es obligatoria'],
+      refliMoru:[(v) => !!v || 'Esta selección es obligatoria'],
+      almorMoru:[(v) => !!v || 'Esta selección es obligatoria'],
+      almdeMoru:[(v) => !!v || 'Esta selección es obligatoria'],
+      },
       itemsMo: [
         "Adquisición (+)",
         "Devolución de adquisición (-)",
         "Distribución (-)",
         "Devolución de distribución (+)",
       ],
-
-      refliMo: null,
       irefliMo: ["La tortuguita pescuezona - YTXX74YA3M"],
-
-      almorMo: null,
       ialmorMo: ["Bodega", "Tres pelagatos sas", "El lector"],
-
-      almdeMo: null,
       ialmdeMo: ["Bodega", "Tres pelagatos sas", "El lector"],
+
+      movimiento:{
+      _id: '',
+      cantidadMo: '',
+      detalleMo: '',
+      tipoMo: '',
+      refliMo: '',
+      almorMo: '',
+      almdeMo: ''
+      },
 
       selectedMov:[],
       buscarMov: '',
@@ -250,22 +297,45 @@ export default {
       ],
     };
   },
+
+
+/*...................................*/
+computed: {
+      formIsValid () {
+        return (
+          this.movimiento.cantidadMo &&
+          this.movimiento.detalleMo &&
+          this.movimiento.tipoMo &&
+          this.movimiento.refliMo &&
+          this.movimiento.almorMo &&
+          this.movimiento.almdeMo
+        )
+      },
+    },
+
+  /*...................................*/
+  
+
+
   methods: {
 
     handleClickMov(item) {
-      alert('Id Movimiento: ' + item.idMov +' Fecha Movimiento: '+ item.fechaMov+' Detalles: '+ item.detalleMov+' Cantidad de movimientos: '+ item.cantidadMov+
-      ' Tipo de movimiento: '+ item.tipoMov +' Referencia: '+ item.referenciaMov +' Origen: '+ item.almorigenMov + ' Destino: '+ item.almdestinoMov );
+          this.movimiento.cantidadMo=item.cantidadMov;
+          this.movimiento.detalleMo =item.detalleMov;
+          this.movimiento.tipoMo =item.tipoMov;
+          this.movimiento.refliMo =item.referenciaMov;
+          this.movimiento.almorMo =item.almorigenMov;
+          this.movimiento.almdeMo =item.almdestinoMov;
+        },
+     resetFormMov () {
+        this.formMov = Object.assign({}, this.defaultForm)
+        this.$refs.formMov.reset()
       },
-
-    validate() {
-      this.$refs.form.validate();
-    },
-    reset() {
-      this.$refs.form.reset();
-    },
-    resetValidation() {
-      this.$refs.form.resetValidation();
-    },
+      submitMov () {
+        this.emergenteMov = true
+        this.resetFormMov()
+      },
+    
   },
 };
 </script>

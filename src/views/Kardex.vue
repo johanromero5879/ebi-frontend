@@ -22,12 +22,16 @@
             required
           ></v-select>
 
-          <v-btn color="white" class="mr-4" outlined @click="validate">
+          <v-btn color="white" class="mr-4" outlined @click="validate"
+          :disabled="!formIsValidKar"
+          >
             <v-icon left>mdi-format-list-bulleted</v-icon>
             Listar
           </v-btn>
 
-          <v-btn color="white" class="mr-4" outlined @click="validate">
+          <v-btn color="white" class="mr-4" outlined @click="validate"
+          :disabled="!formIsValidKar"
+          >
             <v-icon left>mdi-file-chart</v-icon>
             Generar Kardex
           </v-btn>
@@ -71,7 +75,7 @@
         </v-data-table>
       </div>
     </div>
-  <v-overlay align="center" :value="overlka" opacity="0.7">
+  <v-overlay align="center" class="overlay-kardex" :value="overlka" opacity="0.7">
     <v-data-table
       :hide-default-footer="true"
       disable-pagination
@@ -178,7 +182,11 @@
 }
 
 .tablaKardexm {
-  width: 180vh;
+  padding: 10px;
+}
+
+.overlay-kardex .v-overlay__content {
+  width: 80%
 }
 
 </style>
@@ -202,7 +210,6 @@ export default {
 
       selectedKa:[],
       buscarKa: '',
-
       datosKa: [
         {
           idKA: "192837465",
@@ -265,6 +272,15 @@ export default {
       ],
     };
   },
+  computed: {
+      
+      
+      formIsValidKar () {
+        return (
+      this.almKa 
+        )
+      }
+    },
   methods: {
     listarKA(item) {
         // alert('Id: ' + item.idKA +' Fecha : '+ item.fechaKA );

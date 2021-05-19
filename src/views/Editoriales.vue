@@ -1,24 +1,40 @@
 <template>
   <div class="contEditoriales">
+
+
+    
     <div class="tituloEd">
       <v-icon dark left>mdi-library</v-icon>
       <h1>Registro de editoriales</h1>
     </div>
+
+<v-snackbar
+      v-model="emergenteEd"
+      absolute
+      botton
+      right
+      color="success"
+    >
+      <span>Se ha registrado correctamente!</span>
+      <v-icon dark>
+        mdi-checkbox-marked-circle
+      </v-icon>
+    </v-snackbar>
+
     <div class="objetosEd">
       <div class="formularEd">
         <v-form
           class="forma"
           align="center"
-          ref="form"
-          v-model="valid"
-          lazy-validation
+          ref="formeditoriales"
+          @submit.prevent="submitEd"
         >
 
 
           <v-text-field
             dark
-            v-model="nombreEd"
-            :rules="nomruEd"
+            v-model="editorial.nombreEd"
+            :rules="rules.nomruEd"
             label="Nombre"
             outlined
             required
@@ -26,8 +42,8 @@
 
           <v-text-field
             dark
-            v-model="direccionEd"
-            :rules="dirruEd"
+            v-model="editorial.direccionEd"
+            :rules="rules.dirruEd"
             label="Dirección"
             outlined
             required
@@ -35,8 +51,8 @@
 
           <v-text-field
             dark
-            v-model="telefonoEd"
-            :rules="telruEd"
+            v-model="editorial.telefonoEd"
+            :rules="rules.telruEd"
             label="Teléfono"
             outlined
             required
@@ -44,8 +60,8 @@
 
           <v-text-field
             dark
-            v-model="correoEd"
-            :rules="corruEd"
+            v-model="editorial.correoEd"
+            :rules="rules.corruEd"
             label="Correo electrónico"
             outlined
             required
@@ -53,21 +69,34 @@
 
           <br />
 
-          <v-btn color="white" class="mr-4" outlined @click="validate">
+          <v-btn color="white" class="mr-4" outlined 
+          :disabled="!formIsValid"
+          type="submitEd"
+          >
             <v-icon left>mdi-content-save</v-icon>
             Guardar
           </v-btn>
 
-          <v-btn color="white" class="mr-4" outlined @click="reset">
+          <v-btn color="white" class="mr-4" outlined @click="resetFormEd">
             <v-icon left>mdi-pencil</v-icon>
             Editar
+          </v-btn>
+
+           <v-btn 
+          color="white"
+          class="mr-4"
+          outlined
+          @click="resetFormEd"
+          >
+            <v-icon left>mdi-window-close</v-icon>
+            Cancelar
           </v-btn>
 
           <v-btn
             v-if="usuario.tipo == 'admin'"
             color="white"
             outlined
-            @click="resetValidation"
+            @click="resetFormEd"
           >
             <v-icon left>mdi-delete</v-icon>
             Eliminar
@@ -128,21 +157,18 @@
   align-items: top;
   font-family: sans-serif;
 }
-
 .tituloEd {
   /* background-color: hotpink; */
   color: white;
   padding: 10px;
   display: flex;
 }
-
 .objetosEd {
   /* background-color: indigo; */
   display: flex;
   justify-content: top;
   align-items: top;
 }
-
 .formularEd {
   background-color: rgba(0, 0, 0, 0.25);
   padding: 20px;
@@ -151,7 +177,6 @@
   display: block;
   align-items: top;
 }
-
 .tablamuestraEd {
   /* background-color: green; */
   padding-top: 0px;
@@ -165,28 +190,37 @@
 <script>
 export default {
   data() {
+
+      const defaultFormEd = Object.freeze({
+        nombreEd: '',
+        direccionEd: '',
+        telefonoEd: '',
+        correoEd: '',
+      })
+
     return {
       usuario: {
         tipo: "xd",
       },
-
-      valid: true,
-      nombreEd: "",
+formeditoriales:Object.assign({}, defaultFormEd),
+      rules: {
       nomruEd: [(v) => !!v || "Este campo es obligatorio"],
-
-      valid: true,
-      direccionEd: "",
       dirruEd: [(v) => !!v || "Este campo es obligatorio"],
-
-      valid: true,
-      telefonoEd: "",
       telruEd: [(v) => !!v || "Este campo es obligatorio"],
-
-      correoEd: "",
       corruEd: [
         (v) => !!v || "Este campo es obligatorio",
         (v) => /.+@.+\..+/.test(v) || "El correo debe tener un formato válido",
-      ],
+      ]
+      },
+      editorial:{
+      _id: '',
+      nombreEd: '',
+      direccionEd: '',
+      telefonoEd: '',
+      correoEd: '',
+      },
+      snackbar: false,
+      defaultFormEd,
     selectedEd:[],
     buscarEd: '',
       titulosEd: [
@@ -218,22 +252,36 @@ export default {
       ],
     };
   },
-  methods: {
+  
+/*...................................*/
+computed: {
+      formIsValid () {
+        return (
+          this.editorial.nombreEd &&
+          this.editorial.direccionEd &&
+          this.editorial.telefonoEd &&
+          this.editorial.correoEd
+        )
+      },
+    },
 
+  /*...................................*/
+  methods: {
       handleClickEd(item) {
-      alert('Codigo ' + item.codigoEdi +' Nombre Editorial: '+ item.nombreEdi+' Direccion: '+ item.direccionEdi+' Telefono: '+ item.telefonoEdi+
-      ' E-mail: '+ item.correoEdi);
+      this.editorial.nombreEd=item.nombreEdi;
+      this.editorial.direccionEd=item.direccionEdi;
+      this.editorial.telefonoEd=item.telefonoEdi;
+      this.editorial.correoEd=item.correoEdi;
+      },
+      resetFormEd () {
+        this.formeditoriales = Object.assign({}, this.defaultForm)
+        this.$refs.formeditoriales.reset()
+      },
+      submitEd () {
+        this.emergenteEd = true
+        this.resetFormEd()
       },
 
-    validate() {
-      this.$refs.form.validate();
-    },
-    reset() {
-      this.$refs.form.reset();
-    },
-    resetValidation() {
-      this.$refs.form.resetValidation();
-    },
   },
 };
 </script>
