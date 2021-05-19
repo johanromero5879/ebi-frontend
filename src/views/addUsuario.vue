@@ -202,6 +202,7 @@
 
 <script>
 import { SERVER_URL } from "../config.json";
+import { http } from "../utils";
 
 export default {
   data() {
@@ -311,21 +312,11 @@ export default {
           let metodo = 'POST'
 
           if(this.usuario_id){
-            url = `${url}/${this.usuario_id}`
+            url += `/${this.usuario_id}`
             metodo = 'PUT'
           }
 
-          console.log(JSON.parse(JSON.stringify(this.datos)))
-          const response = await fetch(url, {
-            method: metodo,
-            headers: {
-              "Content-type": "application/json",
-            },
-            body: JSON.stringify(this.datos)
-          })
-
-          const data = await response.json()
-
+          const data = await http(url, metodo, this.datos)
           if(data.error)
             throw data.error.message
 
@@ -341,9 +332,7 @@ export default {
       }
     },
     async obtenerUsuarios(){
-      
-      const response = await fetch(`${SERVER_URL}/api/usuarios`)
-      const usuarios = await response.json()
+      const usuarios = await http(`${SERVER_URL}/api/usuarios`)
       this.datosUsuarios = []
       for(const usuario of usuarios){
         const { persona } = usuario

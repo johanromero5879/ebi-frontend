@@ -1,24 +1,13 @@
 <template>
   <div class="contEditoriales">
-
-
-    
     <div class="tituloEd">
       <v-icon dark left>mdi-library</v-icon>
       <h1>Registro de editoriales</h1>
     </div>
 
-<v-snackbar
-      v-model="emergenteEd"
-      absolute
-      botton
-      right
-      color="success"
-    >
+    <v-snackbar v-model="snackbar" absolute botton right color="success">
       <span>Se ha registrado correctamente!</span>
-      <v-icon dark>
-        mdi-checkbox-marked-circle
-      </v-icon>
+      <v-icon dark> mdi-checkbox-marked-circle </v-icon>
     </v-snackbar>
 
     <div class="objetosEd">
@@ -29,11 +18,9 @@
           ref="formeditoriales"
           @submit.prevent="submitEd"
         >
-
-
           <v-text-field
             dark
-            v-model="editorial.nombreEd"
+            v-model="editorial.nombre"
             :rules="rules.nomruEd"
             label="Nombre"
             outlined
@@ -42,7 +29,7 @@
 
           <v-text-field
             dark
-            v-model="editorial.direccionEd"
+            v-model="editorial.direccion"
             :rules="rules.dirruEd"
             label="Dirección"
             outlined
@@ -51,7 +38,7 @@
 
           <v-text-field
             dark
-            v-model="editorial.telefonoEd"
+            v-model="editorial.telefono"
             :rules="rules.telruEd"
             label="Teléfono"
             outlined
@@ -60,7 +47,7 @@
 
           <v-text-field
             dark
-            v-model="editorial.correoEd"
+            v-model="editorial.correo"
             :rules="rules.corruEd"
             label="Correo electrónico"
             outlined
@@ -69,25 +56,29 @@
 
           <br />
 
-          <v-btn color="white" class="mr-4" outlined 
-          :disabled="!formIsValid"
-          type="submitEd"
+          <v-btn
+            color="white"
+            class="mr-4"
+            outlined
+            :disabled="!formIsValid"
+            type="submitEd"
           >
-            <v-icon left>mdi-content-save</v-icon>
-            Guardar
+            <template v-if="!this.editorial_id">
+              <v-icon left>mdi-content-save</v-icon>
+              Guardar
+            </template>
+            <template v-else>
+              <v-icon left>mdi-pencil</v-icon>
+              Editar
+            </template>
           </v-btn>
 
-          <v-btn color="white" class="mr-4" outlined @click="resetFormEd">
+          <!-- <v-btn color="white" class="mr-4" outlined @click="resetFormEd">
             <v-icon left>mdi-pencil</v-icon>
             Editar
-          </v-btn>
+          </v-btn> -->
 
-           <v-btn 
-          color="white"
-          class="mr-4"
-          outlined
-          @click="resetFormEd"
-          >
+          <v-btn color="white" class="mr-4" outlined @click="resetFormEd">
             <v-icon left>mdi-window-close</v-icon>
             Cancelar
           </v-btn>
@@ -114,19 +105,23 @@
           v-model="selectedEd"
           @click:row="handleClickEd"
         >
-
           <template slot="items" slot-scope="props">
-          <tr @click="showAlert(props.item)">
-          <td>{{ props.item.codigoAlm }}</td>
-          <td class="text-xs-right">{{ props.item.nombreEdi }}</td>
-          <td class="text-xs-right">{{ props.item.direccionEdi }}</td>
-          <td class="text-xs-right">{{ props.item.telefonoEdi }}</td>
-          <td class="text-xs-right">{{ props.item.correoEdi }}</td>
+            <tr @click="showAlert(props.item)">
+              <td class="text-xs-right">{{ props.item._id }}</td>
+              <td class="text-xs-right">{{ props.item.nombre }}</td>
+              <td class="text-xs-right">{{ props.item.direccion }}</td>
+              <td class="text-xs-right">{{ props.item.telefono }}</td>
+              <td class="text-xs-right">{{ props.item.correo }}</td>
             </tr>
-        </template>
-        <v-alert slot="no-results" :value="true" color="error" icon="mdi-alert">
-          No se encontraron resultados para "{{ buscarEd }}".
-        </v-alert>
+          </template>
+          <v-alert
+            slot="no-results"
+            :value="true"
+            color="error"
+            icon="mdi-alert"
+          >
+            No se encontraron resultados para "{{ buscarEd }}".
+          </v-alert>
 
           <template v-slot:top>
             <v-text-field
@@ -188,100 +183,119 @@
 </style>
 
 <script>
+import { SERVER_URL } from "../config.json";
+import { http } from "../utils";
+
 export default {
   data() {
-
-      const defaultFormEd = Object.freeze({
-        nombreEd: '',
-        direccionEd: '',
-        telefonoEd: '',
-        correoEd: '',
-      })
+    const defaultFormEd = Object.freeze({
+      nombre: "",
+      direccion: "",
+      telefono: "",
+      correo: "",
+    });
 
     return {
       usuario: {
         tipo: "xd",
       },
-formeditoriales:Object.assign({}, defaultFormEd),
+      formeditoriales: Object.assign({}, defaultFormEd),
       rules: {
-      nomruEd: [(v) => !!v || "Este campo es obligatorio"],
-      dirruEd: [(v) => !!v || "Este campo es obligatorio"],
-      telruEd: [(v) => !!v || "Este campo es obligatorio"],
-      corruEd: [
-        (v) => !!v || "Este campo es obligatorio",
-        (v) => /.+@.+\..+/.test(v) || "El correo debe tener un formato válido",
-      ]
-      },
-      editorial:{
-      _id: '',
-      nombreEd: '',
-      direccionEd: '',
-      telefonoEd: '',
-      correoEd: '',
+        nomruEd: [(v) => !!v || "Este campo es obligatorio"],
+        dirruEd: [(v) => !!v || "Este campo es obligatorio"],
+        telruEd: [(v) => !!v || "Este campo es obligatorio"],
+        corruEd: [
+          (v) => !!v || "Este campo es obligatorio",
+          (v) =>
+            /.+@.+\..+/.test(v) || "El correo debe tener un formato válido",
+        ],
       },
       snackbar: false,
       defaultFormEd,
-    selectedEd:[],
-    buscarEd: '',
+      selectedEd: [],
+      buscarEd: "",
       titulosEd: [
-        {
-          text: "Código",
-          align: "start",
-          value: "codigoEdi",
-        },
-        { text: "Nombre", value: "nombreEdi" },
-        { text: "Dirección", value: "direccionEdi" },
-        { text: "Teléfono", value: "telefonoEdi" },
-        { text: "Correo Electrónico", value: "correoEdi" },
+        { text: "Código", value: "_id" },
+        { text: "Nombre", value: "nombre" },
+        { text: "Dirección", value: "direccion" },
+        { text: "Teléfono", value: "telefono" },
+        { text: "Correo Electrónico", value: "correo" },
       ],
-      datosEd: [
-        {
-          codigoEdi: 1234567890,
-          nombreEdi: "Santillana",
-          direccionEdi: "Calle 50A # 6-19",
-          telefonoEdi: 3025846359,
-          correoEdi: "contacto@satillana.com",
-        },
-        {
-          codigoEdi: 9987654321,
-          nombreEdi: "Grupo planeta",
-          direccionEdi: "Trasversar 16B # 3-18",
-          telefonoEdi: 3125946800,
-          correoEdi: "contacto@grupoplaneta.com",
-        },
-      ],
+      datosEd: [],
+      editorial_id: '',
+      editorial: {
+        nombre: '',
+        direccion: '',
+        telefono: '',
+        correo: ''
+      }
     };
   },
-  
-/*...................................*/
-computed: {
-      formIsValid () {
-        return (
-          this.editorial.nombreEd &&
-          this.editorial.direccionEd &&
-          this.editorial.telefonoEd &&
-          this.editorial.correoEd
-        )
-      },
+
+  /*...................................*/
+  computed: {
+    formIsValid() {
+      return (
+        this.editorial.nombre &&
+        this.editorial.direccion &&
+        this.editorial.telefono &&
+        this.editorial.correo
+      );
     },
+  },
 
   /*...................................*/
   methods: {
-      handleClickEd(item) {
-      this.editorial.nombreEd=item.nombreEdi;
-      this.editorial.direccionEd=item.direccionEdi;
-      this.editorial.telefonoEd=item.telefonoEdi;
-      this.editorial.correoEd=item.correoEdi;
-      },
-      resetFormEd () {
-        this.formeditoriales = Object.assign({}, this.defaultForm)
-        this.$refs.formeditoriales.reset()
-      },
-      submitEd () {
-        this.emergenteEd = true
-        this.resetFormEd()
-      },
+    handleClickEd(item) {
+      this.editorial_id = item._id;
+      this.editorial.nombre = item.nombre;
+      this.editorial.direccion = item.direccion;
+      this.editorial.telefono = item.telefono;
+      this.editorial.correo = item.correo;
+    },
+    resetFormEd() {
+      this.editorial_id = ''
+      this.formeditoriales = Object.assign({}, this.defaultForm);
+      this.$refs.formeditoriales.reset();
+    },
+    async submitEd() {
+      if(this.$refs.formeditoriales.validate()){
+        try{
+          let url = `${ SERVER_URL }/api/editoriales`
+          let metodo = 'POST'
 
+          if(this.editorial_id){
+            url += `/${this.editorial_id}`
+            metodo = 'PUT'
+          }
+
+          const data = await http(url, metodo, this.editorial)
+
+          if(data.error)
+            throw data.error.message
+
+          
+          this.resetFormEd();
+          this.obtenerEditoriales()
+          this.snackbar = true;
+          
+        }catch(ex){
+          console.log(ex)
+        }
+      }
+      
+    },
+    async obtenerEditoriales(){
+      const editoriales = await http(`${SERVER_URL}/api/editoriales`)
+
+      this.datosEd = []
+      for(const editorial of editoriales){
+        this.datosEd.push(editorial)
+      }
+    }
   },
+  beforeMount(){
+    this.obtenerEditoriales()
+  }
 };
 </script>

@@ -76,6 +76,7 @@
 
 <script>
 import { SERVER_URL } from "../config.json";
+import { http } from "../utils";
 
 export default {
   data() {
@@ -98,16 +99,7 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await fetch(`${SERVER_URL}/api/auth/signin`, {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify(this.usuario),
-        });
-
-        
-        const data = await response.json();
+        const data = await http(`${SERVER_URL}/api/auth/signin`, 'POST', this.usuario);
         
         if(data.error)
           throw data.message
