@@ -10,6 +10,7 @@ import movimientos from '../views/Movimientos.vue'
 import kardex from '../views/Kardex.vue'
 import consultexis from '../views/consultarExistencias.vue'
 import manualuser from '../views/Manual.vue'
+import wallpaperb from '../views/bienvenido.vue'
 
 
 import { obtenerUsuario } from '../utils'
@@ -38,6 +39,10 @@ const routes = [
     path: '/home',
     component: Home,
     children: [
+      {
+        path: '',
+        component: wallpaperb
+      },
       {
         path: 'crear_usuario',
         component: addUsuario
