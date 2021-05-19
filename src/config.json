@@ -1,3 +1,4 @@
 {
-    "SERVER_URL": "http://ebi-backend.herokuapp.com"
+    "SERVER_URL": "https://ebi-backend.herokuapp.com"
+    
 }

@@ -1,20 +1,10 @@
 <template>
   <div class="contLibros">
     <div class="titulolib">
-
-<v-snackbar
-      v-model="snackbarLib"
-      absolute
-      botton
-      right
-      color="success"
-    >
-      <span>Se ha registrado correctamente!</span>
-      <v-icon dark>
-        mdi-checkbox-marked-circle
-      </v-icon>
-    </v-snackbar>
-    
+      <v-snackbar v-model="snackbarLib" absolute botton right color="success">
+        <span>Se ha registrado correctamente!</span>
+        <v-icon dark> mdi-checkbox-marked-circle </v-icon>
+      </v-snackbar>
 
       <v-icon dark left> mdi-book-open-blank-variant </v-icon>
       <h1>Registro de libros</h1>
@@ -26,11 +16,10 @@
           align="center"
           ref="formLib"
           @submit.prevent="submitLib"
-          
         >
           <v-text-field
             dark
-            v-model="libro.codigoisbn"
+            v-model="libro.isbn"
             :counter="13"
             :rules="rules.codisbru"
             label="Código ISBN"
@@ -76,51 +65,37 @@
 
           <v-text-field
             dark
-            v-model="libro.anu"
+            v-model="libro.anio"
             :rules="rules.anuru"
             label="Año"
             outlined
             required
           ></v-text-field>
-          <v-text-field
+          <v-select
             dark
             v-model="libro.editorial"
+            :items="editoriales"
+            item-text=""
             :rules="rules.editorialru"
             label="Editorial"
             outlined
-            required
-          ></v-text-field>
-
-          <v-text-field
-            dark
-            v-model="libro.costo"
-            :rules="rules.costoru"
-            label="Costo del Libro"
-            outlined
-            required
-          ></v-text-field>
-          
+            aria-required=""
+          ></v-select>
 
           <br />
 
           <v-btn
-          color="white"
-          class="mr-4"
-          outlined
-          :disabled="!formIsValid"
-          type="submitLib"
-          
+            color="white"
+            class="mr-4"
+            outlined
+            :disabled="!formIsValid"
+            type="submitLib"
           >
             <v-icon left>mdi-content-save</v-icon>
             Guardar
           </v-btn>
 
-          <v-btn 
-          color="white"
-          class="mr-4"
-          outlined
-          @click="resetFormLib"
-          >
+          <v-btn color="white" class="mr-4" outlined @click="resetFormLib">
             <v-icon left>mdi-window-close</v-icon>
             Cancelar
           </v-btn>
@@ -135,8 +110,8 @@
             Eliminar
           </v-btn>
 
-          <br>
-          <br>
+          <br />
+          <br />
 
           <v-btn color="white" outlined @click="mostrarRef">
             <v-icon left>mdi-file-eye</v-icon>
@@ -155,23 +130,25 @@
           :search="buscarlibro"
           v-model="selectedLib"
         >
-
-        <template slot="items" slot-scope="props">
-          <tr @click="showAlert(props.item)">
-            <td>{{ props.item.CodigoLib }}</td>
-            <td class="text-xs-right">{{ props.item.CodIsbn }}</td>
-            <td class="text-xs-right">{{ props.item.TituloLib }}</td>
-            <td class="text-xs-right">{{ props.item.AutorLib }}</td>
-            <td class="text-xs-right">{{ props.item.CategoriaLib }}</td>
-            <td class="text-xs-right">{{ props.item.TemaLib }}</td>
-            <td class="text-xs-right">{{ props.item.AnuLib }}</td>
-            <td class="text-xs-right">{{ props.item.EdiLib }}</td>
-            <td class="text-xs-right">{{ props.item.CostoLib }}</td>
-          </tr>
-        </template>
-        <v-alert slot="no-results" :value="true" color="error" icon="mdi-alert">
-          No se encontraron resultados para "{{ buscarlibro }}".
-        </v-alert>
+          <template slot="items" slot-scope="props">
+            <tr @click="showAlert(props.item)">
+              <td class="text-xs-right">{{ props.item.isbn }}</td>
+              <td class="text-xs-right">{{ props.item.titulo }}</td>
+              <td class="text-xs-right">{{ props.item.autor }}</td>
+              <td class="text-xs-right">{{ props.item.categoria }}</td>
+              <td class="text-xs-right">{{ props.item.tema }}</td>
+              <td class="text-xs-right">{{ props.item.anio }}</td>
+              <td class="text-xs-right">{{ props.item.editorial.nombre }}</td>
+            </tr>
+          </template>
+          <v-alert
+            slot="no-results"
+            :value="true"
+            color="error"
+            icon="mdi-alert"
+          >
+            No se encontraron resultados para "{{ buscarlibro }}".
+          </v-alert>
 
           <template v-slot:top>
             <v-text-field
@@ -187,29 +164,26 @@
         </v-data-table>
       </div>
     </div>
-    <v-overlay align="center" class="overlref" :value="overlayferen" opacity="0.7">
-      <v-snackbar
-      v-model="snackbarRef"
-      absolute
-      botton
-      right
-      color=blue
+    <v-overlay
+      align="center"
+      class="overlref"
+      :value="overlayferen"
+      opacity="0.7"
     >
-      <span>Se ha registrado correctamente!  </span>
-      <v-icon dark>
-        mdi-checkbox-marked-circle
-      </v-icon>
-    </v-snackbar>
+      <v-snackbar v-model="snackbarRef" absolute botton right color="blue">
+        <span>Se ha registrado correctamente! </span>
+        <v-icon dark> mdi-checkbox-marked-circle </v-icon>
+      </v-snackbar>
       <div class="formulariorefer">
         <v-form
           class="forma"
           align="center"
           ref="formRef"
-         @submit.prevent="submitRef"
+          @submit.prevent="submitRef"
         >
           <v-text-field
             light
-            v-model="libro.tituloref"
+            v-model="referencia.nombre"
             :rules="rules.tituloref"
             label="Nombre del libro"
             outlined
@@ -218,19 +192,19 @@
 
           <v-text-field
             light
-            v-model="libro.costref"
+            v-model="referencia.precioCosto"
             :rules="rules.costoru"
             label="Costo"
             outlined
             required
           ></v-text-field>
 
-          <v-btn 
-          color="black" 
-          class="mr-4" 
-          outlined 
-          :disabled="!formIsValidRef"
-          type="submitRef"
+          <v-btn
+            color="black"
+            class="mr-4"
+            outlined
+            :disabled="!formIsValidRef"
+            type="submitRef"
           >
             <v-icon left>mdi-content-save</v-icon>
             Guardar
@@ -248,7 +222,7 @@
         </v-form>
       </div>
 
-      <br>
+      <br />
 
       <div class="tablamuestraref">
         <v-data-table
@@ -264,17 +238,21 @@
           :search="buscarRefe"
           v-model="selectedRef"
         >
-
-        <template slot="items" slot-scope="props">
-          <tr @click="showAlert(props.item)">
-            <td>{{ props.item.reflibr }}</td>
-            <td class="text-xs-right">{{ props.item.nomref }}</td>
-            <td class="text-xs-right">{{ props.item.CostoLib }}</td>
-          </tr>
-        </template>
-        <v-alert slot="no-results" :value="true" color="error" icon="mdi-alert">
-          No se encontraron resultados para "{{ buscarRefe }}".
-        </v-alert>
+          <template slot="items" slot-scope="props">
+            <tr @click="showAlert(props.item)">
+              <td class="text-xs-right">{{ props.item._id }}</td>
+              <td class="text-xs-right">{{ props.item.nombre }}</td>
+              <td class="text-xs-right">{{ props.item.precioCosto }}</td>
+            </tr>
+          </template>
+          <v-alert
+            slot="no-results"
+            :value="true"
+            color="error"
+            icon="mdi-alert"
+          >
+            No se encontraron resultados para "{{ buscarRefe }}".
+          </v-alert>
 
           <template v-slot:top>
             <v-text-field
@@ -287,11 +265,9 @@
               hide-details
             ></v-text-field>
           </template>
-
-
         </v-data-table>
       </div>
-      <br>
+      <br />
       <v-btn color="white" light @click="ocultarRef">
         <v-icon>mdi-close</v-icon>
       </v-btn>
@@ -368,196 +344,161 @@
   width: 50%;
   display: block;
 }
-
 </style>
 
 <script>
+import { SERVER_URL } from "../config.json";
+import { http } from "../utils";
+
 export default {
-  
-  data(){
+  data() {
+    const defaultFormLib = Object.freeze({
+      isbn: "",
+      titulo: "",
+      autor: "",
+      categoria: "",
+      tema: "",
+      anio: "",
+      editorial: ""
+    });
 
-const defaultFormLib = Object.freeze({
-        codigoisbn: '',
-        titulo: '',
-        autor: '',
-        categoria: '',
-        tema: '',
-        anu: '', 
-        costo: '',
-        tituloref: '',
-        costref: ''
-      })
-return{
-formLib: Object.assign({}, defaultFormLib),
-formRef:Object.assign({}, defaultFormLib),
+    const defaultFormRef = Object.freeze({
+      nombre: "",
+      precioCosto: "",
+    });
 
-rules:{
+    return {
+      formLib: Object.assign({}, defaultFormLib),
+      formRef: Object.assign({}, defaultFormRef),
 
-codisbru: [
-      (v) => !!v || "Este campo es obligatorio",
-      (v) => (v && v.length > 9) || "ISBN no puede tener menos de 10 digitos",
-      (v) => (v && v.length < 14) || "ISBN no puede tener mas de 13 digitos",
-    ],
-tituloru: [(v) => !!v || "Este campo es obligatorio"],
-autoru: [(v) => !!v || "Este campo es obligatorio"],
-cateru: [(v) => !!v || "Este campo es obligatorio"],
-temru: [(v) => !!v || "Este campo es obligatorio"],
-anuru: [
-      (v) => !!v || "Este campo es obligatorio",
-      (v) => (v && v.length <= 4) || "El dato del año no es valido",
+      rules: {
+        codisbru: [
+          (v) => !!v || "Este campo es obligatorio",
+          (v) =>
+            (v && v.length > 9) || "ISBN no puede tener menos de 10 digitos",
+          (v) =>
+            (v && v.length < 14) || "ISBN no puede tener mas de 13 digitos",
+        ],
+        tituloru: [(v) => !!v || "Este campo es obligatorio"],
+        autoru: [(v) => !!v || "Este campo es obligatorio"],
+        cateru: [(v) => !!v || "Este campo es obligatorio"],
+        temru: [(v) => !!v || "Este campo es obligatorio"],
+        anuru: [
+          (v) => !!v || "Este campo es obligatorio",
+          (v) => (v && v.length <= 4) || "El dato del año no es valido",
+        ],
+        editorialru: [(v) => !!v || "Este campo es obligatorio"],
+        tituloref: [(v) => !!v || "Este campo es obligatorio"],
+        costoru: [
+          (v) => !!v || "Este campo es obligatorio",
+          (v) => (v && v.length > 0) || "El precio no es valido",
+        ],
+      },
+      libro_id: '',
+      libro: {
+        isbn: "",
+        titulo: "",
+        autor: "",
+        categoria: "",
+        tema: "",
+        anio: "",
+        editorial: ""
+      },
+      referencia: {
+        nombre: '',
+        precioCosto: ''
+      },
+      editoriales: [],
+      overlayferen: false,
+      snackbarLib: false,
+      defaultFormLib,
+      selected: [],
+      buscarlibro: "",
+      buscarRefe: "",
+
+      tituloslib: [
+        { text: "ISBN", value: "isbn" },
+        { text: "Titulo", value: "titulo" },
+        { text: "Autor", value: "autor" },
+        { text: "Categoria", value: "categoria" },
+        { text: "Tema", value: "tema" },
+        { text: "Año", value: "anio" },
+        { text: "Editorial", value: "editorial.nombre" }
       ],
-editorialru: [(v) => !!v || "Este campo es obligatorio"],
-tituloref: [(v) => !!v || "Este campo es obligatorio"],
-costoru: [
-      (v) => !!v || "Este campo es obligatorio",
-       (v) => (v && v.length > 0) || "El precio no es valido",
-    ],
+      datoslib: [],
 
-
-},
-
-libro:{
-        _id: '',
-        codigoisbn: '',
-        titulo: '',
-        autor: '',
-        categoria: '',
-        tema: '',
-        anu: '', 
-        editorial: '',
-        costo: '',
-        tituloref: '',
-        costref: ''
-        },
-
-overlayferen: false,
-snackbarLib:false,
-defaultFormLib,
-selected:[],
-buscarlibro: '',
-buscarRefe:'',
-
-  tituloslib: [
-      {
-        text: "Código",
-        align: "start",
-        value: "CodigoLib",
-      },
-      { text: "ISBN", value: "CodIsbn" },
-      { text: "Titulo", value: "TituloLib" },
-      { text: "Autor", value: "AutorLib" },
-      { text: "Categoria", value: "CategoriaLib" },
-      { text: "Tema", value: "TemaLib" },
-      { text: "Año", value: "AnuLib" },
-      { text: "Editorial", value: "EdiLib" },
-      { text: "Costo", value: "CostoLib" },
-    ],
-    datoslib: [
-      {
-        CodigoLib: 1234567890,
-        CodIsbn: 1234567895,
-        TituloLib: "El resplandor",
-        AutorLib: "Stephen King",
-        CategoriaLib: "Terror",
-        TemaLib: "Adultos",
-        AnuLib: 1977,
-        EdiLib: "Debolsillo",
-        CostoLib: 65000,
-      },
-      {
-        CodigoLib: 5695426546,
-        CodIsbn: 9781234567897,
-        TituloLib: "Luna de Plutón",
-        AutorLib: "Dross Rotzank",
-        CategoriaLib: "Entretenimiento",
-        TemaLib: "Infantil",
-        AnuLib: 2015,
-        EdiLib: "Grupo planeta",
-        CostoLib: 45000,
-      },
-    ],
-
-titulosref: [
-      { text: "Referencia", align: "start", value: "reflibr", },
-      { text: "Nombre", value: "nomref" },
-      { text: "Costo", value: "CostoLib" },
-    ],
-    datosref: [
-      {
-        reflibr: 'C3GTNC1NMI',
-        nomref: 'Luna de Plutón',
-        costref: '78500',
-      },
-      {
-        reflibr: 'H9U0WQ0N1T',
-        nomref: 'Luna de Plutón (Edición especial)',
-        costref: '97000',
-      },
-    ]
-}
+      titulosref: [
+        { text: "Referencia", value: "_id" },
+        { text: "Nombre", value: "nombre" },
+        { text: "Costo", value: "precioCosto" },
+      ],
+      datosref: [],
+    };
   },
 
-
-computed: {
-      formIsValid () {
-        return (
-      this.libro.codigoisbn &&
-      this.libro.titulo &&
-      this.libro.autor &&
-      this.libro.categoria &&
-      this.libro.tema &&
-      this.libro.anu &&
-      this.libro.editorial &&
-      this.libro.costo
-        )
-      },
-      
-      formIsValidRef () {
-        return (
-      this.libro.tituloref &&
-      this.libro.costref
-        )
-      }
+  computed: {
+    formIsValid() {
+      return (
+        this.libro.isbn &&
+        this.libro.titulo &&
+        this.libro.autor &&
+        this.libro.categoria &&
+        this.libro.tema &&
+        this.libro.anio &&
+        this.libro.editorial
+      );
     },
 
+    formIsValidRef() {
+      return this.referencia.nombre && this.referencia.precioCosto;
+    },
+  },
 
   methods: {
     handleClickLib(item) {
-      this.libro.codigoisbn=item.CodIsbn;
-      this.libro.titulo =item.TituloLib;
-      this.libro.autor =item.AutorLib;
-      this.libro.categoria =item.CategoriaLib;
-      this.libro.tema =item.TemaLib;
-      this.libro.anu =item.AnuLib;
-      this.libro.editorial =item.EdiLib;
-      this.libro.costo=item.CostoLib;
+      this.libro.isbn = item.isbn;
+      this.libro.titulo = item.titulo;
+      this.libro.autor = item.autor;
+      this.libro.categoria = item.categoria;
+      this.libro.tema = item.tema;
+      this.libro.anio = item.anio;
+      this.libro.editorial = item.editorial._id;
     },
-     resetFormLib () {
-        this.formLib = Object.assign({}, this.defaultForm)
-        this.$refs.formLib.reset()
-      },
-      submitLib () {
-        this.snackbarLib = true
-        this.resetFormLib()
-      },
+    resetFormLib() {
+      this.formLib = Object.assign({}, this.defaultForm);
+      this.$refs.formLib.reset();
+    },
+    submitLib() {
+      this.snackbarLib = true;
+      this.resetFormLib();
+    },
     clickRef(item) {
-      this.libro.tituloref =item.nomref;
-      this.libro.costref=item.costref;
+      this.libro.tituloref = item.nomref;
+      this.libro.costref = item.costref;
     },
-    mostrarRef(){
+    mostrarRef() {
       this.overlayferen = true;
     },
-    ocultarRef(){
+    ocultarRef() {
       this.overlayferen = false;
     },
-    resetFormRef () {
-        this.formRef = Object.assign({}, this.defaultForm)
-        this.$refs.formRef.reset()
-      },
-      submitRef () {
-        this.snackbarRef = true
-        this.resetFormRef()
-      }
+    resetFormRef() {
+      this.formRef = Object.assign({}, this.defaultForm);
+      this.$refs.formRef.reset();
+    },
+    submitRef() {
+      this.snackbarRef = true;
+      this.resetFormRef();
+    },
+
+    async obtenerEditoriales(){
+      const editoriales = await http(`${SERVER_URL}/api/editoriales`)
+      
+    }
   },
+
+  beforeMount(){
+
+  }
 };
 </script>
