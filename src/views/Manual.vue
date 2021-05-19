@@ -5,8 +5,7 @@
       <v-icon dark left>mdi-book-open-page-variant</v-icon>
       <h1>Manual de Usuario</h1>
     </div>
- <iframe src="https://www.docdroid.net/kRGxhau/manual-de-usuario-pdf" width="1400" height="650" style="border: none;"></iframe>
-
+ <iframe src="https://www.docdroid.net/kRGxhau/manual-de-usuario-pdf#zoom=100" class="pdfv" style="border: none;"></iframe>
 </div>
 </template>
 
@@ -28,6 +27,11 @@
   color: white;
   padding: 10px;
   display: flex;
+}
+
+.pdfv {
+  width: 100%;
+  height: 80vh;
 }
 
 </style>
