@@ -490,7 +490,14 @@ export default {
       this.snackbarRef = true;
       this.resetFormRef();
     },
+    obtenerEditorial(id){
+      let nombre = ""
+      if(this.editoriales.length > 0){
+        nombre = (this.editoriales.find(editorial => editorial._id == id)).nombre
+      }
 
+      return nombre
+    },
     async obtenerEditoriales(){
       const editoriales = await http(`${SERVER_URL}/api/editoriales`)
       
