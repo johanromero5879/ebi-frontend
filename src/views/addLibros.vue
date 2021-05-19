@@ -75,7 +75,8 @@
             dark
             v-model="libro.editorial"
             :items="editoriales"
-            item-text=""
+            item-text="nombre"
+            item-value="_id"
             :rules="rules.editorialru"
             label="Editorial"
             outlined
@@ -490,22 +491,14 @@ export default {
       this.snackbarRef = true;
       this.resetFormRef();
     },
-    obtenerEditorial(id){
-      let nombre = ""
-      if(this.editoriales.length > 0){
-        nombre = (this.editoriales.find(editorial => editorial._id == id)).nombre
-      }
-
-      return nombre
-    },
     async obtenerEditoriales(){
       const editoriales = await http(`${SERVER_URL}/api/editoriales`)
-      
+      console.log(editoriales)
     }
   },
 
   beforeMount(){
-
+    this.obtenerEditoriales()
   }
 };
 </script>
