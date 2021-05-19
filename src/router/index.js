@@ -65,7 +65,15 @@ const routes = [
         path: 'consultar-existencias',
         component: consultexis
       }
-    ]
+    ],
+    beforeEnter: (to, from, next) => {
+      const usuario = obtenerUsuario()
+      if(!usuario){
+        next({ path: '/ingresar' })
+      }else{
+        next()
+      }
+    }
   }
 ]
 
