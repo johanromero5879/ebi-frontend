@@ -268,8 +268,6 @@ computed: {
   /*...................................*/
   methods: {
       handleClickEd(item) {
-      alert('Codigo ' + item.codigoEdi +' Nombre Editorial: '+ item.nombreEdi+' Direccion: '+ item.direccionEdi+' Telefono: '+ item.telefonoEdi+
-      ' E-mail: '+ item.correoEdi);
       this.editorial.nombreEd=item.nombreEdi;
       this.editorial.direccionEd=item.direccionEdi;
       this.editorial.telefonoEd=item.telefonoEdi;

@@ -22,12 +22,16 @@
             required
           ></v-select>
 
-          <v-btn color="white" class="mr-4" outlined @click="validate">
+          <v-btn color="white" class="mr-4" outlined @click="validate"
+          :disabled="!formIsValidKar"
+          >
             <v-icon left>mdi-format-list-bulleted</v-icon>
             Listar
           </v-btn>
 
-          <v-btn color="white" class="mr-4" outlined @click="validate">
+          <v-btn color="white" class="mr-4" outlined @click="validate"
+          :disabled="!formIsValidKar"
+          >
             <v-icon left>mdi-file-chart</v-icon>
             Generar Kardex
           </v-btn>
@@ -206,7 +210,6 @@ export default {
 
       selectedKa:[],
       buscarKa: '',
-
       datosKa: [
         {
           idKA: "192837465",
@@ -269,6 +272,15 @@ export default {
       ],
     };
   },
+  computed: {
+      
+      
+      formIsValidKar () {
+        return (
+      this.almKa 
+        )
+      }
+    },
   methods: {
     listarKA(item) {
         // alert('Id: ' + item.idKA +' Fecha : '+ item.fechaKA );
