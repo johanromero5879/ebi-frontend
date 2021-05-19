@@ -11,6 +11,8 @@ import kardex from '../views/Kardex.vue'
 import consultexis from '../views/consultarExistencias.vue'
 
 
+import { obtenerUsuario } from '../utils'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -20,7 +22,15 @@ const routes = [
   },
   {
     path: '/ingresar',
-    component: Login
+    component: Login,
+    beforeEnter: (to, from, next) => {
+      const usuario = obtenerUsuario()
+      if(usuario){
+        next({ path: '/home' })
+      }else{
+        next()
+      }
+    }
   },
 
   {
@@ -55,7 +65,15 @@ const routes = [
         path: 'consultar-existencias',
         component: consultexis
       }
-    ]
+    ],
+    beforeEnter: (to, from, next) => {
+      const usuario = obtenerUsuario()
+      if(!usuario){
+        next({ path: '/ingresar' })
+      }else{
+        next()
+      }
+    }
   }
 ]
 
