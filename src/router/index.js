@@ -9,6 +9,7 @@ import editoriales from '../views/Editoriales.vue'
 import movimientos from '../views/Movimientos.vue'
 import kardex from '../views/Kardex.vue'
 import consultexis from '../views/consultarExistencias.vue'
+import manualuser from '../views/Manual.vue'
 
 
 import { obtenerUsuario } from '../utils'
@@ -64,6 +65,10 @@ const routes = [
       {
         path: 'consultar-existencias',
         component: consultexis
+      },
+      {
+        path: 'Manual_usuario',
+        component: manualuser
       }
     ],
     beforeEnter: (to, from, next) => {
