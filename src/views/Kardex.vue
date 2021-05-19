@@ -71,7 +71,7 @@
         </v-data-table>
       </div>
     </div>
-  <v-overlay align="center" :value="overlka" opacity="0.7">
+  <v-overlay align="center" class="overlay-kardex" :value="overlka" opacity="0.7">
     <v-data-table
       :hide-default-footer="true"
       disable-pagination
@@ -178,7 +178,11 @@
 }
 
 .tablaKardexm {
-  width: 180vh;
+  padding: 10px;
+}
+
+.overlay-kardex .v-overlay__content {
+  width: 80%
 }
 
 </style>

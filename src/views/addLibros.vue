@@ -93,6 +93,14 @@
             <v-icon left>mdi-delete</v-icon>
             Eliminar
           </v-btn>
+
+          <br>
+          <br>
+
+          <v-btn color="white" outlined @click="mostrarRef">
+            <v-icon left>mdi-file-eye</v-icon>
+            Ver referencias
+          </v-btn>
         </v-form>
       </div>
       <v-spacer></v-spacer>
@@ -137,7 +145,7 @@
         </v-data-table>
       </div>
     </div>
-    <v-overlay align="center" :value="true" opacity="0.7">
+    <v-overlay align="center" class="overlref" :value="overlayferen" opacity="0.7">
 
       <div class="formulariorefer">
         <v-form
@@ -148,42 +156,61 @@
           lazy-validation
         >
           <v-text-field
-            dark
-            v-model="codigoisbn"
-            :rules="codisbru"
-            label="Código ISBN"
+            light
+            v-model="nombredLibr"
+            :rules="nombredLibru"
+            label="Nombre del libro"
             outlined
             required
           ></v-text-field>
 
           <v-text-field
-            dark
-            v-model="titulo"
-            :rules="tituloru"
-            label="Titulo del Libro"
+            light
+            v-model="precioCoLib"
+            :rules="precioCoLibru"
+            label="Costo"
             outlined
             required
           ></v-text-field>
 
-          <br />
-
-          <v-btn color="white" class="mr-4" outlined @click="validate">
+          <v-btn color="black" class="mr-4" outlined @click="validate">
             <v-icon left>mdi-content-save</v-icon>
             Guardar
           </v-btn>
 
-          <v-btn color="white" class="mr-4" outlined @click="reset">
+          <v-btn color="black" class="mr-4" outlined @click="reset">
             <v-icon left>mdi-pencil</v-icon>
             Editar
           </v-btn>
 
-          <v-btn color="white" outlined @click="resetValidation">
+          <v-btn color="black" outlined @click="resetValidation">
             <v-icon left>mdi-delete</v-icon>
             Eliminar
           </v-btn>
         </v-form>
       </div>
 
+      <br>
+
+      <div class="tablamuestraref">
+        <v-data-table
+          light
+          :hide-default-footer="true"
+          disable-pagination
+          height="240px"
+          :headers="titulosref"
+          :items="datosref"
+          item-key="name"
+          class="elevation-1"
+          @click:row="clickRef"
+          v-model="selectedLib"
+        >
+        </v-data-table>
+      </div>
+      <br>
+      <v-btn color="white" light @click="ocultarRef">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
     </v-overlay>
   </div>
 </template>
@@ -226,12 +253,16 @@
 }
 
 .formulariorefer {
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(255, 255, 255);
   padding: 20px;
   border-radius: 5px;
   width: 100%;
   display: block;
   align-items: center;
+}
+
+.tablamuestraref {
+  width: 100%;
 }
 
 .tablamuestralib {
@@ -242,12 +273,27 @@
   padding-right: 20px;
   width: 70%;
 }
+
+.overlref {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlref .v-overlay__content {
+  width: 50%;
+  display: block;
+}
+
 </style>
 
 <script>
 export default {
   
   data: () => ({
+
+    overlayferen: false,
+
     valid: true,
     codigoisbn: "",
     codisbru: [
@@ -255,15 +301,13 @@ export default {
       (v) => (v && v.length > 9) || "ISBN no puede tener menos de 10 digitos",
       (v) => (v && v.length < 14) || "ISBN no puede tener mas de 13 digitos",
     ],
-    valid: true,
+
     titulo: "",
     tituloru: [(v) => !!v || "Este campo es obligatorio"],
-
-    valid: true,
+    
     autor: "",
     autoru: [(v) => !!v || "Este campo es obligatorio"],
 
-    valid: true,
     categoria: "",
     cateru: [(v) => !!v || "Este campo es obligatorio"],
 
@@ -280,6 +324,13 @@ export default {
       (v) => !!v || "Este campo es obligatorio",
       (v) => (v && v.length <= 4) || "El dato del año no es valido",
     ],
+
+    nombredLibr: "",
+    nombredLibru: [(v) => !!v || "Este campo es obligatorio"],
+
+    precioCoLib: "",
+    precioCoLibru: [(v) => !!v || "Este campo es obligatorio"],
+    
       selected:[],
       search: '',
   tituloslib: [
@@ -317,16 +368,39 @@ export default {
         AnuLib: 2015,
         editLib: "Grupo planeta",
       },
+    ],
+    titulosref: [
+      { text: "Referencia", align: "start", value: "reflibr", },
+      { text: "Nombre", value: "nomref" },
+      { text: "Costo", value: "costref" },
+    ],
+    datosref: [
+      {
+        reflibr: 'C3GTNC1NMI',
+        nomref: 'Luna de Plutón',
+        costref: '78500',
+      },
+      {
+        reflibr: 'H9U0WQ0N1T',
+        nomref: 'Luna de Plutón (Edición especial)',
+        costref: '97000',
+      },
     ]
-  
-    
   }),
 
   methods: {
     handleClickLib(item) {
       alert('Codigo ' + item.CodigoLib +' ISBN: '+ item.CodIsbn+' Titulo: '+ item.TituloLib+' Autor: '+ item.AutorLib+
       ' Categoria: '+ item.CategoriaLib+' Tema: '+ item.TemaLib+' Año: '+ item.AnuLib+' Costo: '+ item.CostoLib+' ');
-      
+    },
+    clickRef(item) {
+      alert('Referencia: ' + item.reflibr + '\nNombre: ' + item.nomref + '\nCosto: ' + item.costref);
+    },
+    mostrarRef(){
+      this.overlayferen = true;
+    },
+    ocultarRef(){
+      this.overlayferen = false;
     },
     validate() {
       this.$refs.form.validate();
