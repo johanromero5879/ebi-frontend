@@ -502,7 +502,7 @@ export default {
 
           this.resetFormLib();
           this.obtenerLibros()
-          this.snackbarLib = true;
+          this.snackbar = true;
           
         }catch(ex){
           console.log(ex)
