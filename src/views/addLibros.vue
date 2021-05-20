@@ -1,7 +1,7 @@
 <template>
   <div class="contLibros">
     <div class="titulolib">
-      <v-snackbar v-model="snackbarLib" absolute botton right color="success">
+      <v-snackbar v-model="snackbar" absolute botton right color="success">
         <span>Se ha registrado correctamente!</span>
         <v-icon dark> mdi-checkbox-marked-circle </v-icon>
       </v-snackbar>
@@ -92,8 +92,14 @@
             :disabled="!formIsValid"
             type="submitLib"
           >
-            <v-icon left>mdi-content-save</v-icon>
-            Guardar
+            <template v-if="!libro_id">
+              <v-icon left>mdi-content-save</v-icon>
+              Guardar
+            </template>
+            <template v-else>
+              <v-icon left>mdi-pencil</v-icon>
+              Editar
+            </template>
           </v-btn>
 
           <v-btn color="white" class="mr-4" outlined @click="resetFormLib">
@@ -101,10 +107,10 @@
             Cancelar
           </v-btn>
 
-          <v-btn color="white" class="mr-4" outlined @click="resetFormLib">
+          <!-- <v-btn color="white" class="mr-4" outlined @click="resetFormLib">
             <v-icon left>mdi-pencil</v-icon>
             Editar
-          </v-btn>
+          </v-btn> -->
 
           <v-btn color="white" outlined @click="resetFormLib">
             <v-icon left>mdi-delete</v-icon>
@@ -171,10 +177,6 @@
       :value="overlayferen"
       opacity="0.7"
     >
-      <v-snackbar v-model="snackbarRef" absolute botton right color="blue">
-        <span>Se ha registrado correctamente! </span>
-        <v-icon dark> mdi-checkbox-marked-circle </v-icon>
-      </v-snackbar>
       <div class="formulariorefer">
         <v-form
           class="forma"
@@ -396,6 +398,7 @@ export default {
         ],
       },
       libro_id: '',
+      ref_id: '',
       libro: {
         isbn: "",
         titulo: "",
@@ -411,9 +414,10 @@ export default {
       },
       editoriales: [],
       overlayferen: false,
-      snackbarLib: false,
+      snackbar: false,
       defaultFormLib,
-      selected: [],
+      selectedLib: [],
+      selectedRef: [],
       buscarlibro: "",
       buscarRefe: "",
 
@@ -457,6 +461,7 @@ export default {
 
   methods: {
     handleClickLib(item) {
+      this.libro_id = item._id
       this.libro.isbn = item.isbn;
       this.libro.titulo = item.titulo;
       this.libro.autor = item.autor;
@@ -466,12 +471,36 @@ export default {
       this.libro.editorial = item.editorial._id;
     },
     resetFormLib() {
+      this.libro_id = ""
       this.formLib = Object.assign({}, this.defaultForm);
       this.$refs.formLib.reset();
     },
-    submitLib() {
-      this.snackbarLib = true;
-      this.resetFormLib();
+    async submitLib() {
+      if(this.$refs.formLib.validate()){
+
+        try{
+          let url = `${ SERVER_URL }/api/libros`
+          let metodo = 'POST'
+
+          if(this.libro_id){
+            url += `/${this.libro_id}`
+            metodo = 'PUT'
+          }
+
+          const data = await http(url, metodo, this.libro)
+          
+          if(data.error)
+            throw data.error.message
+
+          this.resetFormLib();
+          this.obtenerLibros()
+          this.snackbarLib = true;
+          
+        }catch(ex){
+          console.log(ex)
+        }
+        
+      }
     },
     clickRef(item) {
       this.libro.tituloref = item.nomref;
@@ -484,21 +513,38 @@ export default {
       this.overlayferen = false;
     },
     resetFormRef() {
+      this.ref_id = ""
       this.formRef = Object.assign({}, this.defaultForm);
       this.$refs.formRef.reset();
     },
     submitRef() {
+      
       this.snackbarRef = true;
       this.resetFormRef();
     },
     async obtenerEditoriales(){
       const editoriales = await http(`${SERVER_URL}/api/editoriales`)
-      console.log(editoriales)
+      this.editoriales = []
+      for(const editorial of editoriales){
+        this.editoriales.push({
+          _id: editorial._id,
+          nombre: editorial.nombre
+        })
+      }
+    },
+
+    async obtenerLibros(){
+      const libros = await http(`${SERVER_URL}/api/libros`)
+      this.datoslib = []
+      for(const libro of libros){
+        this.datoslib.push(libro)
+      }
     }
   },
 
   beforeMount(){
     this.obtenerEditoriales()
+    this.obtenerLibros()
   }
 };
 </script>
