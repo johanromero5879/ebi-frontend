@@ -5,7 +5,6 @@
       height="65px"
       absolute
       src="~@/assets/img/loginbg.png"
-      scroll-target="#scrolling-techniques-3"
     >
       <template v-slot:img="{ props }">
         <v-img

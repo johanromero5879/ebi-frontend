@@ -1,23 +1,12 @@
 <template>
   <div class="contAlmacenes">
-
- 
-
     <div class="titulo">
       <v-icon dark left>mdi-store</v-icon>
       <h1>Registro de almacenes</h1>
     </div>
-    <v-snackbar
-      v-model="snackbar"
-      absolute
-      botton
-      right
-      color="success"
-    >
+    <v-snackbar v-model="snackbar" absolute botton right color="success">
       <span>Se ha registrado correctamente!</span>
-      <v-icon dark>
-        mdi-checkbox-marked-circle
-      </v-icon>
+      <v-icon dark> mdi-checkbox-marked-circle </v-icon>
     </v-snackbar>
     <div class="objetos">
       <div class="formular">
@@ -27,14 +16,11 @@
           ref="formAlm"
           @submit.prevent="submitAlm"
         >
-         
-
           <v-text-field
             dark
             v-model="almacen.nombre"
             :rules="rules.nomru"
             label="Nombre"
-            
             outlined
             required
           ></v-text-field>
@@ -68,31 +54,32 @@
 
           <br />
 
-          <v-btn 
-          color="white"
-          class="mr-4"
-          outlined
-          :disabled="!formIsValid"
-          type="submitAlm"
+          <v-btn
+            color="white"
+            class="mr-4"
+            outlined
+            :disabled="!formIsValid"
+            type="submitAlm"
           >
-            <v-icon left>mdi-content-save</v-icon>
-            Guardar
+            <template v-if="!almacen_id">
+              <v-icon left>mdi-content-save</v-icon>
+              Guardar
+            </template>
+            <template v-else>
+              <v-icon left>mdi-pencil</v-icon>
+              Editar
+            </template>
           </v-btn>
 
-          <v-btn 
-          color="white"
-          class="mr-4"
-          outlined
-          @click="resetFormAlm"
-          >
+          <v-btn color="white" class="mr-4" outlined @click="resetFormAlm">
             <v-icon left>mdi-window-close</v-icon>
             Cancelar
           </v-btn>
 
-          <v-btn color="white" class="mr-4" outlined @click="resetFormAlm">
+          <!-- <v-btn color="white" class="mr-4" outlined @click="resetFormAlm">
             <v-icon left>mdi-pencil</v-icon>
             Editar
-          </v-btn>
+          </v-btn> -->
 
           <v-btn
             v-if="usuario.tipo == 'admin'"
@@ -116,19 +103,23 @@
           v-model="selectedAlm"
           @click:row="ClickAlm"
         >
-
           <template slot="items" slot-scope="props">
-          <tr @click="showAlert(props.item)">
-          <td>{{ props.item.codigoAlm }}</td>
-          <td class="text-xs-right">{{ props.item.nombreAlm }}</td>
-          <td class="text-xs-right">{{ props.item.direccionAlm }}</td>
-          <td class="text-xs-right">{{ props.item.telefonoAlm }}</td>
-          <td class="text-xs-right">{{ props.item.correoAlm }}</td>
+            <tr @click="showAlert(props.item)">
+              <td class="text-xs-right">{{ props.item._id }}</td>
+              <td class="text-xs-right">{{ props.item.nombre }}</td>
+              <td class="text-xs-right">{{ props.item.direccion }}</td>
+              <td class="text-xs-right">{{ props.item.telefono }}</td>
+              <td class="text-xs-right">{{ props.item.correo }}</td>
             </tr>
-        </template>
-        <v-alert slot="no-results" :value="true" color="error" icon="mdi-alert">
-          No se encontraron resultados para "{{ buscarAlm }}".
-        </v-alert>
+          </template>
+          <v-alert
+            slot="no-results"
+            :value="true"
+            color="error"
+            icon="mdi-alert"
+          >
+            No se encontraron resultados para "{{ buscarAlm }}".
+          </v-alert>
 
           <template v-slot:top>
             <v-text-field
@@ -194,37 +185,37 @@
 </style>
 
 <script>
+import { SERVER_URL } from "../config.json";
+import { http } from "../utils";
+
 export default {
   data() {
-
     const defaultFormAlm = Object.freeze({
-        nombre: '',
-        direccion: '',
-        telefono: '',
-        correo: '',
-      })
-      
+      nombre: "",
+      direccion: "",
+      telefono: "",
+      correo: "",
+    });
 
     return {
       formAlm: Object.assign({}, defaultFormAlm),
-        rules: {
-          nomru: [(v) => !!v || "Este campo es obligatorio"],
-          dirru: [(v) => !!v || "Este campo es obligatorio"],
-          telru: [(v) => !!v || "Este campo es obligatorio"],
-          corru: [
-        (v) => !!v || "Este campo es obligatorio",
-        (v) => /.+@.+\..+/.test(v) || "El correo debe tener un formato válido"
-      ],
+      rules: {
+        nomru: [(v) => !!v || "Este campo es obligatorio"],
+        dirru: [(v) => !!v || "Este campo es obligatorio"],
+        telru: [(v) => !!v || "Este campo es obligatorio"],
+        corru: [
+          (v) => !!v || "Este campo es obligatorio",
+          (v) =>
+            /.+@.+\..+/.test(v) || "El correo debe tener un formato válido",
+        ],
+      },
 
-        },
-
+      almacen_id: "",
       almacen: {
-        _id: '',
-        nombre: '',
-        direccion: '',
-        telefono: '',
-        correo: '',
-
+        nombre: "",
+        direccion: "",
+        telefono: "",
+        correo: "",
       },
 
       snackbar: false,
@@ -232,67 +223,80 @@ export default {
       usuario: {
         tipo: "xd",
       },
-    selectedAlm:[],
-    buscarAlm: '',
+      selectedAlm: [],
+      buscarAlm: "",
 
       titulosAl: [
-        {
-          text: "Código",
-          align: "start",
-          value: "codigoAlm",
-        },
-        { text: "Nombre", value: "nombreAlm" },
-        { text: "Dirección", value: "direccionAlm" },
-        { text: "Teléfono", value: "telefonoAlm" },
-        { text: "Correo Electrónico", value: "correoAlm" },
+        { text: "Código", value: "_id" },
+        { text: "Nombre", value: "nombre" },
+        { text: "Dirección", value: "direccion" },
+        { text: "Teléfono", value: "telefono" },
+        { text: "Correo Electrónico", value: "correo" },
       ],
-      datosAl: [
-        {
-          codigoAlm: 1234567890,
-          nombreAlm: "Tres pelagatos sas",
-          direccionAlm: "Calle 30B # 2-19",
-          telefonoAlm: 3048463944,
-          correoAlm: "contacto@trespel.com",
-        },
-        {
-          codigoAlm: 9987654321,
-          nombreAlm: "El lector",
-          direccionAlm: "Trasversal 5A # 2-14",
-          telefonoAlm: 3135994633,
-          correoAlm: "contacto@ellector.com",
-        },
-      ],
+      datosAl: [],
     };
   },
 
-   computed: {
-      formIsValid () {
-        return (
-          this.almacen.nombre &&
-          this.almacen.direccion &&
-          this.almacen.telefono &&
-          this.almacen.correo
-        )
-      },
+  computed: {
+    formIsValid() {
+      return (
+        this.almacen.nombre &&
+        this.almacen.direccion &&
+        this.almacen.telefono &&
+        this.almacen.correo
+      );
     },
+  },
 
   methods: {
-
     ClickAlm(item) {
-    this.almacen.nombre=item.nombreAlm;
-    this.almacen.direccion=item.direccionAlm;
-    this.almacen.telefono=item.telefonoAlm;
-    this.almacen.correo=item.correoAlm;
-      },
+      this.almacen_id = item._id
+      this.almacen.nombre = item.nombre;
+      this.almacen.direccion = item.direccion;
+      this.almacen.telefono = item.telefono;
+      this.almacen.correo = item.correo;
+    },
 
-      resetFormAlm () {
-        this.formAlm = Object.assign({}, this.defaultForm)
-        this.$refs.formAlm.reset()
-      },
-      submitAlm () {
-        this.snackbar = true
-        this.resetFormAlm()
-      },
+    resetFormAlm() {
+      this.almacen_id = ''
+      this.formAlm = Object.assign({}, this.defaultForm);
+      this.$refs.formAlm.reset();
+    },
+    async submitAlm() {
+      if(this.$refs.formAlm.validate()){
+        let url = `${ SERVER_URL }/api/almacenes`
+        let metodo = 'POST'
+
+        if(this.almacen_id){
+          url += `/${this.almacen_id}`
+          metodo = 'PUT'
+        }
+
+        try{
+          const data = await http(url, metodo, this.almacen)
+          if(data.error)
+            throw data.error.message
+
+          this.resetFormAlm();
+          this.obtenerAlmacenes()
+          this.snackbar = true;
+        }catch(ex){
+          console.log(ex)
+        }
+        
+      }
+    },
+    async obtenerAlmacenes(){
+      const almacenes = await http(`${SERVER_URL}/api/almacenes`)
+      this.datosAl = []
+      for(const almacen of almacenes){
+        this.datosAl.push(almacen)
+      }
+    }
   },
+
+  beforeMount(){
+    this.obtenerAlmacenes()
+  }
 };
 </script>
