@@ -120,7 +120,7 @@
           <br />
           <br />
 
-          <v-btn color="white" outlined @click="mostrarRef">
+          <v-btn color="white" outlined v-if="libro_id" @click="mostrarRef">
             <v-icon left>mdi-file-eye</v-icon>
             Ver referencias
           </v-btn>
@@ -135,6 +135,7 @@
           class="elevation-1"
           @click:row="handleClickLib"
           :search="buscarlibro"
+          sort-by="titulo"
           v-model="selectedLib"
         >
           <template slot="items" slot-scope="props">
@@ -177,6 +178,11 @@
       :value="overlayferen"
       opacity="0.7"
     >
+      <v-snackbar v-model="snackbarRef" absolute top right color="success">
+        <span>Se ha registrado correctamente!</span>
+        <v-icon dark> mdi-checkbox-marked-circle </v-icon>
+      </v-snackbar>
+
       <div class="formulariorefer">
         <v-form
           class="forma"
@@ -188,7 +194,7 @@
             light
             v-model="referencia.nombre"
             :rules="rules.tituloref"
-            label="Nombre del libro"
+            label="Nombre referencia"
             outlined
             required
           ></v-text-field>
@@ -206,21 +212,21 @@
             color="black"
             class="mr-4"
             outlined
-            :disabled="!formIsValidRef"
             type="submitRef"
           >
-            <v-icon left>mdi-content-save</v-icon>
-            Guardar
-          </v-btn>
-
-          <v-btn color="black" class="mr-4" outlined @click="resetFormRef">
-            <v-icon left>mdi-pencil</v-icon>
-            Editar
+            <template v-if="!ref_id">
+              <v-icon left>mdi-content-save</v-icon>
+              Guardar
+            </template>
+            <template v-else>
+              <v-icon left>mdi-pencil</v-icon>
+              Editar
+            </template>
           </v-btn>
 
           <v-btn color="black" outlined @click="resetFormRef">
             <v-icon left>mdi-delete</v-icon>
-            Eliminar
+            Cancelar
           </v-btn>
         </v-form>
       </div>
@@ -239,6 +245,7 @@
           class="elevation-1"
           @click:row="clickRef"
           :search="buscarRefe"
+          sort-by="nombre"
           v-model="selectedRef"
         >
           <template slot="items" slot-scope="props">
@@ -388,13 +395,13 @@ export default {
         temru: [(v) => !!v || "Este campo es obligatorio"],
         anuru: [
           (v) => !!v || "Este campo es obligatorio",
-          (v) => (v && v.length <= 4) || "El dato del año no es valido",
+          (v) => (v && !isNaN(v)) || "El dato del año no es valido",
         ],
         editorialru: [(v) => !!v || "Este campo es obligatorio"],
         tituloref: [(v) => !!v || "Este campo es obligatorio"],
         costoru: [
           (v) => !!v || "Este campo es obligatorio",
-          (v) => (v && v.length > 0) || "El precio no es valido",
+          (v) => (v && !isNaN(v)) || "El precio no es valido",
         ],
       },
       libro_id: '',
@@ -415,6 +422,7 @@ export default {
       editoriales: [],
       overlayferen: false,
       snackbar: false,
+      snackbarRef: false,
       defaultFormLib,
       selectedLib: [],
       selectedRef: [],
@@ -503,10 +511,12 @@ export default {
       }
     },
     clickRef(item) {
-      this.libro.tituloref = item.nomref;
-      this.libro.costref = item.costref;
+      this.ref_id = item._id;
+      this.referencia.nombre = item.nombre
+      this.referencia.precioCosto = item.precioCosto;
     },
     mostrarRef() {
+      this.obtenerReferencias()
       this.overlayferen = true;
     },
     ocultarRef() {
@@ -517,10 +527,38 @@ export default {
       this.formRef = Object.assign({}, this.defaultForm);
       this.$refs.formRef.reset();
     },
-    submitRef() {
-      
-      this.snackbarRef = true;
-      this.resetFormRef();
+    async submitRef() {
+      if(this.$refs.formRef.validate()){
+
+        let url = `${ SERVER_URL }/api/referencias`
+        
+        let metodo = 'POST'
+
+        if(this.ref_id){
+          url += `/${this.ref_id}`
+          metodo = 'PUT'
+        }
+
+        try{
+          const data = await http(url, metodo, {
+            nombre: this.referencia.nombre,
+            precioCosto: this.referencia.precioCosto,
+            libro: this.libro_id
+          })
+
+          if(data.error)
+            throw data.error
+          
+          this.resetFormRef();
+          this.obtenerReferencias()
+          this.snackbarRef = true;
+          
+        }catch(ex){
+          console.log(ex)
+        }
+
+        
+      }
     },
     async obtenerEditoriales(){
       const editoriales = await http(`${SERVER_URL}/api/editoriales`)
@@ -538,6 +576,17 @@ export default {
       this.datoslib = []
       for(const libro of libros){
         this.datoslib.push(libro)
+      }
+    },
+
+    async obtenerReferencias(){
+      this.datosref = []
+      if(this.libro_id){
+        const referencias = await http(`${SERVER_URL}/api/referencias/lib/${this.libro_id}`)
+      
+        for(const referencia of referencias){
+          this.datosref.push(referencia)
+        }
       }
     }
   },

@@ -103,6 +103,7 @@
           class="elevation-1"
           :search="buscarEd"
           v-model="selectedEd"
+          sort-by="nombre"
           @click:row="handleClickEd"
         >
           <template slot="items" slot-scope="props">

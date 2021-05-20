@@ -129,6 +129,7 @@
           :search="buscarUsu"
           v-model="selectedUsu"
           @click:row="ClickUsu"
+          :sort-by="['nombres', 'apellidos']"
         >
           <template slot="items" slot-scope="props">
             <tr @click="showAlert(props.item)">
