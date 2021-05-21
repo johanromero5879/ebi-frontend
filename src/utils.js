@@ -26,6 +26,5 @@ export const http = async (url, metodo = 'GET', datos = {}) => {
     
     const response = await fetch(url, request)
     const data = await response.json()
-
-    return data
+    return JSON.parse(JSON.stringify(data))
 }

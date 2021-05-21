@@ -275,7 +275,7 @@ export default {
         try{
           const data = await http(url, metodo, this.almacen)
           if(data.error)
-            throw data.error.message
+            throw data.message
 
           this.resetFormAlm();
           this.obtenerAlmacenes()

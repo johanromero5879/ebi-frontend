@@ -273,7 +273,7 @@ export default {
           const data = await http(url, metodo, this.editorial)
 
           if(data.error)
-            throw data.error.message
+            throw data.message
 
           
           this.resetFormEd();
