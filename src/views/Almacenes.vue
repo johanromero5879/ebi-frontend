@@ -102,6 +102,7 @@
           :search="buscarAlm"
           v-model="selectedAlm"
           @click:row="ClickAlm"
+          sort-by="nombre"
         >
           <template slot="items" slot-scope="props">
             <tr @click="showAlert(props.item)">

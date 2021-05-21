@@ -28,3 +28,13 @@ export const http = async (url, metodo = 'GET', datos = {}) => {
     const data = await response.json()
     return JSON.parse(JSON.stringify(data))
 }
+
+export const formatearMoneda = (value) => {
+    const formater = new Intl.NumberFormat('es-CO', {
+      style: 'currency',
+      currency: 'COP',
+      minimumFractionDigits: 0
+    })
+
+    return formater.format(value)
+  }
