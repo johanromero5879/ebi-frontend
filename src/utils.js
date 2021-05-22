@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export const obtenerUsuario = () => {
     const usuario = localStorage.getItem('usuario')
     return JSON.parse(usuario)
@@ -31,10 +33,14 @@ export const http = async (url, metodo = 'GET', datos = {}) => {
 
 export const formatearMoneda = (value) => {
     const formater = new Intl.NumberFormat('es-CO', {
-      style: 'currency',
-      currency: 'COP',
-      minimumFractionDigits: 0
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0
     })
 
     return formater.format(value)
-  }
+}
+
+export const formatearFecha = (fecha) => {
+    return moment(String(fecha)).format('MM/DD/YYYY hh:mm A')
+}

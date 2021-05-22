@@ -245,8 +245,8 @@
 
 <script>
 import { SERVER_URL } from "../config.json";
-import { http } from "../utils";
-import moment from 'moment'
+import { http, formatearFecha } from "../utils";
+
 
 export default {
   data() {
@@ -383,8 +383,8 @@ export default {
     },
     async submitMov() {
 
-      if(this.movimiento.almacen != this.destino.almacen){
-        if(this.$refs.formMov.validate()){
+      if(this.$refs.formMov.validate()){
+        if(this.movimiento.almacen != this.destino.almacen){
           const movimientos = this.extraerMovimientos()
 
           try{
@@ -399,6 +399,8 @@ export default {
           }catch(ex){
             this.showSnackbar(ex, 'error')
           }
+        }else{
+          this.showSnackbar('Los almacenes no deben ser los mismos', 'error')
         }
       }
       
@@ -415,9 +417,7 @@ export default {
         this.destino.almacen = ''
       }
     },
-    formatearFecha(fecha){
-      return moment(String(fecha)).format('MM/DD/YYYY hh:mm A')
-    },
+    
     async obtenerReferencias(){
       
       const refs = await http(`${SERVER_URL}/api/referencias`)
@@ -465,7 +465,7 @@ export default {
       for(const movimiento of movimientos){
         this.datosMo.push({
           _id: movimiento._id,
-          fecha: this.formatearFecha(movimiento.fecha),
+          fecha: formatearFecha(movimiento.fecha),
           detalle: movimiento.detalle,
           cantidad: movimiento.cantidad,
           tipo: movimiento.tipo,

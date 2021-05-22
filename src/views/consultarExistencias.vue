@@ -157,6 +157,7 @@ export default {
       this.$refs.form.resetValidation();
     },
     async obtenerExistencias(){
+      this.existencias = []
       try{
         let url = `${SERVER_URL}/api/inventarios/almacen/${this.almacen}`
 
@@ -169,7 +170,6 @@ export default {
         if(data.error)
           throw data.message
         
-        this.existencias = []
         for(const existencia of data){
           const { cantidad, referencia } = existencia
           const { libro, precioCosto, nombre } = referencia
