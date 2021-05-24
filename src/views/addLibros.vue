@@ -20,7 +20,7 @@
           <v-text-field
             dark
             v-model="libro.isbn"
-            :counter="13"
+            :counter="15"
             :rules="rules.codisbru"
             label="Código ISBN"
             outlined
@@ -387,7 +387,7 @@ export default {
           (v) =>
             (v && v.length > 9) || "ISBN no puede tener menos de 10 digitos",
           (v) =>
-            (v && v.length < 14) || "ISBN no puede tener mas de 13 digitos",
+            (v && v.length < 16) || "ISBN no puede tener mas de 13 digitos",
         ],
         tituloru: [(v) => !!v || "Este campo es obligatorio"],
         autoru: [(v) => !!v || "Este campo es obligatorio"],
